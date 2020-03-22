@@ -1,0 +1,24 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2020-03-22T11:45:55.336508",
+  "text": "text",
+  "@text": {
+    "type": "text",
+    "placeholders": {},
+    "source_text": "text"
+  },
+  "textWithMetadata": "textWithMetadata",
+  "@textWithMetadata": {
+    "type": "text",
+    "placeholders": {},
+    "source_text": "textWithMetadata"
+  },
+  "pluralExample": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}",
+  "@pluralExample": {
+    "type": "text",
+    "placeholders": {
+      "howMany": {}
+    },
+    "source_text": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}"
+  }
+}
