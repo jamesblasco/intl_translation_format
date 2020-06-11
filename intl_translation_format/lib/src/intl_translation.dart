@@ -5,23 +5,16 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'models/translation_catalog.dart';
 import 'models/translation_format.dart';
 
-
 Map<String, List<MainMessage>> originMessages;
 
-typedef TranslationFormatBuilder = TranslationFormat Function();
-
 class IntlTranslation {
-  static String extractMessages({String format,
-    String locale,
-    Map<String, TranslationFormatBuilder> supportedFormats,
-    List<String> dartFiles,
-    MessageExtraction messageExtraction}) {
+  @deprecated
+  static String extractMessages(
+      {TranslationFormat format,
+      String locale,
+      List<String> dartFiles,
+      MessageExtraction messageExtraction}) {
     final extraction = messageExtraction ?? MessageExtraction();
-
-    final translationFormat = supportedFormats[format]?.call();
-    assert(translationFormat ==
-        null, 'This translation format is not supported');
-
 
     Map<String, String> metadata = {};
     if (locale != null) {
@@ -33,57 +26,55 @@ class IntlTranslation {
 
     final messages = _extractMessages(dartFiles, extraction);
 
-    return translationFormat.build(messages, metadata);
+    return format.build(messages, metadata);
   }
 
-  static Map<String, String> generateTranslations({String format,
-    String locale,
-    Map<String, TranslationFormatBuilder> supportedFormats,
-    List<String> dartFiles,
-    List<String> translationFiles,
-    String targetDir,
-    MessageExtraction messageExtraction,
-    MessageGeneration messageGeneration}) {
+  static Map<String, String> generateTranslations(
+      {TranslationFormat format,
+      String locale,
+      List<String> dartFiles,
+      List<String> translationFiles,
+      String targetDir,
+      MessageExtraction messageExtraction,
+      MessageGeneration messageGeneration}) {
     final extraction = messageExtraction ?? MessageExtraction();
     final generation = messageGeneration ?? MessageGeneration();
-
-    final translationFormat = supportedFormats[format]?.call();
-    assert(translationFormat ==
-        null, 'This translation format is not supported');
-
 
     final messages = _extractMessages(dartFiles, extraction);
 
     //Todo: Check why originMessages is needed
-    var allMessages = dartFiles
-        .map((each) => extraction.parseFile(new File(each), false));
+    var allMessages =
+        dartFiles.map((each) => extraction.parseFile(new File(each), false));
 
     originMessages = new Map();
     for (var eachMap in allMessages) {
       eachMap.forEach(
-              (key, value) => originMessages.putIfAbsent(key, () => []).add(value));
+          (key, value) => originMessages.putIfAbsent(key, () => []).add(value));
     }
 
-
-    final translation = translationFormat.parse(
-        messages, translationFiles, defaultLocale: locale);
+    final translation =
+        format.parse(messages, translationFiles, defaultLocale: locale);
 
     generation.allLocales = translation.locales.toSet();
 
+    final files = <String, String>{};
+    final prefix = generation.generatedFilePrefix;
+
     translation.translatedMessages.forEach((locale, translation) {
-      generation.generateIndividualMessageFile(locale, translation, targetDir);
+      final content = generation.generateIndividualMessageFileContent(
+          locale, translation, targetDir);
+      files['${prefix}messages_$locale.dart'] = content;
     });
 
-    final prefix = generation.generatedFilePrefix;
-    String mainFile = generation.generateMainImportFile();
-    return {
-      '${prefix}messages_all.dart': mainFile
-    };
-
+    final mainFile = generation.generateMainImportFile();
+    files['${prefix}messages_all.dart'] = mainFile;
+    return files;
   }
 
-  static Map<String, MainMessage> _extractMessages(List<String> dartFiles,
-      MessageExtraction extraction) {
+  static Map<String, MainMessage> _extractMessages(
+    List<String> dartFiles,
+    MessageExtraction extraction,
+  ) {
     Map<String, MainMessage> allMessages = {};
     for (var arg in dartFiles) {
       var messages = extraction.parseFile(File(arg), false);
@@ -93,7 +84,6 @@ class IntlTranslation {
     return allMessages;
   }
 }
-
 
 /// A TranslatedMessage that just uses the name as the id and knows how to look
 /// up its original messages in our [messages].
@@ -108,4 +98,3 @@ class BasicTranslatedMessage extends TranslatedMessage {
   //key in [messages].
   List<MainMessage> _findOriginals() => originalMessages = originMessages[id];
 }
-

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:intl_translation_arb/intl_translation_arb.dart';
 import 'package:path/path.dart' as path;
 
 import 'package:intl_translation/generate_localized.dart';
@@ -8,13 +9,18 @@ import 'package:intl_translation/src/icu_parser.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 
 class ArbFormat extends TranslationFormat {
+  static const String key = 'arb';
+
+  @override
+  List<String> get supportedFileExtensions => ['arb'];
+
 
   String build(
-      Map<String, MainMessage> messages,
-      Map<String, String> metadata, {
-        bool suppressMetaData = false,
-        bool includeSourceText = true,
-      }) {
+    Map<String, MainMessage> messages,
+    Map<String, String> metadata, {
+    bool suppressMetaData = false,
+    bool includeSourceText = true,
+  }) {
     Map<String, dynamic> allMessages = {};
     if (metadata['locale'] != null) {
       allMessages["@@locale"] = metadata['locale'];
@@ -29,17 +35,16 @@ class ArbFormat extends TranslationFormat {
 
     var encoder = new JsonEncoder.withIndent("  ");
     return encoder.convert(allMessages);
-
   }
 
   Map<String, dynamic> _toARB(
-      MainMessage message, {
-        bool suppressMetaData = false,
-        bool includeSourceText = true,
-      }) {
+    MainMessage message, {
+    bool suppressMetaData = false,
+    bool includeSourceText = true,
+  }) {
     if (message.messagePieces.isEmpty) return null;
     Map<String, dynamic> out = {};
-    out[message.name] = icuForm(message);
+    out[message.name] = ICUParser().icuMessageToString(message);
 
     if (!suppressMetaData) {
       out["@${message.name}"] = _arbMetadata(message);
@@ -75,40 +80,7 @@ class ArbFormat extends TranslationFormat {
     result[arg] = extraInfo;
   }
 
-  /// Return a version of the message string with with ICU parameters "{variable}"
-  /// rather than Dart interpolations "$variable".
-  String icuForm(MainMessage message) =>
-      message.expanded(turnInterpolationIntoICUForm);
-
-  String turnInterpolationIntoICUForm(Message message, chunk,
-      {bool shouldEscapeICU: false}) {
-    if (chunk is String) {
-      return shouldEscapeICU ? escape(chunk) : chunk;
-    }
-    if (chunk is int && chunk >= 0 && chunk < message.arguments.length) {
-      return "{${message.arguments[chunk]}}";
-    }
-    if (chunk is SubMessage) {
-      return chunk.expanded((message, chunk) =>
-          turnInterpolationIntoICUForm(message, chunk, shouldEscapeICU: true));
-    }
-    if (chunk is Message) {
-      return chunk.expanded((message, chunk) => turnInterpolationIntoICUForm(
-          message, chunk,
-          shouldEscapeICU: shouldEscapeICU));
-    }
-    throw new FormatException("Illegal interpolation: $chunk");
-  }
-
-  String escape(String s) {
-    return s
-        .replaceAll("'", "''")
-        .replaceAll("{", "'{'")
-        .replaceAll("}", "'}'");
-  }
-
-
-
+  
   // Parse method
   @override
   TranslationCatalog parse(
@@ -116,7 +88,8 @@ class ArbFormat extends TranslationFormat {
       {String defaultLocale, MessageGeneration messageGeneration}) {
     final generation = messageGeneration ?? MessageGeneration();
 
-    var catalog = TranslationCatalog(); //Todo: We could save the state of this class to detect in the future what translations have been changed
+    var catalog =
+        TranslationCatalog(); //Todo: We could save the state of this class to detect in the future what translations have been changed
     catalog.mainMessages = messages;
     catalog.defaultLocal = defaultLocale;
 
@@ -129,11 +102,10 @@ class ArbFormat extends TranslationFormat {
       _loadData(arg, messagesByLocale, generation);
     }
 
-
-
     catalog.translatedMessages = {};
     messagesByLocale.forEach((locale, messages) {
-      catalog.translatedMessages[locale] = _generateLocaleTranslation(messages, generation);
+      catalog.translatedMessages[locale] =
+          _generateLocaleTranslation(messages, generation);
 
       print(catalog.translatedMessages[locale]);
     });
@@ -142,9 +114,8 @@ class ArbFormat extends TranslationFormat {
   }
 }
 
-
-List<TranslatedMessage> _generateLocaleTranslation(List<Map> localeData,
-    MessageGeneration generation) {
+List<TranslatedMessage> _generateLocaleTranslation(
+    List<Map> localeData, MessageGeneration generation) {
   List<TranslatedMessage> translations = [];
   for (var jsonTranslations in localeData) {
     jsonTranslations.forEach((id, messageData) {
@@ -156,6 +127,7 @@ List<TranslatedMessage> _generateLocaleTranslation(List<Map> localeData,
   }
   return translations;
 }
+
 const jsonDecoder = const JsonCodec();
 
 _loadData(String filename, Map<String, List<Map>> messagesByLocale,
@@ -178,7 +150,6 @@ _loadData(String filename, Map<String, List<Map>> messagesByLocale,
   generation.allLocales.add(locale);
 }
 
-
 /// Regenerate the original IntlMessage objects from the given [data]. For
 /// things that are messages, we expect [id] not to start with "@" and
 /// [data] to be a String. For metadata we expect [id] to start with "@"
@@ -193,7 +164,5 @@ BasicTranslatedMessage recreateIntlObjects(String id, data) {
   return new BasicTranslatedMessage(id, parsed);
 }
 
-
 final _pluralAndGenderParser = new IcuParser().message;
 final _plainParser = new IcuParser().nonIcuMessage;
-

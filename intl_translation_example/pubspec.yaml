@@ -13,6 +13,8 @@ description: Translation example
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 1.0.0+1
 
+
+
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
@@ -20,17 +22,22 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.16.1
-
+  derry: 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
 dev_dependencies:
+  intl_translation_format:
+    path: '../intl_translation_format'
   intl_translation_arb:
     path: '../intl_translation_arb'
-  flutter_test:
-    sdk: flutter
+  intl_translation_json:
+    path: '../intl_translation_json'  
+  intl_translation_multi_language_json:
+    path: '../intl_translation_multi_language_json'  
+  
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

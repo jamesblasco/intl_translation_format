@@ -1,0 +1,25 @@
+name: intl_translation_multi_language_json
+description: Extract messages to a json file and generate translations from json files
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.6.0 <3.0.0"
+
+dependencies:
+  intl_translation:
+    git:
+      url: https://github.com/jamesblasco/intl_translation/
+      ref: gsoc
+  intl_translation_format:
+    path: './../intl_translation_format'
+
+dev_dependencies:
+  analyzer: '>=0.36.0 <0.40.0'
+  args: '>=0.12.1 <2.0.0'
+  dart_style: ^1.0.0
+  intl: '>=0.15.3 <0.17.0'
+  path: '>=0.9.0 <2.0.0'
+  petitparser: '>=1.0.0 < 4.0.0'
+  pedantic: ^1.8.0

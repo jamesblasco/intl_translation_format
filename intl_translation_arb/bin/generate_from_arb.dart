@@ -106,8 +106,7 @@ main(List<String> args) {
   extraction.suppressWarnings = true;
 
   final files = IntlTranslation.generateTranslations(
-    format: 'arb',
-    supportedFormats: {'arb': () => ArbFormat()},
+    format: ArbFormat(),
     dartFiles: dartFiles,
     translationFiles: jsonFiles,
     targetDir: targetDir // Todo: remove this and add translation files to response

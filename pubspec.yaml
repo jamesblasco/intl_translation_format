@@ -1,0 +1,66 @@
+name: util
+dscription: s
+
+
+environment:
+  sdk: ">=2.8.1 <3.0.0"
+
+dependencies:
+ 
+
+dev_dependencies:
+   derry: 
+
+
+scripts:
+  generate:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/intl_messages_en.json lib/l10n/intl_messages_es.json --output-dir lib/l10n/ 
+  extract-new:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_format:extract_proposal lib/main.dart --locale en --output-dir lib/l10n/ --output-file intl_messages_en.json
+  extract:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_format:extract lib/main.dart --locale en --output-dir lib/l10n/ --output-file intl_messages_en.json
+  generate-json:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_json:generate_from_json lib/main.dart lib/l10n/intl_messages_en.json lib/l10n/intl_messages_es.json --output-dir lib/l10n/
+  extract-json:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_json:extract_to_json lib/main.dart --locale en --output-dir lib/l10n/ --output-file intl_messages_en.json
+  generate-multi-json:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_multi_language_json:generate_from_multi_language_json lib/main.dart lib/l10n/intl_messages.json --output-dir lib/l10n/
+  extract-multi-json:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_multi_language_json:extract_to_multi_language_json lib/main.dart --locale en --output-dir lib/l10n/ --output-file intl_messages_multi_template.json
+  generate-arb: 
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_arb:generate_from_arb lib/main.dart lib/l10n/intl_messages_en.arb lib/l10n/intl_messages_es.arb --output-dir lib/l10n/
+  extract-arb: 
+    execution: once 
+    scripts:
+     - cd intl_translation_example
+     - flutter pub run intl_translation_arb:extract_to_arb lib/main.dart --locale en --output-dir lib/l10n/ --output-file intl_messages_en.json
+  petit: 
+    execution: once 
+    scripts:
+     - cd intl_translation_xliff
+     - dart ./bin/petit_parser.dart
+

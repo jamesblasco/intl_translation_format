@@ -81,12 +81,9 @@ main(List<String> args) {
   var dartFiles = args.where((x) => x.endsWith(".dart")).toList();
   dartFiles.addAll(linesFromFile(sourcesListFile));
   String content = IntlTranslation.extractMessages(
-    format: 'arb',
+    format: ArbFormat(),
     locale: locale,
     dartFiles:  dartFiles,
-    supportedFormats: {
-      'arb': () => ArbFormat()
-    }
   );
 
   final file = new File(path.join(targetDir, outputFilename));
