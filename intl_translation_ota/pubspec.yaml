@@ -1,0 +1,24 @@
+name: intl_translation_ota
+description: This package provides multiformat support for the Intl package
+version: 0.0.1
+author:
+homepage:
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  intl:
+  intl_translation:
+    git:
+      url: https://github.com/jamesblasco/intl_translation/
+      ref: gsoc
+  intl_translation_format:
+    path: './../intl_translation_format'
+dev_dependencies:
+  analyzer: '>=0.36.0 <0.40.0'
+  args: '>=0.12.1 <2.0.0'
+  dart_style: ^1.0.0
+  intl: '>=0.15.3 <0.17.0'
+  path: '>=0.9.0 <2.0.0'
+  petitparser: '>=1.1.3 < 3.0.2'

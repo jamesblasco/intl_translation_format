@@ -9,13 +9,13 @@ class JsonFormat extends SingleLanguageFormat {
   static const key = 'json';
 
   @override
-  List<String> get supportedFileExtensions => ['json'];
+  String get supportedFileExtension => 'json';
 
   @override
-  String buildTemplate(
-    Map<String, MainMessage> messages,
-    Map<String, String> metadata,
+  String buildTemplateFileContent(
+    TranslationTemplate catalog,
   ) {
+    final messages = catalog.messages;
     var json = '{\n';
     messages.forEach((key, value) {
       final message = ICUParser().icuMessageToString(value);
@@ -26,8 +26,11 @@ class JsonFormat extends SingleLanguageFormat {
     return json;
   }
 
-  @override
-  Map<String, TranslatedMessage> parseFile(String content) {
+   @override
+  Map<String, TranslatedMessage> parseFile(
+    String content, {
+    MessageGeneration generation,
+  }) {
     final values = SimpleJsonParser().parser.parse(content);
 
     if (values.isFailure) throw BadFormatException(values.message);
@@ -41,4 +44,9 @@ class JsonFormat extends SingleLanguageFormat {
 class BadFormatException implements Exception {
   String message;
   BadFormatException(this.message);
+  @override
+  String toString() {
+  
+    return message;
+  }
 }

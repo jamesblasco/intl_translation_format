@@ -122,6 +122,13 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  intl_translation_xliff:
+    dependency: transitive
+    description:
+      path: "../intl_translation_xliff"
+      relative: true
+    source: path
+    version: "0.0.1"
   js:
     dependency: transitive
     description:
@@ -220,6 +227,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7+15"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.0"
   yaml:
     dependency: transitive
     description:

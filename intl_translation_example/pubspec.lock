@@ -91,7 +91,7 @@ packages:
       name: derry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2"
+    version: "0.0.4"
   equatable:
     dependency: transitive
     description:
@@ -111,6 +111,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  gettext_parser:
+    dependency: transitive
+    description:
+      name: gettext_parser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0+1"
   glob:
     dependency: transitive
     description:
@@ -137,12 +144,12 @@ packages:
     description:
       path: "."
       ref: gsoc
-      resolved-ref: "40fd36b488fea4f19a0a6758b1f8acf9d3b5ae9d"
+      resolved-ref: bed15be7df2969ccdc1ebde4a4121e8f7db58e60
       url: "https://github.com/jamesblasco/intl_translation/"
     source: git
     version: "0.17.10"
   intl_translation_arb:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../intl_translation_arb"
       relative: true
@@ -155,8 +162,15 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  intl_translation_gettext:
+    dependency: transitive
+    description:
+      path: "../intl_translation_gettext"
+      relative: true
+    source: path
+    version: "0.0.1"
   intl_translation_json:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       path: "../intl_translation_json"
       relative: true
@@ -166,6 +180,27 @@ packages:
     dependency: "direct dev"
     description:
       path: "../intl_translation_multi_language_json"
+      relative: true
+    source: path
+    version: "0.0.1"
+  intl_translation_ota:
+    dependency: "direct dev"
+    description:
+      path: "../intl_translation_ota"
+      relative: true
+    source: path
+    version: "0.0.1"
+  intl_translation_strings:
+    dependency: transitive
+    description:
+      path: "../intl_translation_strings"
+      relative: true
+    source: path
+    version: "0.0.1"
+  intl_translation_xliff:
+    dependency: transitive
+    description:
+      path: "../intl_translation_xliff"
       relative: true
     source: path
     version: "0.0.1"
@@ -279,6 +314,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.7+15"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.0"
   yaml:
     dependency: transitive
     description:

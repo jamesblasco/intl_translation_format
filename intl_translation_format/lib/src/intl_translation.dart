@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
-import 'models/translation_catalog.dart';
 import 'models/translation_format.dart';
 
 Map<String, List<MainMessage>> originMessages;
@@ -14,21 +13,10 @@ class IntlTranslation {
       String locale,
       List<String> dartFiles,
       MessageExtraction messageExtraction}) {
-    final extraction = messageExtraction ?? MessageExtraction();
-
-    Map<String, String> metadata = {};
-    if (locale != null) {
-      metadata["locale"] = locale;
-    }
-    if (!extraction.suppressLastModified) {
-      metadata["last_modified"] = DateTime.now().toIso8601String();
-    }
-
-    final messages = _extractMessages(dartFiles, extraction);
-
-    return format.build(messages, metadata);
+    throw 'Deprecated ';
   }
 
+  @deprecated
   static Map<String, String> generateTranslations(
       {TranslationFormat format,
       String locale,
@@ -37,6 +25,7 @@ class IntlTranslation {
       String targetDir,
       MessageExtraction messageExtraction,
       MessageGeneration messageGeneration}) {
+    throw 'Deprecated ';
     final extraction = messageExtraction ?? MessageExtraction();
     final generation = messageGeneration ?? MessageGeneration();
 
@@ -52,8 +41,7 @@ class IntlTranslation {
           (key, value) => originMessages.putIfAbsent(key, () => []).add(value));
     }
 
-    final translation =
-        format.parse(messages, translationFiles, defaultLocale: locale);
+    final translation = format.parse(messages, null, defaultLocale: locale);
 
     generation.allLocales = translation.locales.toSet();
 
@@ -61,8 +49,8 @@ class IntlTranslation {
     final prefix = generation.generatedFilePrefix;
 
     translation.translatedMessages.forEach((locale, translation) {
-      final content = generation.generateIndividualMessageFileContent(
-          locale, translation, targetDir);
+      final content =
+          generation.generateIndividualMessageFileContent(locale, translation);
       files['${prefix}messages_$locale.dart'] = content;
     });
 

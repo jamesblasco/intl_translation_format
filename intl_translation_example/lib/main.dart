@@ -3,7 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'l10n/messages_all.dart';
+import 'l10n/intl_messages_all.dart';
+import 'l10n_ota/ota.dart';
 
 void main() {
   runApp(MyApp());
@@ -68,21 +69,53 @@ class _MyHomePageState extends State<MyHomePage> {
     showModalBottomSheet(
       context: context,
       builder: (context) => Column(
-        children: supportedLanguages
-            .map((locale) => ListTile(
-                  title: Text(locale),
-                  onTap: () {
-                    if (locale != currentLocale) {
-                      setState(() {
-                        currentLocale = locale;
-                      });
-                    }
-                    Navigator.of(context).pop();
-                  },
-                ))
-            .toList(),
+        children: [
+          ...supportedLanguages.map((locale) => ListTile(
+                title: Text(locale),
+                onTap: () {
+                  if (locale != currentLocale) {
+                    setState(() {
+                      currentLocale = locale;
+                    });
+                  }
+                  Navigator.of(context).pop();
+                },
+              )),
+          if (!supportedLanguages.contains('fr'))
+            ListTile(
+              title: Text('Add France from assets'),
+              onTap: () {
+                addNewTranslation();
+                Navigator.of(context).pop();
+              },
+            ),
+            if (!supportedLanguages.contains('fr'))
+            ListTile(
+              title: Text('Add France from network'),
+              onTap: () {
+                addNetworkTranslation();
+                Navigator.of(context).pop();
+              },
+            ),
+        ].toList(),
       ),
     );
+  }
+
+  Future addNewTranslation() async {
+    await loadNewTranslations();
+    supportedLanguages.add('fr');
+    setState(() {
+      currentLocale = 'fr';
+    });
+  }
+
+   Future addNetworkTranslation() async {
+    await loadNetworkTranslations();
+    supportedLanguages.add('fr');
+    setState(() {
+      currentLocale = 'fr';
+    });
   }
 
   @override
@@ -123,9 +156,9 @@ class Localized extends StatelessWidget {
         Text(
           textWithMetadata,
         ),
-        Text(
+        /* Text(
           pluralExample(2),
-        ),
+        ), */
       ],
     );
   }

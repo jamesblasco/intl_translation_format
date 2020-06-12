@@ -1,0 +1,32 @@
+<?xml version="1.0 encoding="UTF-8""?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" srcLang="en" trgLang="en">
+  <file>
+    <unit id="text" name="text">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>text</source>
+        <target>texto</target>
+      </segment>
+    </unit>
+    <unit id="textWithMetadata" name="textWithMetadata">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>texto con metadata</source>
+        <target>texto con metadata</target>
+      </segment>
+    </unit>
+    <unit id="pluralExample" name="pluralExample">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>{howMany,plural, =0{Ningun elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}</source>
+        <source>{howMany,plural, =0{Ningun elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

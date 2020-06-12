@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
@@ -8,23 +7,23 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 
 import '../intl_translation_multi_language_json.dart';
 
-
 class BadFormatException implements Exception {
   String message;
   BadFormatException(this.message);
 }
 
-
 class MultiJsonFormat extends MultipleLanguageFormat {
   static const key = 'multi_language_json';
 
   @override
-  List<String> get supportedFileExtensions => ['json'];
+  String get supportedFileExtension => 'json';
 
   @override
-  String buildTemplate(Map<String, Map<String, Message>> messages,
-      Map<String, String> metadata) {
-     final messagesByKey = <String, Map<String, String>>{};
+  String buildTemplateFileContent(
+    Map<String, Map<String, Message>> messages,
+    TranslationTemplate catalog,
+  ) {
+    final messagesByKey = <String, Map<String, String>>{};
 
     messages.forEach((locale, messages) {
       messages.forEach((key, message) {
@@ -32,7 +31,7 @@ class MultiJsonFormat extends MultipleLanguageFormat {
         messagesByKey[key][locale] = ICUParser().icuMessageToString(message);
       });
     });
-    
+
     final encoder = JsonEncoder.withIndent('  ');
     return encoder.convert(messagesByKey);
   }
@@ -55,5 +54,4 @@ class MultiJsonFormat extends MultipleLanguageFormat {
     });
     return messagesByLocale;
   }
-  
 }

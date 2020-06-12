@@ -18,7 +18,12 @@ dependencies:
     path: '../intl_translation_json'  
   intl_translation_multi_language_json:
     path: '../intl_translation_multi_language_json'  
-
+  intl_translation_xliff:
+    path: '../intl_translation_xliff'  
+  intl_translation_strings:
+    path: '../intl_translation_strings'    
+  intl_translation_gettext:
+    path: '../intl_translation_gettext'    
 dev_dependencies:
   analyzer: '>=0.36.0 <0.40.0'
   args: '>=0.12.1 <2.0.0'

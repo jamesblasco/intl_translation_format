@@ -8,32 +8,31 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation/src/icu_parser.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-class ArbFormat extends TranslationFormat {
+class ArbFormat extends SingleLanguageFormat {
   static const String key = 'arb';
 
   @override
-  List<String> get supportedFileExtensions => ['arb'];
+  String get supportedFileExtension => 'arb';
 
-
-  String build(
-    Map<String, MainMessage> messages,
-    Map<String, String> metadata, {
+  @override
+  String buildTemplateFileContent(
+    TranslationTemplate catalog, {
     bool suppressMetaData = false,
     bool includeSourceText = true,
   }) {
     Map<String, dynamic> allMessages = {};
-    if (metadata['locale'] != null) {
-      allMessages["@@locale"] = metadata['locale'];
+    if (catalog.defaultLocal != null) {
+      allMessages["@@locale"] = catalog.defaultLocal;
     }
-    if (metadata['last_modified'] != null) {
-      allMessages["@@last_modified"] = metadata['last_modified'];
+    if (catalog.lastModified != null) {
+      allMessages["@@last_modified"] = catalog.lastModified.toIso8601String();
     }
 
-    messages.forEach((k, v) => allMessages.addAll(_toARB(v,
+    catalog.messages.forEach((k, v) => allMessages.addAll(_toARB(v,
         suppressMetaData: suppressMetaData,
         includeSourceText: includeSourceText)));
 
-    var encoder = new JsonEncoder.withIndent("  ");
+    final encoder = new JsonEncoder.withIndent("  ");
     return encoder.convert(allMessages);
   }
 
@@ -80,48 +79,25 @@ class ArbFormat extends TranslationFormat {
     result[arg] = extraInfo;
   }
 
-  
-  // Parse method
-  @override
-  TranslationCatalog parse(
-      Map<String, MainMessage> messages, List<String> files,
-      {String defaultLocale, MessageGeneration messageGeneration}) {
-    final generation = messageGeneration ?? MessageGeneration();
-
-    var catalog =
-        TranslationCatalog(); //Todo: We could save the state of this class to detect in the future what translations have been changed
-    catalog.mainMessages = messages;
-    catalog.defaultLocal = defaultLocale;
-
-    var messagesByLocale = <String, List<Map>>{};
-
-    // In order to group these by locale, to support multiple input files,
-    // we're reading all the data eagerly, which could be a memory
-    // issue for very large projects.
-    for (var arg in files) {
-      _loadData(arg, messagesByLocale, generation);
-    }
-
-    catalog.translatedMessages = {};
-    messagesByLocale.forEach((locale, messages) {
-      catalog.translatedMessages[locale] =
-          _generateLocaleTranslation(messages, generation);
-
-      print(catalog.translatedMessages[locale]);
-    });
-
-    return catalog;
+  Map<String, TranslatedMessage> parseFile(
+    String content, {
+    MessageGeneration generation,
+  }) {
+    var data = jsonDecoder.decode(content);
+    return _generateLocaleTranslation(data, generation);
   }
+
+  
 }
 
-List<TranslatedMessage> _generateLocaleTranslation(
+Map<String, TranslatedMessage> _generateLocaleTranslation(
     List<Map> localeData, MessageGeneration generation) {
-  List<TranslatedMessage> translations = [];
+  Map<String, TranslatedMessage> translations = {};
   for (var jsonTranslations in localeData) {
     jsonTranslations.forEach((id, messageData) {
       TranslatedMessage message = recreateIntlObjects(id, messageData);
       if (message != null) {
-        translations.add(message);
+        translations[id] = message;
       }
     });
   }
@@ -130,25 +106,6 @@ List<TranslatedMessage> _generateLocaleTranslation(
 
 const jsonDecoder = const JsonCodec();
 
-_loadData(String filename, Map<String, List<Map>> messagesByLocale,
-    MessageGeneration generation) {
-  var file = File(filename);
-  var src = file.readAsStringSync();
-  var data = jsonDecoder.decode(src);
-  var locale = data["@@locale"] ?? data["_locale"];
-  if (locale == null) {
-    // Get the locale from the end of the file name. This assumes that the file
-    // name doesn't contain any underscores except to begin the language tag
-    // and to separate language from country. Otherwise we can't tell if
-    // my_file_fr.arb is locale "fr" or "file_fr".
-    var name = path.basenameWithoutExtension(file.path);
-    locale = name.split("_").skip(1).join("_");
-    print("No @@locale or _locale field found in $name, "
-        "assuming '$locale' based on the file name.");
-  }
-  messagesByLocale.putIfAbsent(locale, () => []).add(data);
-  generation.allLocales.add(locale);
-}
 
 /// Regenerate the original IntlMessage objects from the given [data]. For
 /// things that are messages, we expect [id] not to start with "@" and
