@@ -28,4 +28,10 @@ Generate and export translations to simple key/value json  using intl_translatio
 
 Generate and export translations to multi_language json using intl_translation_format
 
+**intl_translation_gettext**
 
+Experimental package for generating and exporting translations to po/mo using intl_translation_format
+
+**intl_translation_ota**
+
+Experimental package for loading translations on the go
