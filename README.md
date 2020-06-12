@@ -24,6 +24,10 @@ Generate and export translations to xliff using intl_translation_format
 
 Generate and export translations to simple key/value json  using intl_translation_format
 
+**intl_translation_string**
+
+Generate and export translations to ios .strings using intl_translation_format
+
 **intl_translation_multi_json**
 
 Generate and export translations to multi_language json using intl_translation_format
