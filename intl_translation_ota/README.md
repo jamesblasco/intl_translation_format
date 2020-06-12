@@ -1,6 +1,6 @@
-# intl_translation_format
+# intl_translation_ota
 
-This package provides multiformat support for the Intl package
+Loads translations on the go, from file system, assets or network. Check the example app 
 
 ## Getting Started
 
