@@ -9,7 +9,7 @@ class JsonFormat extends SingleLanguageFormat {
   static const key = 'json';
 
   @override
-  String get supportedFileExtension => 'json';
+  String get fileExtension => 'json';
 
   @override
   String buildTemplateFileContent(
@@ -41,12 +41,3 @@ class JsonFormat extends SingleLanguageFormat {
   }
 }
 
-class BadFormatException implements Exception {
-  String message;
-  BadFormatException(this.message);
-  @override
-  String toString() {
-  
-    return message;
-  }
-}

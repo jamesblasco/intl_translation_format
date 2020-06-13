@@ -7,37 +7,30 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'dart:io';
 
 import 'package:intl_translation/src/directory_utils.dart';
+import 'package:intl_translation_format/src/file/local/local_file.dart';
+import 'package:intl_translation_format/src/models/formats.dart';
+import 'package:intl_translation_format/src/models/translation_template.dart';
 
-import 'package:path/path.dart' as path;
 
-import 'formats.dart';
-
-main(List<String> args) {
+main(List<String> args) async {
   final parser = ExtractArgParser();
 
   parser.parse(args);
 
-  final translationFormat = TranslationFormat.fromFormat(
-    format: parser.formatKey,
-    supportedFormats: availableFormats,
-  );
+  final translationFormat = TranslationFormat.fromKey(parser.formatKey);
 
   var dartFiles = args.where((x) => x.endsWith(".dart")).toList();
   dartFiles.addAll(linesFromFile(parser.sourcesListFile));
 
-  final files = Map.fromEntries(
-      dartFiles.map((e) => MapEntry(e, File(e).readAsStringSync())));
+  final files = dartFiles.map((file) => LocalFile(file)).toList();
 
-  final template = TranslationTemplate.fromDartFiles(
-    parser.baseName,
-    locale: parser.locale,
-    dartFiles: files,
-    config: parser.extractConfig,
-  );
+  final template = TranslationTemplate(parser.baseName, locale: parser.locale);
+  await template.addMessagesfromDartFiles(files, config: parser.extractConfig);
 
-  template.extractTemplate(translationFormat).forEach((formatFile) {
-    formatFile.writeSyncIn(parser.targetDir);
-  });
+  final templateFiles = template.extractTemplate(translationFormat);
+  for (final files in templateFiles) {
+    LocalFile(parser.targetDir + files.name).write(files);
+  }
 
   // Todo: Check where to add this.
   /* if (extraction.hasWarnings && parser.warningsAreErrors) {
@@ -112,7 +105,7 @@ class ExtractArgParser {
         callback: (val) => extractConfig.descriptionRequired = val);
 
     parser.addOption("format",
-        allowed: availableFormats.keys,
+        allowed: defaultFormats.keys,
         help: "Select one of the supported translation formats",
         callback: (val) => formatKey = val);
 

@@ -9,7 +9,7 @@ class StringsFormat extends SingleLanguageFormat {
   static const key = 'strings';
 
   @override
-  String get supportedFileExtension => 'strings';
+  String get fileExtension => 'strings';
 
   @override
   String buildTemplateFileContent(
@@ -24,22 +24,18 @@ class StringsFormat extends SingleLanguageFormat {
     return json;
   }
 
-
-
   @override
-  List<TranslationFile> buildTemplate(
+  List<StringFileData> buildTemplate(
     TranslationTemplate catalog,
   ) {
-    final file = TranslationFile(
-      content: buildTemplateFileContent(catalog),
-      name: '${catalog.projectName}_${catalog.defaultLocal}',
-      fileExtension: supportedFileExtension,
+    final file = StringFileData(
+      buildTemplateFileContent(catalog),
+      '${catalog.projectName}_${catalog.defaultLocale}.$fileExtension',
     );
 
-    final pluralFakeFile = TranslationFile(
-      content: fakePluralFile,
-      name: '${catalog.projectName}_${catalog.defaultLocal}',
-      fileExtension: 'stringsdict',
+    final pluralFakeFile = StringFileData(
+      fakePluralFile,
+      '${catalog.projectName}_${catalog.defaultLocale}.stringsdict',
     );
 
     return [file, pluralFakeFile];
@@ -60,14 +56,6 @@ class StringsFormat extends SingleLanguageFormat {
   }
 }
 
-class BadFormatException implements Exception {
-  String message;
-  BadFormatException(this.message);
-  @override
-  String toString() {
-    return message;
-  }
-}
 
 final fakePluralFile = '''
 <?xml version="1.0" encoding="UTF-8"?>

@@ -9,7 +9,7 @@ class PoFormat extends SingleLanguageFormat {
   static const key = 'po';
 
   @override
-  String get supportedFileExtension => 'po';
+  String get fileExtension => 'po';
 
   @override
   String buildTemplateFileContent(
@@ -60,14 +60,5 @@ class PoFormat extends SingleLanguageFormat {
       });
     });
     return messages;
-  }
-}
-
-class BadFormatException implements Exception {
-  String message;
-  BadFormatException(this.message);
-  @override
-  String toString() {
-    return message;
   }
 }

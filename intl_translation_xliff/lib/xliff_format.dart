@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:path/path.dart' as path;
 
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
@@ -19,7 +16,7 @@ class XliffFormat extends SingleLanguageFormat {
   static const key = 'xliff-2';
 
   @override
-  String get supportedFileExtension => 'xliff';
+  String get fileExtension => 'xliff';
 
   @override
   String buildTemplateFileContent(
@@ -29,7 +26,7 @@ class XliffFormat extends SingleLanguageFormat {
     builder.processing('xml', 'version="1.0 encoding="UTF-8""');
     builder.element('xliff', attributes: {
       ...xliffAttributes,
-      'srcLang': catalog.defaultLocal,
+      'srcLang': catalog.defaultLocale,
       //trgLang="es"  Templates don't need target
     }, nest: () {
       builder.element('file', nest: () {
@@ -88,9 +85,4 @@ class XliffFormat extends SingleLanguageFormat {
 
     return Map<String, TranslatedMessage>.fromEntries(entries);
   }
-}
-
-class BadFormatException implements Exception {
-  String message;
-  BadFormatException(this.message);
 }

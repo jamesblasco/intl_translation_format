@@ -1,8 +1,3 @@
-
-
-
-
-
 import 'package:intl_translation/extract_messages.dart';
 
 class ExtractConfig {
@@ -26,12 +21,12 @@ class ExtractConfig {
 
   setToMessageExtraction(MessageExtraction extraction) {
     extraction
-      ..allowEmbeddedPluralsAndGenders = allowEmbeddedPluralsAndGenders
-      ..descriptionRequired = descriptionRequired
-      ..warningsAreErrors = warningsAreErrors
-      ..suppressWarnings = suppressWarnings
-      ..suppressLastModified = suppressLastModified
-      ..suppressMetaData = suppressMetaData
-      ..includeSourceText = includeSourceText;
+      ..allowEmbeddedPluralsAndGenders = allowEmbeddedPluralsAndGenders ?? true
+      ..descriptionRequired = descriptionRequired ?? false
+      ..warningsAreErrors = warningsAreErrors ?? true
+      ..suppressWarnings = suppressWarnings ?? false
+      ..suppressLastModified = suppressLastModified ?? false
+      ..suppressMetaData = suppressMetaData ?? false
+      ..includeSourceText = includeSourceText ?? true;
   }
 }

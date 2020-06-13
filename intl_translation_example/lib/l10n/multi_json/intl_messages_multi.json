@@ -1,11 +1,14 @@
 {
   "text": {
-    "en": "text"
+    "en": "text",
+    "es": "texto"
   },
   "textWithMetadata": {
-    "en": "textWithMetadata"
+    "en": "textWithMetadata",
+    "es": "texto con metadata"
   },
   "pluralExample": {
-    "en": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}"
+    "en": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}",
+    "es": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}"
   }
 }

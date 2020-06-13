@@ -6,6 +6,8 @@ import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl/src/intl_helpers.dart';
 
+export 'src/file.dart';
+
 class OntheGoLookup extends MessageLookupByLibrary {
   OntheGoLookup(this.localeName, List<TranslatedMessage> messages)
       : messages = _notInlinedMessages(messages);
@@ -29,11 +31,12 @@ class OntheGoLookup extends MessageLookupByLibrary {
 class TranslationLoader {
   Map<String, OntheGoLookup> _messagesByLocale = {};
 
-  TranslationLoader(this.catalog);
+  TranslationLoader(this.catalog) : assert(catalog != null);
   final TranslationCatalog catalog;
 
   /// User programs should call this before using [localeName] for messages.
   Future<bool> initializeMessages(String localeName) async {
+    print(catalog.locales);
     var availableLocale = Intl.verifiedLocale(
         localeName, (locale) => catalog.locales.contains(locale),
         onFailure: (_) => null);

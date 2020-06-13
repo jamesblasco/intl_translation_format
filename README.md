@@ -38,4 +38,8 @@ Experimental package for generating and exporting translations to po/mo using in
 
 **intl_translation_ota**
 
-Experimental package for loading translations on the go
+Experimental package for loading translations on the go with intl library
+
+**intl_translation_ota_flutter**
+
+Experimental package for loading translations on the go with Flutter localization delegates

@@ -21,21 +21,18 @@ library generate;
 import 'dart:io';
 import 'package:args/args.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:path/path.dart' as path;
+import 'package:intl_translation_format/src/file/local/local_file.dart';
+import 'package:intl_translation_format/src/models/formats.dart';
+import 'package:intl_translation_format/src/models/translation_template.dart';
+import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 
-import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/directory_utils.dart';
 
-import 'formats.dart';
-
-main(List<String> args) {
+main(List<String> args) async {
   final parser = ExtractArgParser();
   parser.parse(args);
 
-  final format = TranslationFormat.fromFormat(
-    format: parser.formatKey,
-    supportedFormats: availableFormats,
-  );
+  final format = TranslationFormat.fromKey(parser.formatKey);
 
   var dartFiles = args.where((x) => x.endsWith("dart")).toList();
   var jsonFiles = args.where((x) => format.isFileSupported(x)).toList();
@@ -61,31 +58,23 @@ main(List<String> args) {
   // sort of automated name we're using.
   //extraction.suppressWarnings = true;
 
-  final files = jsonFiles.map((e) {
-    return TranslationFile.readSync(File(e), type: format.fileType);
-  }).toList();
+  final files = jsonFiles.map((e) => LocalFile(e)).toList();
+  final dartFileRef = dartFiles.map((e) => LocalFile(e)).toList();
 
-  final dartfiles = Map.fromEntries(
-      dartFiles.map((e) => MapEntry(e, File(e).readAsStringSync())));
-
-  final template = TranslationTemplate.fromDartFiles(
-    parser.projectName,
-    dartFiles: dartfiles,
+  final template = TranslationTemplate(parser.projectName);
+  await template.addMessagesfromDartFiles(
+    dartFileRef,
+    config: parser.extractConfig,
   );
 
-  MessageGeneration generation =
-      parser.useJson ? new JsonMessageGeneration() : new MessageGeneration();
-  generation.useDeferredLoading = parser.useDeferredLoading;
-  generation.generatedFilePrefix = parser.projectName;
-  generation.codegenMode = parser.codegenMode;
 
-  TranslationCatalog.fromTemplate(template)
-      .addTranslationsFromFiles(files, format: format)
-      .generateDartMessages(messageGeneration: generation)
-      .forEach(
-        (name, content) =>
-            File(path.join(parser.targetDir, name)).writeAsStringSync(content),
-      );
+  final catalog = TranslationCatalog.fromTemplate(template);
+  await catalog.addTranslationsFromFiles(files, format: format);
+
+  final generatedFiles =
+      catalog.generateDartMessages(config: parser.generationConfig);
+  generatedFiles
+      .forEach((file) => LocalFile(parser.targetDir + file.name).write(file));
 }
 
 class ExtractArgParser {
@@ -98,20 +87,17 @@ class ExtractArgParser {
   bool transformer; //Todo: Support transformer and extraction data
 
   bool suppressWarnings;
-  bool useDeferredLoading;
-
-  String codegenMode;
 
   ExtractConfig extractConfig = ExtractConfig();
+  GenerationConfig generationConfig = GenerationConfig();
 
-  bool useJson;
   final parser = ArgParser();
 
   String get usage => parser.usage;
   void parse(Iterable<String> args) {
     parser.addFlag('json',
         defaultsTo: false,
-        callback: (x) => useJson = x,
+        callback: (x) => generationConfig.useJson = x,
         help:
             'Generate translations as a JSON string rather than as functions.');
     parser.addFlag("suppress-warnings",
@@ -122,20 +108,20 @@ class ExtractArgParser {
         defaultsTo: '.',
         callback: (x) => targetDir = x,
         help: 'Specify the output directory.');
-    parser.addOption("project-name",
-        defaultsTo: '',
-        callback: (x) => projectName = '${x}_',
-        help: 'Specify a prefix to be used for the generated file names.');
+    parser.addOption("project-name", defaultsTo: '', callback: (x) {
+      projectName = x;
+      generationConfig.projectName = x.isEmpty ? x : '${x}_';
+    }, help: 'Specify a prefix to be used for the generated file names.');
     parser.addFlag("use-deferred-loading",
         defaultsTo: true,
-        callback: (x) => useDeferredLoading = x,
+        callback: (x) => generationConfig.useDeferredLoading = x,
         help:
             'Generate message code that must be loaded with deferred loading. '
             'Otherwise, all messages are eagerly loaded.');
     parser.addOption('codegen_mode',
         allowed: ['release', 'debug'],
         defaultsTo: 'debug',
-        callback: (x) => codegenMode = x,
+        callback: (x) => generationConfig.codegenMode = x,
         help:
             'What mode to run the code generator in. Either release or debug.');
     parser.addOption("sources-list-file",
@@ -156,7 +142,7 @@ class ExtractArgParser {
             "don't need to be specified for messages.");
 
     parser.addOption("format",
-        allowed: availableFormats.keys,
+        allowed: defaultFormats.keys,
         help: "Select one of the supported translation formats",
         callback: (val) => formatKey = val);
 

@@ -1,8 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'package:intl_translation_arb/intl_translation_arb.dart';
-import 'package:path/path.dart' as path;
-
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation/src/icu_parser.dart';
@@ -12,7 +8,7 @@ class ArbFormat extends SingleLanguageFormat {
   static const String key = 'arb';
 
   @override
-  String get supportedFileExtension => 'arb';
+  String get fileExtension => 'arb';
 
   @override
   String buildTemplateFileContent(
@@ -21,8 +17,8 @@ class ArbFormat extends SingleLanguageFormat {
     bool includeSourceText = true,
   }) {
     Map<String, dynamic> allMessages = {};
-    if (catalog.defaultLocal != null) {
-      allMessages["@@locale"] = catalog.defaultLocal;
+    if (catalog.defaultLocale != null) {
+      allMessages["@@locale"] = catalog.defaultLocale;
     }
     if (catalog.lastModified != null) {
       allMessages["@@last_modified"] = catalog.lastModified.toIso8601String();
@@ -79,33 +75,31 @@ class ArbFormat extends SingleLanguageFormat {
     result[arg] = extraInfo;
   }
 
+  @override
   Map<String, TranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
   }) {
-    var data = jsonDecoder.decode(content);
-    return _generateLocaleTranslation(data, generation);
+    final data = jsonDecoder.decode(content);
+    return _generateLocaleTranslation(data);
   }
-
-  
 }
 
 Map<String, TranslatedMessage> _generateLocaleTranslation(
-    List<Map> localeData, MessageGeneration generation) {
+    Map<String, dynamic> localeData) {
   Map<String, TranslatedMessage> translations = {};
-  for (var jsonTranslations in localeData) {
-    jsonTranslations.forEach((id, messageData) {
-      TranslatedMessage message = recreateIntlObjects(id, messageData);
-      if (message != null) {
-        translations[id] = message;
-      }
-    });
-  }
+
+  localeData.forEach((id, messageData) {
+    TranslatedMessage message = recreateIntlObjects(id, messageData);
+    if (message != null) {
+      translations[id] = message;
+    }
+  });
+
   return translations;
 }
 
 const jsonDecoder = const JsonCodec();
-
 
 /// Regenerate the original IntlMessage objects from the given [data]. For
 /// things that are messages, we expect [id] not to start with "@" and

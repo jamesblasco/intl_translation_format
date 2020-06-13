@@ -1,4 +1,4 @@
-import 'package:intl_translation/generate_localized.dart';
+
 import 'package:intl_translation/src/intl_message.dart';
 
 class ICUParser {
