@@ -26,7 +26,7 @@ class ICUParser {
           message, chunk,
           shouldEscapeICU: shouldEscapeICU));
     }
-    throw new FormatException("Illegal interpolation: $chunk");
+    throw FormatException("Illegal interpolation: $chunk");
   }
 
   String _escape(String s) {

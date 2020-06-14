@@ -13,7 +13,7 @@ export 'src/app_strings.dart';
 export 'src/file.dart';
 
 
-class AssetFile extends FileReference {
+class AssetFile extends FileProvider {
   final String key;
 
   @override

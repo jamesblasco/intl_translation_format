@@ -9,4 +9,4 @@ export 'src/icu_parser.dart';
 
 export 'src/utils/message_extraction_config.dart';
 
-export 'src/file/file_reference.dart';
+export 'src/file/file_provider.dart';

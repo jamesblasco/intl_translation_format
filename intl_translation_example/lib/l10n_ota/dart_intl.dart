@@ -8,6 +8,7 @@ import 'package:intl_translation_json/intl_translation_json.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_ota_flutter/intl_translation_ota_flutter.dart';
 
+import '../main.dart';
 import 'common.dart';
 
 
@@ -15,8 +16,8 @@ Future loadAssetsTranslations() async {
   final catalog = TranslationCatalog(projectName: 'intl');
   await catalog.addTranslationsFromFiles(
     [
-      AssetFile('assets/arb/intl_messages_es.json'),
-      AssetFile('assets/arb/intl_messages_en.json'),
+      AssetFile('assets/l10n/intl_messages_es.json'),
+      AssetFile('assets/l10n/intl_messages_en.json'),
     ],
     format: JsonFormat(),
   );
@@ -40,18 +41,6 @@ Future loadNetworkTranslations() async {
 }
 
 class Localized extends StatelessWidget {
-  final String text = Intl.message('text');
-
-  final String textWithMetadata =
-      Intl.message('textWithMetadata', examples: {'a': 'hello'});
-
-  String pluralExample(int howMany) => Intl.plural(howMany,
-      zero: 'No items',
-      one: 'One item',
-      many: 'A lot of items',
-      other: '$howMany items',
-      name: 'pluralExample',
-      args: [howMany]);
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import '../file_reference.dart';
+import '../file_provider.dart';
 import 'package:path/path.dart' as p;
 
-class LocalFile extends FileReference {
+class LocalFile extends FileProvider {
   final String path;
 
   const LocalFile(this.path);

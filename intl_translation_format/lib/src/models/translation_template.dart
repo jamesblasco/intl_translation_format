@@ -15,7 +15,7 @@ class TranslationTemplate {
   }) : defaultLocale = locale;
 
   Future addMessagesfromDartFiles(
-    List<FileReference> dartFiles, {
+    List<FileProvider> dartFiles, {
     ExtractConfig config,
   }) async {
     final extraction = MessageExtraction();
@@ -28,8 +28,8 @@ class TranslationTemplate {
       content.forEach((key, value) {
         originalMessage.putIfAbsent(key, () => <MainMessage>[]).add(value);
       });
-
-      allMessages.addAll(messages);
+    
+      allMessages.addAll(content);
     }
     messages.addAll(allMessages);
     lastModified = DateTime.now();

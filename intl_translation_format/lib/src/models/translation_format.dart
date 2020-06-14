@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/src/file/file_reference.dart';
+import 'package:intl_translation_format/src/file/file_provider.dart';
 
 import 'package:intl_translation_format/src/models/translation_catalog.dart';
 import 'package:intl_translation_format/src/models/translation_template.dart';
@@ -17,20 +17,9 @@ typedef TranslationFormatBuilder = TranslationFormat Function();
 abstract class TranslationFormat<T extends FileData> {
   const TranslationFormat();
 
-  Future parseMessagesFromFileIntoCatalog2(
-    List<FileReference> files, {
-    TranslationCatalog catalog,
-  }) async {
-    final dataList = <T>[];
-    for (final file in files) {
-      final data = await file.readDataOfExactType<T>();
-      dataList.add(data);
-    }
-    return parseMessagesFromFileIntoCatalog(dataList, catalog: catalog);
-  }
 
   void parseMessagesFromFileIntoCatalog(
-    List<T> files, {
+    List<FileProvider> files, {
     TranslationCatalog catalog,
   });
 
@@ -75,19 +64,20 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
   );
 
   @override
-  void parseMessagesFromFileIntoCatalog(
-    List<StringFileData> files, {
+  Future parseMessagesFromFileIntoCatalog(
+    List<FileProvider> files, {
     TranslationCatalog catalog,
-  }) {
+  }) async {
     var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory
     // issue for very large projects.
     for (final file in files) {
+      final data = await file.readDataOfExactType<StringFileData>();;
       final locale =
-          localeFromName(file.nameWithoutExtension, catalog.projectName);
-      final messages = parseFile(file.contents);
+          localeFromName(data.nameWithoutExtension, catalog.projectName);
+      final messages = parseFile(data.contents);
       messagesByLocale.putIfAbsent(locale, () => {}).addAll(messages);
     }
 
@@ -122,19 +112,20 @@ abstract class SingleBinaryLanguageFormat
   );
 
   @override
-  void parseMessagesFromFileIntoCatalog(
-    List<BinaryFileData> files, {
+  Future parseMessagesFromFileIntoCatalog(
+    List<FileProvider> files, {
     TranslationCatalog catalog,
-  }) {
+  }) async {
     var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory
     // issue for very large projects.
     for (final file in files) {
+      final data = await file.readDataOfExactType<BinaryFileData>();
       final locale =
-          localeFromName(file.nameWithoutExtension, catalog.projectName);
-      final messages = parseFile(file.bytes);
+          localeFromName(data.nameWithoutExtension, catalog.projectName);
+      final messages = parseFile(data.bytes);
       messagesByLocale.putIfAbsent(locale, () => {}).addAll(messages);
     }
 
@@ -176,17 +167,18 @@ abstract class MultipleLanguageFormat
       Map<String, Map<String, Message>> messages, TranslationTemplate metadata);
 
   @override
-  void parseMessagesFromFileIntoCatalog(
-    List<StringFileData> files, {
+  Future parseMessagesFromFileIntoCatalog(
+    List<FileProvider> files, {
     TranslationCatalog catalog,
-  }) {
+  }) async {
     var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory
     // issue for very large projects.
     for (final file in files) {
-      final content = file.content;
+      final data = await file.readDataOfExactType<StringFileData>();
+      final content = data.contents;
       final messages = parseFile(content);
       messagesByLocale.addEntries(messages.entries);
     }
@@ -228,4 +220,3 @@ class BadFormatException implements Exception {
     return message;
   }
 }
-

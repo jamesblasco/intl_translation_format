@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
-import '../file_reference.dart';
+import '../file_provider.dart';
 
-class LocalFile extends FileReference {
+class LocalFile extends FileProvider {
   final String path;
 
   LocalFile(this.path) {

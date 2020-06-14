@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 
 import 'l10n_ota/dart_intl.dart';
 import 'l10n_ota/flutter_localization.dart';
@@ -53,3 +54,17 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+  final String text = Intl.message('text');
+
+  final String textWithMetadata =
+      Intl.message('textWithMetadata', examples: {'a': 'hello'});
+
+  String pluralExample(int howMany) => Intl.plural(howMany,
+      zero: 'No items',
+      one: 'One item',
+      many: 'A lot of items',
+      other: '$howMany items',
+      name: 'pluralExample',
+      args: [howMany]);

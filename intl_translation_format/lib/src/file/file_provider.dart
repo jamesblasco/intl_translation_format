@@ -3,10 +3,10 @@ import 'dart:typed_data';
 export 'local/local_file.dart';
 import 'package:path/path.dart' as p;
 
-abstract class FileReference {
+abstract class FileProvider {
   String get name;
 
-  const FileReference();
+  const FileProvider();
   Future writeAsString(String content);
   Future<String> readAsString();
 
@@ -15,7 +15,7 @@ abstract class FileReference {
 
   Future write(FileData data) async {
     if (data?.type == FileDataType.text) {
-      return await writeAsString(data._content);
+      return await writeAsString(data._contents);
     } else if (data?.type == FileDataType.binary) {
       return await writeAsBytes(data._bytes);
     }
@@ -23,16 +23,9 @@ abstract class FileReference {
         'Write not supported for file type ${data?.type}.');
   }
 
-  Future<FileData> readDataOfExactType<T extends FileData>() async {
+  Future<T> readDataOfExactType<T extends FileData>() async {
     final type = FileData.dataTypeForDataOfExactType<T>();
-    if (type == FileDataType.text) {
-      final content = await readAsString();
-      return StringFileData(content, name);
-    } else if (type == FileDataType.binary) {
-      final bytes = await readAsBytes();
-      return BinaryFileData(bytes, name);
-    }
-    throw UnimplementedError('Read not supported for file type $type.');
+    return await read(type) as T;
   }
 
   Future<FileData> read(FileDataType type) async {
@@ -55,10 +48,8 @@ class FileData {
   String get nameWithoutExtension => p.basenameWithoutExtension(name);
 
   final Uint8List _bytes;
-  Uint8List get bytes => _bytes;
+  final String _contents;
 
-  final String _content;
-  String get contents => _content;
   final Encoding encoding;
 
   static FileDataType dataTypeForDataOfExactType<T extends FileData>() => {
@@ -73,32 +64,32 @@ class FileData {
     this.name, {
     this.encoding = utf8,
   })  : _bytes = null,
-        _content = content;
+        _contents = content;
 
   FileData._binary(
     Uint8List bytes,
     this.name, {
     this.encoding = utf8,
   })  : _bytes = bytes,
-        _content = null;
+        _contents = null;
 }
 
 class StringFileData extends FileData {
-  final String content;
+  String get contents => _contents;
   final Encoding encoding;
 
   static final FileDataType dataType = FileDataType.text;
   final FileDataType type = FileDataType.text;
 
   StringFileData(
-    this.content,
+    String contents,
     String basename, {
     this.encoding = utf8,
-  }) : super._(content, basename, encoding: encoding);
+  }) : super._(contents, basename, encoding: encoding);
 }
 
 class BinaryFileData extends FileData {
-  final Uint8List bytes;
+  Uint8List get bytes => _bytes;
 
   final Encoding encoding;
 
@@ -106,7 +97,7 @@ class BinaryFileData extends FileData {
   final FileDataType data = FileDataType.binary;
 
   BinaryFileData(
-    this.bytes,
+    Uint8List bytes,
     String basename, {
     this.encoding = utf8,
   }) : super._binary(bytes, basename, encoding: encoding);

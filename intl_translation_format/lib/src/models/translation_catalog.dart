@@ -1,6 +1,6 @@
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
-import 'package:intl_translation_format/src/file/file_reference.dart';
+import 'package:intl_translation_format/src/file/file_provider.dart';
 import 'package:intl_translation_format/src/models/translation_template.dart';
 import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 
@@ -26,12 +26,12 @@ class TranslationCatalog {
         mainMessages = template.messages,
         projectName = template.projectName;
 
-  //Todo: This doesn't add, it creates a new TransationCatalog
+
   Future addTranslationsFromFiles(
-    List<FileReference> translationFiles, {
+    List<FileProvider> translationFiles, {
     TranslationFormat format,
   }) async {
-    await format.parseMessagesFromFileIntoCatalog2(
+    await format.parseMessagesFromFileIntoCatalog(
       translationFiles,
       catalog: this,
     );
