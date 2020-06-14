@@ -152,7 +152,7 @@ String localeFromName(
   String fileName,
   String baseName,
 ) {
-  final locale = fileName.replaceAll('${baseName}_messages_', '');
+  final locale = fileName.replaceAll('${baseName}_', '');
   return locale;
 }
 

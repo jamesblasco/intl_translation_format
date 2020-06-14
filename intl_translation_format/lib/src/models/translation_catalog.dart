@@ -6,7 +6,6 @@ import 'package:intl_translation_format/src/utils/message_generation_config.dart
 
 import '../../intl_translation_format.dart';
 
-
 class TranslationCatalog {
   String projectName;
   String defaultLocale;
@@ -26,7 +25,6 @@ class TranslationCatalog {
         mainMessages = template.messages,
         projectName = template.projectName;
 
-
   Future addTranslationsFromFiles(
     List<FileProvider> translationFiles, {
     TranslationFormat format,
@@ -40,24 +38,29 @@ class TranslationCatalog {
   List<FileData> generateDartMessages({GenerationConfig config}) {
     final generation = (config ?? GenerationConfig()).getMessageGeneration();
     generation.allLocales.addAll(locales);
-   
+
     print(translatedMessages);
 
-    final files = <FileData>[];
-    final prefix = generation.generatedFilePrefix;
+    final nameHasMessageWord = projectName.endsWith('_messages');
+    final basenameWithoutMessage = nameHasMessageWord
+        ? '${projectName.substring(0, projectName.length - 9)}_'
+        : '${projectName}_';
 
+    final basename = '${basenameWithoutMessage}messages';
+    generation.generatedFilePrefix = basenameWithoutMessage;
+
+    final files = <FileData>[];
     translatedMessages.forEach((locale, translation) {
       print(locale);
       print(translation);
       final content =
           generation.generateIndividualMessageFileContent(locale, translation);
-      final file = StringFileData(content, '${prefix}messages_$locale.dart');
+      final file = StringFileData(content, '${basename}_$locale.dart');
       files.add(file);
     });
 
-
     final content = generation.generateMainImportFile();
-    final mainFile = StringFileData(content, '${prefix}messages_all.dart');
+    final mainFile = StringFileData(content, '${basename}_all.dart');
     files.add(mainFile);
     return files;
   }

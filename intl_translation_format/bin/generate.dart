@@ -110,7 +110,6 @@ class ExtractArgParser {
         help: 'Specify the output directory.');
     parser.addOption("project-name", defaultsTo: '', callback: (x) {
       projectName = x;
-      generationConfig.projectName = x.isEmpty ? x : '${x}_';
     }, help: 'Specify a prefix to be used for the generated file names.');
     parser.addFlag("use-deferred-loading",
         defaultsTo: true,

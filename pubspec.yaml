@@ -18,42 +18,42 @@ scripts:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart  --output-dir lib/l10n/ --project-name intl
+     - flutter pub run intl_translation_format:generate lib/main.dart  --output-dir lib/l10n/ --project-name intl_messages
   g-json:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/json/intl_messages_en.json lib/l10n/json/intl_messages_es.json --output-dir lib/l10n/ --project-name intl --format json
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/json/intl_messages_en.json lib/l10n/json/intl_messages_es.json --output-dir lib/l10n/ --project-name intl_messages --format json
   g-arb:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/arb/intl_messages_en.arb lib/l10n/arb/intl_messages_es.arb --output-dir lib/l10n/ --project-name intl --format arb
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/arb/intl_messages_en.arb lib/l10n/arb/intl_messages_es.arb --output-dir lib/l10n/ --project-name intl_messages --format arb
   g-multi-json:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/multi_json/intl_messages_multi.json --output-dir lib/l10n/ --format multi_language_json --project-name intl
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/multi_json/intl_messages_multi.json --output-dir lib/l10n/ --format multi_language_json --project-name intl_messages
   g-xliff:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/xliff/intl_messages_en.xliff lib/l10n/xliff/intl_messages_es.xliff --output-dir lib/l10n/ --project-name intl --format xliff-2
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/xliff/intl_messages_en.xliff lib/l10n/xliff/intl_messages_es.xliff --output-dir lib/l10n/ --project-name intl_messages --format xliff-2
   g-strings:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/strings/intl_messages_en.strings lib/l10n/strings/intl_messages_es.strings --output-dir lib/l10n/ --project-name intl --format strings
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/strings/intl_messages_en.strings lib/l10n/strings/intl_messages_es.strings --output-dir lib/l10n/ --project-name intl_messages --format strings
   g-po:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/gettext/intl_messages_en.po lib/l10n/gettext/intl_messages_es.po --output-dir lib/l10n/ --project-name intl --format po
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/gettext/intl_messages_en.po lib/l10n/gettext/intl_messages_es.po --output-dir lib/l10n/ --project-name intl_messages --format po
   g-mo:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/gettext/intl_messages_en.mo lib/l10n/gettext/intl_messages_es.mo --output-dir lib/l10n/ --project-name intl --format mo
+     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/gettext/intl_messages_en.mo lib/l10n/gettext/intl_messages_es.mo --output-dir lib/l10n/ --project-name intl_messages --format mo
   
 
    # General extract
