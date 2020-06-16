@@ -27,6 +27,7 @@ import 'package:intl_translation_format/src/models/translation_template.dart';
 import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 
 import 'package:intl_translation/src/directory_utils.dart';
+import 'package:intl_translation_format/translation_configuration.dart';
 
 main(List<String> args) async {
   final parser = ExtractArgParser();
@@ -34,8 +35,8 @@ main(List<String> args) async {
 
   final format = TranslationFormat.fromKey(parser.formatKey);
 
-  var dartFiles = args.where((x) => x.endsWith("dart")).toList();
-  var jsonFiles = args.where((x) => format.isFileSupported(x)).toList();
+  var dartFiles = parser.configuration.sourceFiles ??  args.where((x) => x.endsWith("dart")).toList();
+  var jsonFiles = parser.configuration.translationFiles ?? args.where((x) => format.isFileSupported(x)).toList();
   dartFiles.addAll(linesFromFile(parser.sourcesListFile));
   jsonFiles.addAll(linesFromFile(parser.translationsListFile));
   if (dartFiles.length == 0 || jsonFiles.length == 0) {
@@ -88,6 +89,11 @@ class ExtractArgParser {
 
   bool suppressWarnings;
 
+
+  String _configurationFile;
+  TranslationConfiguration configuration;
+
+
   ExtractConfig extractConfig = ExtractConfig();
   GenerationConfig generationConfig = GenerationConfig();
 
@@ -95,6 +101,10 @@ class ExtractArgParser {
 
   String get usage => parser.usage;
   void parse(Iterable<String> args) {
+    parser.addOption("config",
+        abbr: 'c',
+        callback: (x) => _configurationFile = x,
+        help: 'Path of yaml file with configuration.');
     parser.addFlag('json',
         defaultsTo: false,
         callback: (x) => generationConfig.useJson = x,
@@ -154,5 +164,17 @@ class ExtractArgParser {
     }
 
     parser.parse(args);
+
+    if (_configurationFile != null) {
+      final yaml = File(_configurationFile).readAsStringSync();
+      configuration = TranslationConfiguration.fromYaml(
+        yaml,
+        _configurationFile,
+      );
+
+      projectName = configuration.projectName ?? projectName;
+      formatKey = configuration.format ?? formatKey;
+      targetDir = configuration.outputDir;
+    }
   }
 }

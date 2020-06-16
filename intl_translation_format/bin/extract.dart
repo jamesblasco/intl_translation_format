@@ -10,16 +10,17 @@ import 'package:intl_translation/src/directory_utils.dart';
 import 'package:intl_translation_format/src/file/local/local_file.dart';
 import 'package:intl_translation_format/src/models/formats.dart';
 import 'package:intl_translation_format/src/models/translation_template.dart';
-
+import 'package:intl_translation_format/translation_configuration.dart';
 
 main(List<String> args) async {
   final parser = ExtractArgParser();
-
+  print(args);
   parser.parse(args);
 
   final translationFormat = TranslationFormat.fromKey(parser.formatKey);
 
-  var dartFiles = args.where((x) => x.endsWith(".dart")).toList();
+  var dartFiles =
+      parser.sourceFiles ?? args.where((x) => x.endsWith(".dart")).toList();
   dartFiles.addAll(linesFromFile(parser.sourcesListFile));
 
   final files = dartFiles.map((file) => LocalFile(file)).toList();
@@ -29,7 +30,7 @@ main(List<String> args) async {
 
   final templateFiles = template.extractTemplate(translationFormat);
   for (final files in templateFiles) {
-    LocalFile(parser.targetDir + files.name).write(files);
+    await LocalFile(parser.targetDir + files.name).write(files);
   }
 
   // Todo: Check where to add this.
@@ -41,15 +42,21 @@ main(List<String> args) async {
 class ExtractArgParser {
   String baseName;
   String targetDir;
+  List<String> sourceFiles;
   String sourcesListFile;
   String formatKey;
   bool transformer; //Todo: Support transformer and extraction data
   String locale;
+  String _configurationFile;
+  TranslationConfiguration configuration;
   ExtractConfig extractConfig = ExtractConfig();
 
   void parse(Iterable<String> args) {
     final parser = ArgParser();
-
+    parser.addOption("config",
+        abbr: 'c',
+        callback: (x) => _configurationFile = x,
+        help: 'Path of yaml file with configuration.');
     parser.addFlag("suppress-last-modified",
         defaultsTo: false,
         callback: (x) => extractConfig.suppressLastModified = x,
@@ -99,7 +106,7 @@ class ExtractArgParser {
         help: 'A file that lists the Dart files to read, one per line.'
             'The paths in the file can be absolute or relative to the '
             'location of this file.');
-    parser.addFlag("require_descriptions",
+    parser.addFlag("require-descriptions",
         defaultsTo: false,
         help: "Fail for messages that don't have a description.",
         callback: (val) => extractConfig.descriptionRequired = val);
@@ -118,5 +125,18 @@ class ExtractArgParser {
     }
 
     parser.parse(args);
+
+    if (_configurationFile != null) {
+      final yaml = File(_configurationFile).readAsStringSync();
+      configuration = TranslationConfiguration.fromYaml(
+        yaml,
+        _configurationFile,
+      );
+
+      baseName = configuration.projectName ?? baseName;
+      formatKey = configuration.format ?? formatKey;
+      sourceFiles = configuration.sourceFiles;
+      targetDir = configuration.outputDir;
+    }
   }
 }

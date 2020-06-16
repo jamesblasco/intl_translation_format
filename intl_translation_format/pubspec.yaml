@@ -24,6 +24,7 @@ dependencies:
     path: '../intl_translation_strings'    
   intl_translation_gettext:
     path: '../intl_translation_gettext'    
+  yaml: ^2.2.1  
 dev_dependencies:
   analyzer: '>=0.36.0 <0.40.0'
   args: '>=0.12.1 <2.0.0'

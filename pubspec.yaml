@@ -18,12 +18,17 @@ scripts:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart  --output-dir lib/l10n/ --project-name intl_messages
+     - flutter pub run intl_translation_format:generate lib/main.dart --output-dir lib/l10n/ --project-name intl_messages
   g-json:
     execution: once 
     scripts: 
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/json/intl_messages_en.json lib/l10n/json/intl_messages_es.json --output-dir lib/l10n/ --project-name intl_messages --format json
+     - flutter pub run intl_translation_format:generate --config intl_config/intl_json.yaml
+  g-json-old:
+    execution: once 
+    scripts: 
+     - cd intl_translation_example
+     - flutter pub run intl_translation_format:generate lib/main.dart  lib/l10n/json/intl_messages_en.json lib/l10n/json/intl_messages_es.json --output-dir lib/l10n/ --project-name intl_messages --format json 
   g-arb:
     execution: once 
     scripts: 
@@ -61,12 +66,18 @@ scripts:
     execution: once 
     scripts:
      - cd intl_translation_example
-     - flutter pub run intl_translation_format:extract lib/main.dart --locale en --output-dir lib/l10n/ --project-name intl_messages
+     - flutter pub run intl_translation_format:extract 
   e-json:
     execution: once 
     scripts:
      - cd intl_translation_example
+     - flutter pub run intl_translation_format:extract --config intl_config/intl_json.yaml
+  e-json2:
+    execution: once 
+    scripts:
+     - cd intl_translation_example
      - flutter pub run intl_translation_format:extract lib/main.dart --locale en --output-dir lib/l10n/json/ --project-name intl_messages --format json
+ 
   e-arb:
     execution: once 
     scripts:

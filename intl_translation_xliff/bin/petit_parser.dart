@@ -13,6 +13,7 @@ class SimpleStringsParser {
   Parser<String> get _colon => string('=');
   Parser<String> get _comma => string(';');
 
+
   Parser get _string =>
       (_safeDoubleQuotes | _doubleQuotes.neg()).star().flatten();
 
