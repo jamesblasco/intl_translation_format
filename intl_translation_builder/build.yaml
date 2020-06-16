@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      intl_translation_builder|generate:
+        generate_for:
+         - lib/**
+        enabled: true
+
+
+builders:
+  generate:
+    import: 'package:intl_translation_builder/intl_translation_builder.dart'
+    builder_factories: ['generate']
+    build_extensions:
+      .json:
+        - .intl.dart
+      $lib$': 
+        - /l10n/messages_all.intl.dart  
+    build_to: source
+    auto_apply: dependents
