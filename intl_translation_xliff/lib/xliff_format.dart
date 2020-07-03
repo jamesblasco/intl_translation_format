@@ -1,6 +1,8 @@
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
+import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
+
 import 'package:xml/xml.dart';
 import 'package:xml/xml_events.dart';
 
@@ -25,7 +27,7 @@ class XliffFormat extends SingleLanguageFormat {
     builder.processing('xml', 'version="1.0 encoding="UTF-8""');
     builder.element('xliff', attributes: {
       ...xliffAttributes,
-        'version': '2.0',
+      'version': '2.0',
       'srcLang': catalog.defaultLocale,
       //trgLang="es"  Templates don't need target
     }, nest: () {
@@ -62,7 +64,10 @@ class XliffFormat extends SingleLanguageFormat {
     String content, {
     MessageGeneration generation,
   }) {
-    final events = parseEvents(content);
+    final messages = XliffParser().parse(content);
+    return messages.messages;
+
+    /*  final events = parseEvents(content);
     print(events);
     final document = XmlDocument.parse(content);
 
@@ -85,6 +90,6 @@ class XliffFormat extends SingleLanguageFormat {
       return MapEntry(id, value);
     }).where((element) => element != null);
 
-    return Map<String, TranslatedMessage>.fromEntries(entries);
+    return Map<String, TranslatedMessage>.fromEntries(entries); */
   }
 }

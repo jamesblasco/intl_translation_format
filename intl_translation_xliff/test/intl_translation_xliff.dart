@@ -1,5 +1,5 @@
 import 'package:intl_translation_xliff/intl_translation_xliff.dart';
-import 'package:intl_translation_xliff/src/xliff_parser.dart';
+import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 import 'package:test/test.dart';
 
 final _xliffAttributes = xliffAttributes.entries
@@ -17,7 +17,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result = await XliffParser(displayWarnings: false).parse(content);
+        final result =  XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'Unsupported nested <xliff> element.');
         return;
@@ -32,7 +32,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result = await XliffParser(displayWarnings: false).parse(content);
+        final result =  XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'version attribute is required for <xliff>');
         return;
@@ -47,7 +47,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result = await XliffParser(displayWarnings: false).parse(content);
+        final result =  XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'version attribute is required for <xliff>');
         return;
@@ -56,17 +56,13 @@ void main() {
     });
 
     test('xliff', () async {
-      final result = await XliffParser().parse(xliffBasicMessage);
+      final result =  XliffParser().parse(xliffBasicMessage);
       print(result.messages.map((key, value) => MapEntry(key, value.message.toString())));
       // expect(result, equals(true));
       // var string = 'foo,bar,baz';
       //  expect(string.split(','), equals(['foo', 'bar', 'baz']));
     });
 
-    test('.trim() removes surrounding whitespace', () {
-      var string = '  foo ';
-      expect(string.trim(), equals('foo'));
-    });
   });
 }
 

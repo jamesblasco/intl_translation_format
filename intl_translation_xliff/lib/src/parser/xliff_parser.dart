@@ -1,7 +1,8 @@
 import 'dart:math';
 
-import 'package:intl_translation_xliff/src/xliff_data.dart';
-import 'package:intl_translation_xliff/src/xml_parsers.dart';
+import 'package:intl_translation_xliff/src/parser/xliff_data.dart';
+import 'package:intl_translation_xliff/src/parser/xml_parsers.dart';
+
 import 'package:xml/xml.dart';
 import 'package:xml/xml_events.dart';
 
@@ -17,8 +18,8 @@ class XliffParser {
   /// Parses SVG from a string to a [DrawableRoot].
   ///
   /// The [key] parameter is used for debugging purposes.
-  Future<LocaleTranslationData> parse(String str, {String key}) async {
-    return await XliffParserState(parseEvents(str), key,
+  LocaleTranslationData parse(String str, {String key})  {
+    return  XliffParserState(parseEvents(str), key,
             displayWarnings: displayWarnings)
         .parse();
   }
@@ -127,7 +128,7 @@ class XliffParserState {
   Element currentElement;
 
   /// Drive the [XmlTextReader] to EOF and produce a [DrawableRoot].
-  Future<LocaleTranslationData> parse() async {
+  LocaleTranslationData parse()  {
     for (final event in _readSubtree()) {
       if (event is XmlStartElementEvent) {
         if (startElement(event)) {
@@ -135,7 +136,7 @@ class XliffParserState {
         }
         final parseFunc = elementParsers[event.name];
 
-        final element = await parseFunc?.call(this);
+        final element =  parseFunc?.call(this);
 
         if (parseFunc == null) {
           if (!event.isSelfClosing) {

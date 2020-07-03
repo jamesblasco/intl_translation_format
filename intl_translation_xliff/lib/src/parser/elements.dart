@@ -1,8 +1,8 @@
-import 'package:intl_translation/generate_localized.dart';
+
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_xliff/src/xliff_data.dart';
-import 'package:intl_translation_xliff/src/xliff_parser.dart';
+import 'package:intl_translation_xliff/src/parser/xliff_data.dart';
+import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 import 'package:xml/xml_events.dart';
 
 // http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html
