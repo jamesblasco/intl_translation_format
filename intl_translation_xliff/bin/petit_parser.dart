@@ -7,12 +7,12 @@ import 'package:intl_translation/src/intl_message.dart';
 
 // Only valid for this use case
 
+
 class SimpleStringsParser {
   Parser<String> get _doubleQuotes => char('"');
   Parser<String> get _safeDoubleQuotes => string('\\"');
   Parser<String> get _colon => string('=');
   Parser<String> get _comma => string(';');
-
 
   Parser get _string =>
       (_safeDoubleQuotes | _doubleQuotes.neg()).star().flatten();

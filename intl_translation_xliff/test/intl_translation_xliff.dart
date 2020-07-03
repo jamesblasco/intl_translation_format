@@ -1,0 +1,102 @@
+import 'package:intl_translation_xliff/intl_translation_xliff.dart';
+import 'package:intl_translation_xliff/src/xliff_parser.dart';
+import 'package:test/test.dart';
+
+final _xliffAttributes = xliffAttributes.entries
+    .map((e) => '${e.key}="${e.value}"')
+    .reduce((value, element) => '$value $element');
+
+void main() {
+  group('Xliff parser:', () {
+    test('Nested <xliff> not allowed', () async {
+      final content = '''
+          <?xml version="1.0 encoding="UTF-8""?>
+          <xliff $_xliffAttributes version="2.0" srcLang="en">
+          <xliff $_xliffAttributes version="2.0"  srcLang="en">
+          </xliff>
+          </xliff>
+      ''';
+      try {
+        final result = await XliffParser(displayWarnings: false).parse(content);
+      } on XliffParserException catch (e) {
+        expect(e.title, 'Unsupported nested <xliff> element.');
+        return;
+      }
+      throw 'Expected an error';
+    });
+
+    test('Required attribute version is missing in <xliff>', () async {
+      final content = '''
+          <?xml version="1.0 encoding="UTF-8""?>
+          <xliff  srcLang="en" $_xliffAttributes>
+          </xliff>
+      ''';
+      try {
+        final result = await XliffParser(displayWarnings: false).parse(content);
+      } on XliffParserException catch (e) {
+        expect(e.title, 'version attribute is required for <xliff>');
+        return;
+      }
+      throw 'Expected an error';
+    });
+
+    test('Required attribute version is missing in <xliff>', () async {
+      final content = '''
+          <?xml version="1.0 encoding="UTF-8""?>
+          <xliff  srcLang="en" $_xliffAttributes>
+          </xliff>
+      ''';
+      try {
+        final result = await XliffParser(displayWarnings: false).parse(content);
+      } on XliffParserException catch (e) {
+        expect(e.title, 'version attribute is required for <xliff>');
+        return;
+      }
+      throw 'Expected an error';
+    });
+
+    test('xliff', () async {
+      final result = await XliffParser().parse(xliffBasicMessage);
+      print(result.messages.map((key, value) => MapEntry(key, value.message.toString())));
+      // expect(result, equals(true));
+      // var string = 'foo,bar,baz';
+      //  expect(string.split(','), equals(['foo', 'bar', 'baz']));
+    });
+
+    test('.trim() removes surrounding whitespace', () {
+      var string = '  foo ';
+      expect(string.trim(), equals('foo'));
+    });
+  });
+}
+
+const xliffBasicMessage = '''
+      <?xml version="1.0 encoding="UTF-8""?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" srcLang="en">
+  <file>
+    <unit id="text" name="text">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>text j</source>
+      </segment>
+    </unit>
+    <unit id="textWithMetadata" name="textWithMetadata">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>text With Metadata</source>
+      </segment>
+    </unit>
+    <unit id="pluralExample" name="pluralExample">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>''';

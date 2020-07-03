@@ -1,13 +1,12 @@
-
 import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:xml/xml.dart';
+import 'package:xml/xml_events.dart';
 
 const xliffAttributes = {
   'xmlns': 'urn:oasis:names:tc:xliff:document:2.0',
   'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-  'version': '2.0',
   'xsi:schemaLocation':
       'urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd',
 };
@@ -26,6 +25,7 @@ class XliffFormat extends SingleLanguageFormat {
     builder.processing('xml', 'version="1.0 encoding="UTF-8""');
     builder.element('xliff', attributes: {
       ...xliffAttributes,
+        'version': '2.0',
       'srcLang': catalog.defaultLocale,
       //trgLang="es"  Templates don't need target
     }, nest: () {
@@ -62,6 +62,8 @@ class XliffFormat extends SingleLanguageFormat {
     String content, {
     MessageGeneration generation,
   }) {
+    final events = parseEvents(content);
+    print(events);
     final document = XmlDocument.parse(content);
 
     final entries = document.descendants
