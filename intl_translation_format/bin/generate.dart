@@ -35,8 +35,8 @@ main(List<String> args) async {
 
   final format = TranslationFormat.fromKey(parser.formatKey);
 
-  var dartFiles = parser.configuration.sourceFiles ??  args.where((x) => x.endsWith("dart")).toList();
-  var jsonFiles = parser.configuration.translationFiles ?? args.where((x) => format.isFileSupported(x)).toList();
+  var dartFiles = parser.configuration?.sourceFiles ??  args.where((x) => x.endsWith("dart")).toList();
+  var jsonFiles = parser.configuration?.translationFiles ?? args.where((x) => format.isFileSupported(x)).toList();
   dartFiles.addAll(linesFromFile(parser.sourcesListFile));
   jsonFiles.addAll(linesFromFile(parser.translationsListFile));
   if (dartFiles.length == 0 || jsonFiles.length == 0) {

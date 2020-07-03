@@ -13,7 +13,7 @@ export 'src/app_strings.dart';
 export 'src/file.dart';
 
 
-class AssetFile extends FileProvider {
+class AssetFile extends RedeableFile {
   final String key;
 
   @override
@@ -33,9 +33,5 @@ class AssetFile extends FileProvider {
     return await rootBundle.loadString(key);
   }
 
-  @override
-  Future writeAsBytes(Uint8List bytes) async {}
-
-  @override
-  Future writeAsString(String content) async {}
+ 
 }

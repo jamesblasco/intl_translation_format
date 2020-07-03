@@ -27,6 +27,8 @@ dependencies:
     path: '../intl_translation_arb' 
   intl_translation_json:
     path: '../intl_translation_json'  
+  intl_translation_ota_flutter:
+    path: '../intl_translation_ota_flutter'    
   flutter_localizations:
     sdk: flutter   
 
@@ -37,8 +39,6 @@ dependencies:
 dev_dependencies:
   intl_translation_format:
     path: '../intl_translation_format'
-  intl_translation_ota_flutter:
-    path: '../intl_translation_ota_flutter'  
   intl_translation_multi_language_json:
     path: '../intl_translation_multi_language_json'  
   

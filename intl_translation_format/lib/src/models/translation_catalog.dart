@@ -26,7 +26,7 @@ class TranslationCatalog {
         projectName = template.projectName;
 
   Future addTranslationsFromFiles(
-    List<FileProvider> translationFiles, {
+    List<RedeableFile> translationFiles, {
     TranslationFormat format,
   }) async {
     await format.parseMessagesFromFileIntoCatalog(

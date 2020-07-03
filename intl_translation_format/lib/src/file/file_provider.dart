@@ -3,25 +3,11 @@ import 'dart:typed_data';
 export 'local/local_file.dart';
 import 'package:path/path.dart' as p;
 
-abstract class FileProvider {
+abstract class RedeableFile {
   String get name;
 
-  const FileProvider();
-  Future writeAsString(String content);
   Future<String> readAsString();
-
-  Future writeAsBytes(Uint8List bytes);
   Future<Uint8List> readAsBytes();
-
-  Future write(FileData data) async {
-    if (data?.type == FileDataType.text) {
-      return await writeAsString(data._contents);
-    } else if (data?.type == FileDataType.binary) {
-      return await writeAsBytes(data._bytes);
-    }
-    throw UnimplementedError(
-        'Write not supported for file type ${data?.type}.');
-  }
 
   Future<T> readDataOfExactType<T extends FileData>() async {
     final type = FileData.dataTypeForDataOfExactType<T>();
@@ -38,6 +24,30 @@ abstract class FileProvider {
     }
     throw UnimplementedError('Read not supported for file type $type.');
   }
+}
+
+abstract class WritableFile {
+
+  Future writeAsString(String content);
+
+  Future writeAsBytes(Uint8List bytes);
+
+  Future write(FileData data) async {
+    if (data?.type == FileDataType.text) {
+      return await writeAsString(data._contents);
+    } else if (data?.type == FileDataType.binary) {
+      return await writeAsBytes(data._bytes);
+    }
+    throw UnimplementedError(
+        'Write not supported for file type ${data?.type}.');
+  }
+}
+
+abstract class FileProvider with RedeableFile, WritableFile {
+  @override
+  String get name;
+
+FileProvider();
 }
 
 enum FileDataType { text, binary }

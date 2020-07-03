@@ -7,7 +7,7 @@ import 'package:path/path.dart' as p;
 class LocalFile extends FileProvider {
   final String path;
 
-  const LocalFile(this.path);
+  LocalFile(this.path);
 
   @override
   String get name => p.basename(path);

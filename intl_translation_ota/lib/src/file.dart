@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 
 
-class NetworkFile extends FileProvider {
+class NetworkFile extends RedeableFile {
   final String url;
   final String name;
 

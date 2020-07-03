@@ -32,7 +32,7 @@ class AppStrings {
   TranslationCatalog _catalog;
 
   static _AppStringsDelegate delegate(
-    Map<String, FileProvider> translations,
+    Map<String, RedeableFile> translations,
     TranslationFormat format,
   ) =>
       _AppStringsDelegate(translations, format);

@@ -19,7 +19,7 @@ abstract class TranslationFormat<T extends FileData> {
 
 
   void parseMessagesFromFileIntoCatalog(
-    List<FileProvider> files, {
+    List<RedeableFile> files, {
     TranslationCatalog catalog,
   });
 
@@ -65,7 +65,7 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
 
   @override
   Future parseMessagesFromFileIntoCatalog(
-    List<FileProvider> files, {
+    List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
     var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
@@ -113,7 +113,7 @@ abstract class SingleBinaryLanguageFormat
 
   @override
   Future parseMessagesFromFileIntoCatalog(
-    List<FileProvider> files, {
+    List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
     var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
@@ -168,7 +168,7 @@ abstract class MultipleLanguageFormat
 
   @override
   Future parseMessagesFromFileIntoCatalog(
-    List<FileProvider> files, {
+    List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
     var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
