@@ -12,7 +12,6 @@ import 'dart:io';
 import 'package:intl_translation/src/directory_utils.dart';
 import 'package:intl_translation_format/src/file/local/local_file.dart';
 import 'package:intl_translation_format/src/models/formats.dart';
-import 'package:intl_translation_format/src/models/translation_template.dart';
 import 'package:intl_translation_format/translation_configuration.dart';
 
 
@@ -30,11 +29,11 @@ main(List<String> args) async {
   final files = dartFiles.map((file) => LocalFile(file)).toList();
 
   final template = TranslationTemplate(parser.baseName, locale: parser.locale);
-  await template.addMessagesfromDartFiles(files, config: parser.extractConfig);
+  await template.addTemplateMessages(files, config: parser.extractConfig);
 
   final templateFiles = template.extractTemplate(translationFormat);
   for (final files in templateFiles) {
-    LocalFile(parser.targetDir + files.name).write(files);
+    await LocalFile(parser.targetDir + files.name).write(files);
   }
 
   // Todo: Check where to add this.

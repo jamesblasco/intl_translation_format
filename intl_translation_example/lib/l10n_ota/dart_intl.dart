@@ -13,8 +13,8 @@ import 'common.dart';
 
 
 Future loadAssetsTranslations() async {
-  final catalog = TranslationCatalog(projectName: 'intl');
-  await catalog.addTranslationsFromFiles(
+  final catalog = TranslationCatalog('intl');
+  await catalog.addTranslations(
     [
       AssetFile('assets/l10n/intl_messages_es.json'),
       AssetFile('assets/l10n/intl_messages_en.json'),
@@ -25,9 +25,9 @@ Future loadAssetsTranslations() async {
 }
 
 Future loadNetworkTranslations() async {
-  final catalog = TranslationCatalog(projectName: 'intl');
+  final catalog = TranslationCatalog( 'intl');
 
-  await catalog.addTranslationsFromFiles(
+  await catalog.addTranslations(
     [
       NetworkFile(
         translationJsonFileUrl,

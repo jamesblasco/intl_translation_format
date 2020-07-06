@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-export 'local/local_file.dart';
+
 import 'package:path/path.dart' as p;
 
 abstract class RedeableFile {
@@ -27,7 +27,6 @@ abstract class RedeableFile {
 }
 
 abstract class WritableFile {
-
   Future writeAsString(String content);
 
   Future writeAsBytes(Uint8List bytes);
@@ -47,7 +46,7 @@ abstract class FileProvider with RedeableFile, WritableFile {
   @override
   String get name;
 
-FileProvider();
+  FileProvider();
 }
 
 enum FileDataType { text, binary }
@@ -67,21 +66,23 @@ class FileData {
         BinaryFileData: FileDataType.binary,
       }[T];
 
-  FileDataType type;
+  final FileDataType type;
 
   FileData._(
     String content,
     this.name, {
     this.encoding = utf8,
   })  : _bytes = null,
-        _contents = content;
+        _contents = content,
+        type = FileDataType.text;
 
   FileData._binary(
     Uint8List bytes,
     this.name, {
     this.encoding = utf8,
   })  : _bytes = bytes,
-        _contents = null;
+        _contents = null,
+        type = FileDataType.binary;
 }
 
 class StringFileData extends FileData {

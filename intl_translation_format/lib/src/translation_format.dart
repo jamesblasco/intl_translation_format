@@ -5,18 +5,16 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/src/file/file_provider.dart';
 
-import 'package:intl_translation_format/src/models/translation_catalog.dart';
-import 'package:intl_translation_format/src/models/translation_template.dart';
 
-import 'formats.dart';
+import 'models/formats.dart';
 
 typedef TranslationFormatBuilder = TranslationFormat Function();
 
 //
 //
 abstract class TranslationFormat<T extends FileData> {
+  
   const TranslationFormat();
-
 
   void parseMessagesFromFileIntoCatalog(
     List<RedeableFile> files, {

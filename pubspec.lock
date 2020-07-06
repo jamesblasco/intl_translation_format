@@ -21,7 +21,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.14.12"
+    version: "1.14.13"
   console:
     dependency: transitive
     description:
@@ -35,7 +35,7 @@ packages:
       name: derry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.7"
+    version: "0.1.1"
   equatable:
     dependency: transitive
     description:

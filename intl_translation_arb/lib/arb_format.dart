@@ -9,6 +9,7 @@ class ArbFormat extends SingleLanguageFormat {
 
   @override
   String get fileExtension => 'arb';
+  
 
   @override
   String buildTemplateFileContent(
@@ -28,7 +29,7 @@ class ArbFormat extends SingleLanguageFormat {
         suppressMetaData: suppressMetaData,
         includeSourceText: includeSourceText)));
 
-    final encoder = new JsonEncoder.withIndent("  ");
+    final encoder =  JsonEncoder.withIndent('  ');
     return encoder.convert(allMessages);
   }
 

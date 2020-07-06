@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import '../file_provider.dart';
+import 'file_provider.dart';
 import 'package:path/path.dart' as p;
 
 class LocalFile extends FileProvider {

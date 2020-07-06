@@ -27,7 +27,6 @@ import 'package:build/build.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/src/file/local/local_file.dart';
 import 'package:intl_translation_format/src/models/formats.dart';
-import 'package:intl_translation_format/src/models/translation_template.dart';
 import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 
 import 'package:intl_translation/src/directory_utils.dart';
@@ -56,12 +55,12 @@ class GenerateBuilder extends Builder {
           .map((e) => LocalFile(Directory.current.path + '/' + e))
           .toList();
 
-      final template = TranslationTemplate(parser.projectName);
-      await template.addMessagesfromDartFiles(
+       catalog = TranslationCatalog(parser.projectName);
+      await catalog.addTemplateMessages(
         dartFileRef,
         config: parser.extractConfig,
       );
-      catalog = TranslationCatalog.fromTemplate(template);
+     
     }
 
     if (buildStep.inputId.path == r'lib/$lib$') {
@@ -77,7 +76,7 @@ class GenerateBuilder extends Builder {
     final id = buildStep.inputId;
 
     final file = BuildFile(buildStep.inputId, buildStep);
-    await catalog.addTranslationsFromFiles([file], format: format);
+    await catalog.addTranslations([file], format: format);
 
     final files = await catalog.generateDartMessages();
     await BuildFile(id.changeExtension('.intl.dart'), buildStep)
@@ -156,14 +155,14 @@ main2(List<String> args) async {
   final files = jsonFiles.map((e) => LocalFile(e)).toList();
   final dartFileRef = dartFiles.map((e) => LocalFile(e)).toList();
 
-  final template = TranslationTemplate(parser.projectName);
-  await template.addMessagesfromDartFiles(
+  final catalog = TranslationCatalog(parser.projectName);
+  await catalog.addTemplateMessages(
     dartFileRef,
     config: parser.extractConfig,
   );
 
-  final catalog = TranslationCatalog.fromTemplate(template);
-  await catalog.addTranslationsFromFiles(files, format: format);
+ 
+  await catalog.addTranslations(files, format: format);
 
   final generatedFiles =
       catalog.generateDartMessages(config: parser.generationConfig);

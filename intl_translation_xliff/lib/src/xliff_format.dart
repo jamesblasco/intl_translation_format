@@ -1,10 +1,9 @@
 import 'package:intl_translation/generate_localized.dart';
-import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 import 'package:xml/xml.dart';
-import 'package:xml/xml_events.dart';
+
 
 const xliffAttributes = {
   'xmlns': 'urn:oasis:names:tc:xliff:document:2.0',

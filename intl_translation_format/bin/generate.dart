@@ -19,18 +19,16 @@
 library generate;
 
 import 'dart:io';
-import 'package:args/args.dart';
+
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/src/file/local/local_file.dart';
-import 'package:intl_translation_format/src/models/formats.dart';
-import 'package:intl_translation_format/src/models/translation_template.dart';
+import 'package:intl_translation_format/src/file/local_file_io.dart';
+
 import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 
 import 'package:intl_translation/src/directory_utils.dart';
-import 'package:intl_translation_format/translation_configuration.dart';
 
 main(List<String> args) async {
-  final parser = ExtractArgParser();
+  final parser = GenerateArgParser();
   parser.parse(args);
 
   final format = TranslationFormat.fromKey(parser.formatKey);
@@ -62,119 +60,16 @@ main(List<String> args) async {
   final files = jsonFiles.map((e) => LocalFile(e)).toList();
   final dartFileRef = dartFiles.map((e) => LocalFile(e)).toList();
 
-  final template = TranslationTemplate(parser.projectName);
-  await template.addMessagesfromDartFiles(
+  final catalog = TranslationCatalog(parser.projectName);
+  await catalog.addTemplateMessages(
     dartFileRef,
     config: parser.extractConfig,
   );
 
-
-  final catalog = TranslationCatalog.fromTemplate(template);
-  await catalog.addTranslationsFromFiles(files, format: format);
+  await catalog.addTranslations(files, format: format);
 
   final generatedFiles =
       catalog.generateDartMessages(config: parser.generationConfig);
   generatedFiles
       .forEach((file) => LocalFile(parser.targetDir + file.name).write(file));
-}
-
-class ExtractArgParser {
-  String projectName;
-  String formatKey;
-
-  String targetDir;
-  String translationsListFile;
-  String sourcesListFile;
-  bool transformer; //Todo: Support transformer and extraction data
-
-  bool suppressWarnings;
-
-
-  String _configurationFile;
-  TranslationConfiguration configuration;
-
-
-  ExtractConfig extractConfig = ExtractConfig();
-  GenerationConfig generationConfig = GenerationConfig();
-
-  final parser = ArgParser();
-
-  String get usage => parser.usage;
-  void parse(Iterable<String> args) {
-    parser.addOption("config",
-        abbr: 'c',
-        callback: (x) => _configurationFile = x,
-        help: 'Path of yaml file with configuration.');
-    parser.addFlag('json',
-        defaultsTo: false,
-        callback: (x) => generationConfig.useJson = x,
-        help:
-            'Generate translations as a JSON string rather than as functions.');
-    parser.addFlag("suppress-warnings",
-        defaultsTo: false,
-        callback: (x) => suppressWarnings = x,
-        help: 'Suppress printing of warnings.');
-    parser.addOption('output-dir',
-        defaultsTo: '.',
-        callback: (x) => targetDir = x,
-        help: 'Specify the output directory.');
-    parser.addOption("project-name", defaultsTo: '', callback: (x) {
-      projectName = x;
-    }, help: 'Specify a prefix to be used for the generated file names.');
-    parser.addFlag("use-deferred-loading",
-        defaultsTo: true,
-        callback: (x) => generationConfig.useDeferredLoading = x,
-        help:
-            'Generate message code that must be loaded with deferred loading. '
-            'Otherwise, all messages are eagerly loaded.');
-    parser.addOption('codegen_mode',
-        allowed: ['release', 'debug'],
-        defaultsTo: 'debug',
-        callback: (x) => generationConfig.codegenMode = x,
-        help:
-            'What mode to run the code generator in. Either release or debug.');
-    parser.addOption("sources-list-file",
-        callback: (value) => sourcesListFile = value,
-        help: 'A file that lists the Dart files to read, one per line.'
-            'The paths in the file can be absolute or relative to the '
-            'location of this file.');
-    parser.addOption("translations-list-file",
-        callback: (value) => translationsListFile = value,
-        help:
-            'A file that lists the translation files to process, one per line.'
-            'The paths in the file can be absolute or relative to the '
-            'location of this file.');
-    parser.addFlag("transformer",
-        defaultsTo: false,
-        callback: (x) => transformer = x,
-        help: "Assume that the transformer is in use, so name and args "
-            "don't need to be specified for messages.");
-
-    parser.addOption("format",
-        allowed: defaultFormats.keys,
-        help: "Select one of the supported translation formats",
-        callback: (val) => formatKey = val);
-
-    if (args.length == 0) {
-      print('Usage: generate [options]'
-          ' file1.dart file2.dart ...'
-          ' translation1_<languageTag>.arb translation2.arb ...');
-      print(parser.usage);
-      exit(0);
-    }
-
-    parser.parse(args);
-
-    if (_configurationFile != null) {
-      final yaml = File(_configurationFile).readAsStringSync();
-      configuration = TranslationConfiguration.fromYaml(
-        yaml,
-        _configurationFile,
-      );
-
-      projectName = configuration.projectName ?? projectName;
-      formatKey = configuration.format ?? formatKey;
-      targetDir = configuration.outputDir;
-    }
-  }
 }

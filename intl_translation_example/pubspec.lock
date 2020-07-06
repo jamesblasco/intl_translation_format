@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.0"
+    version: "5.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.10"
+    version: "0.39.11"
   args:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       name: derry
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.9"
+    version: "0.1.1"
   equatable:
     dependency: transitive
     description:
@@ -170,7 +170,7 @@ packages:
     description:
       path: "."
       ref: gsoc
-      resolved-ref: bed15be7df2969ccdc1ebde4a4121e8f7db58e60
+      resolved-ref: "8a39a5fd8cf008c3bb358262b22de92e7daeb32c"
       url: "https://github.com/jamesblasco/intl_translation/"
     source: git
     version: "0.17.10"

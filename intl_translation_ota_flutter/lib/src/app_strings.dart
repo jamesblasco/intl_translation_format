@@ -44,8 +44,8 @@ class AppStrings {
   final String _locale;
   static Future<AppStrings> load(Locale locale, FileProvider file,
       String _locale, TranslationFormat format) async {
-    final catalog = TranslationCatalog(projectName: 'intl');
-    await catalog.addTranslationsFromFiles([file], format: format);
+    final catalog = TranslationCatalog('intl');
+    await catalog.addTranslations([file], format: format);
     await TranslationLoader(catalog).initializeMessages(locale.toString());
     return AppStrings(locale, catalog, _locale);
   }

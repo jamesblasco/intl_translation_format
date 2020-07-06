@@ -10,7 +10,7 @@ class ICUParser {
     
 
   String _turnInterpolationIntoICUForm(Message message, chunk,
-      {bool shouldEscapeICU: false}) {
+      {bool shouldEscapeICU = false}) {
     if (chunk is String) {
       return shouldEscapeICU ? _escape(chunk) : chunk;
     }
