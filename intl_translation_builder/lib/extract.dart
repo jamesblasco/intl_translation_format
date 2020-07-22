@@ -10,7 +10,6 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'dart:io';
 
 import 'package:intl_translation/src/directory_utils.dart';
-import 'package:intl_translation_format/src/file/local/local_file.dart';
 import 'package:intl_translation_format/src/models/formats.dart';
 import 'package:intl_translation_format/translation_configuration.dart';
 

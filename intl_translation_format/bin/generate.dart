@@ -21,7 +21,6 @@ library generate;
 import 'dart:io';
 
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/src/file/local_file_io.dart';
 
 import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 

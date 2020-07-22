@@ -10,4 +10,5 @@ export 'src/icu_parser.dart';
 
 export 'src/utils/message_extraction_config.dart';
 export 'src/utils/message_generation_config.dart';
+export 'src/file/local_file.dart';
 

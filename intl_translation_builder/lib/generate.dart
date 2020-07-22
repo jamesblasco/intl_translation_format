@@ -25,7 +25,6 @@ import 'dart:typed_data';
 import 'package:args/args.dart';
 import 'package:build/build.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/src/file/local/local_file.dart';
 import 'package:intl_translation_format/src/models/formats.dart';
 import 'package:intl_translation_format/src/utils/message_generation_config.dart';
 
