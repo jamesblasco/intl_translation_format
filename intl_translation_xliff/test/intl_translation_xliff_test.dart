@@ -58,7 +58,7 @@ void main() {
     });
 
     test('xliff', () async {
-      final result = XliffParser().parse(xliffBasicMessage);
+      final result = XliffParser(displayWarnings: false).parse(xliffBasicMessage);
       final mainMessage = MainMessage()..arguments = ['howMany', 'variable'];
       final map = result.messages.map((key, value) {
         final message = value.message;

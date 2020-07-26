@@ -13,7 +13,7 @@ dependencies:
       url: https://github.com/jamesblasco/intl_translation/
       ref: gsoc
   intl_translation_format:
-    path: './../intl_translation_format'
+    path: './../../intl_translation_format'
 
 dev_dependencies:
   analyzer: '>=0.36.0 <0.40.0'

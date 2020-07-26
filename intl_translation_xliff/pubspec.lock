@@ -14,7 +14,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.39.14"
+    version: "0.39.15"
   args:
     dependency: "direct dev"
     description:
@@ -167,28 +167,28 @@ packages:
   intl_translation_gettext:
     dependency: transitive
     description:
-      path: "../intl_translation_gettext"
+      path: "../experimental/intl_translation_gettext"
       relative: true
     source: path
     version: "0.0.1"
   intl_translation_json:
     dependency: transitive
     description:
-      path: "../intl_translation_json"
+      path: "../experimental/intl_translation_json"
       relative: true
     source: path
     version: "0.0.1"
   intl_translation_multi_language_json:
     dependency: transitive
     description:
-      path: "../intl_translation_multi_language_json"
+      path: "../experimental/intl_translation_multi_language_json"
       relative: true
     source: path
     version: "0.0.1"
   intl_translation_strings:
     dependency: transitive
     description:
-      path: "../intl_translation_strings"
+      path: "../experimental/intl_translation_strings"
       relative: true
     source: path
     version: "0.0.1"

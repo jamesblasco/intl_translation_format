@@ -1,4 +1,4 @@
-name: intl_translation_json
+name: intl_translation_multi_language_json
 description: Extract messages to a json file and generate translations from json files
 version: 0.0.1
 author:
@@ -13,7 +13,7 @@ dependencies:
       url: https://github.com/jamesblasco/intl_translation/
       ref: gsoc
   intl_translation_format:
-    path: './../intl_translation_format'
+    path: './../../intl_translation_format'
 
 dev_dependencies:
   analyzer: '>=0.36.0 <0.40.0'

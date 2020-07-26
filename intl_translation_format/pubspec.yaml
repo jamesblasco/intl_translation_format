@@ -15,15 +15,15 @@ dependencies:
   intl_translation_arb:
     path: '../intl_translation_arb'
   intl_translation_json:
-    path: '../intl_translation_json'  
+    path: '../experimental/intl_translation_json'  
   intl_translation_multi_language_json:
-    path: '../intl_translation_multi_language_json'  
+    path: '../experimental/intl_translation_multi_language_json'  
   intl_translation_xliff:
     path: '../intl_translation_xliff'  
   intl_translation_strings:
-    path: '../intl_translation_strings'    
+    path: '../experimental/intl_translation_strings'    
   intl_translation_gettext:
-    path: '../intl_translation_gettext'    
+    path: '../experimental/intl_translation_gettext'    
   yaml: ^2.2.1  
 dev_dependencies:
   test: ^1.15.1
