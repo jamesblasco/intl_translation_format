@@ -59,36 +59,11 @@ class XliffFormat extends SingleLanguageFormat {
   }
 
   @override
-  Map<String, TranslatedMessage> parseFile(
+  Map<String, BasicTranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
   }) {
     final messages = XliffParser().parse(content);
     return messages.messages;
-
-    /*  final events = parseEvents(content);
-    print(events);
-    final document = XmlDocument.parse(content);
-
-    final entries = document.descendants
-        .whereType<XmlElement>()
-        .where((node) => node.name.local == 'unit')
-        .map((node) {
-      final id = node.getAttribute('id');
-
-      final segment = node.getElement('segment');
-      var message = segment?.getElement('target')?.innerText;
-      message ??= segment?.getElement('source')?.innerText;
-
-      if (message == null) return null;
-
-      final value = BasicTranslatedMessage(
-        id,
-        Message.from(message, null),
-      );
-      return MapEntry(id, value);
-    }).where((element) => element != null);
-
-    return Map<String, TranslatedMessage>.fromEntries(entries); */
   }
 }

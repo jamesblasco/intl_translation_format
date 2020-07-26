@@ -1,4 +1,3 @@
-import 'package:xml/xml.dart';
 import 'package:xml/xml_events.dart';
 
 

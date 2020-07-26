@@ -55,16 +55,18 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
+final String text = Intl.message('text');
 
-  final String text = Intl.message('text');
+final String textWithMetadata =
+    Intl.message('textWithMetadata', examples: {'a': 'hello'});
 
-  final String textWithMetadata =
-      Intl.message('textWithMetadata', examples: {'a': 'hello'});
+ String variable(int variable) =>
+    Intl.message('Hello $variable', name: 'variable', args: [variable]); 
 
-  String pluralExample(int howMany) => Intl.plural(howMany,
-      zero: 'No items',
-      one: 'One item',
-      many: 'A lot of items',
-      other: '$howMany items',
-      name: 'pluralExample',
-      args: [howMany]);
+String pluralExample(int howMany) => Intl.plural(howMany,
+    zero: 'No items',
+    one: 'One item',
+    many: 'A lot of items',
+    other: '$howMany items',
+    name: 'pluralExample',
+    args: [howMany]);

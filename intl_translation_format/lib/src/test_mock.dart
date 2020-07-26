@@ -1,8 +1,7 @@
 
 
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:petitparser/petitparser.dart';
-import 'package:intl_translation/src/icu_parser.dart';
+
 import 'package:intl_translation/src/intl_message.dart';
 
 
@@ -62,9 +61,4 @@ class MockTemplate extends TranslationTemplate {
   final Map<String, MainMessage> messages;
 }
 
-Parser get messageParser {
-  final IcuParser parser = IcuParser();
 
-  return (parser.pluralOrGenderOrSelect | parser.simpleText | parser.empty)
-      .map((chunk) => Message.from(chunk, null));
-}

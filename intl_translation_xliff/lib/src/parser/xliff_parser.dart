@@ -1,12 +1,10 @@
 import 'dart:math';
 
 import 'package:intl_translation_xliff/src/parser/xliff_data.dart';
+import 'package:intl_translation_xliff/src/parser/xml_elements.dart';
 import 'package:intl_translation_xliff/src/parser/xml_parsers.dart';
-
-import 'package:xml/xml.dart';
 import 'package:xml/xml_events.dart';
 
-import 'elements.dart';
 
 enum XliffVersion { v2, v1 }
 

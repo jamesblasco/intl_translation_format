@@ -38,9 +38,9 @@ class MoFormat extends SingleBinaryLanguageFormat {
   }
 
   @override
-  Map<String, TranslatedMessage> parseFile(List<int> content) {
+  Map<String, BasicTranslatedMessage> parseFile(List<int> content) {
     final po = gettextParser.mo.parseBytes(content);
-    var messages = <String, TranslatedMessage>{};
+    var messages = <String, BasicTranslatedMessage>{};
 
     Map.from(po['translations']).forEach((key, value) {
       Map.from(value).forEach((key, value) {

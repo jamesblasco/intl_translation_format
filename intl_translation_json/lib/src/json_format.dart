@@ -27,7 +27,7 @@ class JsonFormat extends SingleLanguageFormat {
   }
 
    @override
-  Map<String, TranslatedMessage> parseFile(
+  Map<String, BasicTranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
   }) {

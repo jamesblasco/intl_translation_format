@@ -17,6 +17,14 @@
         <source>textWithMetadata</source>
       </segment>
     </unit>
+    <unit id="variable" name="variable">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Hello {variable}</source>
+      </segment>
+    </unit>
     <unit id="pluralExample" name="pluralExample">
       <segment>
         <notes>

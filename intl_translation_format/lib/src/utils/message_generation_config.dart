@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:intl_translation/generate_localized.dart';
@@ -19,16 +18,14 @@ class GenerationConfig {
     this.codegenMode,
   });
 
-  MessageGeneration getMessageGeneration()  {
+  MessageGeneration getMessageGeneration() {
     final generation =
-        (useJson ?? false) ?  JsonMessageGeneration() :  MessageGeneration();
+        (useJson ?? false) ? JsonMessageGeneration() : MessageGeneration();
     generation.useDeferredLoading = useDeferredLoading ?? true;
     generation.codegenMode = codegenMode ?? '';
     return generation;
   }
 }
-
-
 
 class GenerateArgParser {
   String projectName;
@@ -41,10 +38,8 @@ class GenerateArgParser {
 
   bool suppressWarnings;
 
-
   String _configurationFile;
   TranslationConfiguration configuration;
-
 
   ExtractConfig extractConfig = ExtractConfig();
   GenerationConfig generationConfig = GenerationConfig();
@@ -70,7 +65,7 @@ class GenerateArgParser {
         defaultsTo: '.',
         callback: (x) => targetDir = x,
         help: 'Specify the output directory.');
-    parser.addOption("project-name", defaultsTo: '', callback: (x) {
+    parser.addOption("project-name", defaultsTo: 'intl', callback: (x) {
       projectName = x;
     }, help: 'Specify a prefix to be used for the generated file names.');
     parser.addFlag("use-deferred-loading",
@@ -116,7 +111,7 @@ class GenerateArgParser {
     }
 
     parser.parse(args);
-
+   
     if (_configurationFile != null) {
       final yaml = File(_configurationFile).readAsStringSync();
       configuration = TranslationConfiguration.fromYaml(
@@ -128,5 +123,6 @@ class GenerateArgParser {
       formatKey = configuration.format ?? formatKey;
       targetDir = configuration.outputDir;
     }
+    
   }
 }

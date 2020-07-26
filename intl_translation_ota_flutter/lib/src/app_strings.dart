@@ -6,7 +6,7 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_ota/intl_translation_ota.dart';
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
-  final Map<String, FileProvider> translations;
+  final Map<String, RedeableFile> translations;
   final TranslationFormat format;
 
   _AppStringsDelegate(this.translations, this.format);
@@ -42,7 +42,7 @@ class AppStrings {
 
   final String _localeName;
   final String _locale;
-  static Future<AppStrings> load(Locale locale, FileProvider file,
+  static Future<AppStrings> load(Locale locale, RedeableFile file,
       String _locale, TranslationFormat format) async {
     final catalog = TranslationCatalog('intl');
     await catalog.addTranslations([file], format: format);

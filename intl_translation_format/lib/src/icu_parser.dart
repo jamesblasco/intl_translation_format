@@ -1,5 +1,17 @@
 
 import 'package:intl_translation/src/intl_message.dart';
+import 'package:petitparser/petitparser.dart';
+import 'package:intl_translation/src/icu_parser.dart';
+
+
+Parser get messageParser {
+  final IcuParser parser = IcuParser();
+
+  return (parser.pluralOrGenderOrSelect | parser.simpleText | parser.empty)
+      .map((chunk) => Message.from(chunk, null));
+}
+
+
 
 class ICUParser {
   /// Return a version of the message string with with ICU parameters "{variable}"

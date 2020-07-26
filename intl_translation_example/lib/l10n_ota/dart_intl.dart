@@ -11,7 +11,6 @@ import 'package:intl_translation_ota_flutter/intl_translation_ota_flutter.dart';
 import '../main.dart';
 import 'common.dart';
 
-
 Future loadAssetsTranslations() async {
   final catalog = TranslationCatalog('intl');
   await catalog.addTranslations(
@@ -25,7 +24,7 @@ Future loadAssetsTranslations() async {
 }
 
 Future loadNetworkTranslations() async {
-  final catalog = TranslationCatalog( 'intl');
+  final catalog = TranslationCatalog('intl');
 
   await catalog.addTranslations(
     [
@@ -41,7 +40,6 @@ Future loadNetworkTranslations() async {
 }
 
 class Localized extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -52,9 +50,9 @@ class Localized extends StatelessWidget {
         Text(
           textWithMetadata,
         ),
-        /* Text(
-          pluralExample(2),
-        ), */
+        Text(
+          pluralExample(0),
+        ),
       ],
     );
   }

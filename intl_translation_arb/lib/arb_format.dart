@@ -77,7 +77,7 @@ class ArbFormat extends SingleLanguageFormat {
   }
 
   @override
-  Map<String, TranslatedMessage> parseFile(
+  Map<String, BasicTranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
   }) {
@@ -86,12 +86,12 @@ class ArbFormat extends SingleLanguageFormat {
   }
 }
 
-Map<String, TranslatedMessage> _generateLocaleTranslation(
+Map<String, BasicTranslatedMessage> _generateLocaleTranslation(
     Map<String, dynamic> localeData) {
-  Map<String, TranslatedMessage> translations = {};
+  Map<String, BasicTranslatedMessage> translations = {};
 
   localeData.forEach((id, messageData) {
-    TranslatedMessage message = recreateIntlObjects(id, messageData);
+    BasicTranslatedMessage message = recreateIntlObjects(id, messageData);
     if (message != null) {
       translations[id] = message;
     }

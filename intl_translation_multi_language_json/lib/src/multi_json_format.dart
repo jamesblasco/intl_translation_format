@@ -33,12 +33,12 @@ class MultiJsonFormat extends MultipleLanguageFormat {
   }
 
   @override
-  Map<String, Map<String, TranslatedMessage>> parseFile(String content) {
+  Map<String, Map<String, BasicTranslatedMessage>> parseFile(String content) {
     final values = MultipleLanguageJsonParser().parser.parse(content);
 
     if (values.isFailure) throw BadFormatException(values.message);
 
-    var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
+    var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
 
     values.value.forEach((key, messages) {
       messages.forEach((locale, messageString) {

@@ -1,6 +1,8 @@
+import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/intl_translation_xliff.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 import 'package:test/test.dart';
+import 'package:intl_translation/src/intl_message.dart';
 
 final _xliffAttributes = xliffAttributes.entries
     .map((e) => '${e.key}="${e.value}"')
@@ -17,7 +19,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result =  XliffParser(displayWarnings: false).parse(content);
+        final result = XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'Unsupported nested <xliff> element.');
         return;
@@ -32,7 +34,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result =  XliffParser(displayWarnings: false).parse(content);
+        final result = XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'version attribute is required for <xliff>');
         return;
@@ -47,7 +49,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result =  XliffParser(displayWarnings: false).parse(content);
+        final result = XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'version attribute is required for <xliff>');
         return;
@@ -56,13 +58,22 @@ void main() {
     });
 
     test('xliff', () async {
-      final result =  XliffParser().parse(xliffBasicMessage);
-      print(result.messages.map((key, value) => MapEntry(key, value.message.toString())));
-      // expect(result, equals(true));
-      // var string = 'foo,bar,baz';
-      //  expect(string.split(','), equals(['foo', 'bar', 'baz']));
-    });
+      final result = XliffParser().parse(xliffBasicMessage);
+      final mainMessage = MainMessage()..arguments = ['howMany', 'variable'];
+      final map = result.messages.map((key, value) {
+        final message = value.message;
+        message..parent = mainMessage;
 
+        return MapEntry(key, ICUParser().icuMessageToString(value.message));
+      });
+
+      expect(map, {
+        'text': 'normal Text',
+        'textWithMetadata': 'text With Metadata',
+        'pluralExample' : '{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}',
+        'variable' : 'Hello {variable}'
+      });
+    });
   });
 }
 
@@ -75,7 +86,7 @@ const xliffBasicMessage = '''
         <notes>
           <note category="format">icu</note>
         </notes>
-        <source>text j</source>
+        <source>normal Text</source>
       </segment>
     </unit>
     <unit id="textWithMetadata" name="textWithMetadata">
@@ -92,6 +103,14 @@ const xliffBasicMessage = '''
           <note category="format">icu</note>
         </notes>
         <source>{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}</source>
+      </segment>
+    </unit>
+    <unit id="variable" name="variable">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Hello {variable}</source>
       </segment>
     </unit>
   </file>

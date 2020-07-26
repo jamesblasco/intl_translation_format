@@ -53,7 +53,7 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
   List<String> get supportedFileExtensions => [fileExtension];
   String get fileExtension;
 
-  Map<String, TranslatedMessage> parseFile(
+  Map<String, BasicTranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
   });
@@ -67,7 +67,7 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
-    var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
+    var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory
@@ -101,7 +101,7 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
 
 abstract class SingleBinaryLanguageFormat
     extends TranslationFormat<BinaryFileData> {
-  Map<String, TranslatedMessage> parseFile(Uint8List content);
+  Map<String, BasicTranslatedMessage> parseFile(Uint8List content);
 
   List<String> get supportedFileExtensions => [supportedFileExtension];
   String get supportedFileExtension;
@@ -115,7 +115,7 @@ abstract class SingleBinaryLanguageFormat
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
-    var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
+    var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory
@@ -160,7 +160,7 @@ abstract class MultipleLanguageFormat
   List<String> get supportedFileExtensions => [supportedFileExtension];
   String get supportedFileExtension;
 
-  Map<String, Map<String, TranslatedMessage>> parseFile(String content);
+  Map<String, Map<String, BasicTranslatedMessage>> parseFile(String content);
 
   String buildTemplateFileContent(
       Map<String, Map<String, Message>> messages, TranslationTemplate metadata);
@@ -170,7 +170,7 @@ abstract class MultipleLanguageFormat
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
-    var messagesByLocale = <String, Map<String, TranslatedMessage>>{};
+    var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory

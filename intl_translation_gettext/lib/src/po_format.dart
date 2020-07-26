@@ -37,12 +37,12 @@ class PoFormat extends SingleLanguageFormat {
   }
 
    @override
-  Map<String, TranslatedMessage> parseFile(
+  Map<String, BasicTranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
   }) {
     final po = gettextParser.po.parse(content);
-    var messages = <String, TranslatedMessage>{};
+    var messages = <String, BasicTranslatedMessage>{};
 
     Map.from(po['translations']).forEach((key, value) {
       Map.from(value).forEach((key, value) {

@@ -82,7 +82,7 @@ class TranslationCatalog extends TranslationTemplate {
 
   List<String> get locales => translatedMessages?.keys?.toList() ?? [];
 
-  TranslationCatalog(String projectName, {String locale})
+  TranslationCatalog(this.projectName, {String locale})
       : super(projectName, locale: locale);
 
   Future addTranslations(

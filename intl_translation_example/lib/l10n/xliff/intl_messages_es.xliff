@@ -25,7 +25,14 @@
           <note category="format">icu</note>
         </notes>
         <source>{howMany,plural, =0{Ningun elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}</source>
-        <source>{howMany,plural, =0{Ningun elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}</source>
+      </segment>
+    </unit>
+     <unit id="variable" name="variable">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Hello {variable}</source>
       </segment>
     </unit>
   </file>

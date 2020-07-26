@@ -1,5 +1,3 @@
-
-import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_data.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
@@ -16,6 +14,9 @@ final Map<String, _ParseFunc> elementParsers = <String, _ParseFunc>{
   'segment': (e) => SegmentElement(e),
   'ignorable': (e) => IgnorableElement(e),
   'source': (e) => SourceElement(e),
+  //v1.2
+  'body': (e) => BodyElement(e),
+
 };
 
 abstract class Element {
@@ -24,7 +25,7 @@ abstract class Element {
         parent = _state.depth == _state.currentElement?.depth
             ? _state.currentElement?.parent
             : _state.currentElement {
-    print('parent ' + parent.toString());
+   
     _state.elementCountForCurrentDepth()[key] ??= 0;
     _state.elementCountForCurrentDepth()[key] += 1;
     if (!allowsMultiple && _state.elementCountForCurrentDepth()[key] > 1) {
@@ -203,7 +204,7 @@ class UnitElement extends Element {
   List<String> get requiredAttributes => ['id'];
 
   @override
-  String get key => 'unit';
+  String get key => parserState.version == XliffVersion.v2 ? 'unit' : 'trans-unit';
 
   @override
   void onStart() {
@@ -226,7 +227,7 @@ class UnitElement extends Element {
     }
     parserState.root.messages[id] = BasicTranslatedMessage(
       id,
-      Message.from(parserState.currentTranslationMessage, null),
+      messageParser.parse(parserState.currentTranslationMessage).value,
     );
     parserState.currentTranslationId = null;
     parserState.currentTranslationMessage = null;
@@ -313,3 +314,18 @@ class TargetElement extends Element {
    
   }
 } */
+
+
+
+/// V1.2
+class BodyElement extends Element {
+  final XliffParserState parserState;
+  BodyElement(this.parserState) : super(parserState);
+
+  @override
+  String get key => 'body';
+
+  @override
+  void onStart() {
+  }
+}
