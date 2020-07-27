@@ -182,7 +182,7 @@ packages:
     source: git
     version: "0.17.10"
   intl_translation_arb:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../intl_translation_arb"
       relative: true
@@ -203,14 +203,14 @@ packages:
     source: path
     version: "0.0.1"
   intl_translation_json:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "../experimental/intl_translation_json"
       relative: true
     source: path
     version: "0.0.1"
   intl_translation_multi_language_json:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       path: "../experimental/intl_translation_multi_language_json"
       relative: true

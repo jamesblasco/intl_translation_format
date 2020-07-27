@@ -4,17 +4,23 @@ import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/src/file/file_provider.dart';
-
-
-
-import 'models/formats.dart';
+import 'package:intl_translation_format/src/utils/formats.dart';
 
 typedef TranslationFormatBuilder = TranslationFormat Function();
+
+class MessagesForLocale {
+  final Map<String, BasicTranslatedMessage> messages;
+
+  final String locale;
+
+  MessagesForLocale(this.messages, {this.locale});
+
+  MapEntry asEntry() => MapEntry(locale, messages);
+}
 
 //
 //
 abstract class TranslationFormat<T extends FileData> {
-  
   const TranslationFormat();
 
   void parseFiles(
@@ -53,7 +59,7 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
   List<String> get supportedFileExtensions => [fileExtension];
   String get fileExtension;
 
-  Map<String, BasicTranslatedMessage> parseFile(
+  MessagesForLocale parseFile(
     String content, {
     MessageGeneration generation,
   });
@@ -73,11 +79,12 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
     // we're reading all the data eagerly, which could be a memory
     // issue for very large projects.
     for (final file in files) {
-      final data = await file.readDataOfExactType<StringFileData>();;
-      final locale =
-          localeFromName(data.nameWithoutExtension, catalog.projectName);
+      final data = await file.readDataOfExactType<StringFileData>();
       final messages = parseFile(data.contents);
-      messagesByLocale.putIfAbsent(locale, () => {}).addAll(messages);
+      final locale = messages.locale ??
+          localeFromName(data.nameWithoutExtension, catalog.projectName);
+
+      messagesByLocale.putIfAbsent(locale, () => {}).addAll(messages.messages);
     }
 
     messagesByLocale.forEach((locale, messages) {
@@ -101,8 +108,7 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
 
 abstract class SingleBinaryLanguageFormat
     extends TranslationFormat<BinaryFileData> {
-
-  Map<String, BasicTranslatedMessage> parseFile(Uint8List content);
+  MessagesForLocale parseFile(Uint8List content);
 
   List<String> get supportedFileExtensions => [supportedFileExtension];
   String get supportedFileExtension;
@@ -123,10 +129,10 @@ abstract class SingleBinaryLanguageFormat
     // issue for very large projects.
     for (final file in files) {
       final data = await file.readDataOfExactType<BinaryFileData>();
-      final locale =
-          localeFromName(data.nameWithoutExtension, catalog.projectName);
       final messages = parseFile(data.bytes);
-      messagesByLocale.putIfAbsent(locale, () => {}).addAll(messages);
+      final locale = messages.locale ??
+          localeFromName(data.nameWithoutExtension, catalog.projectName);
+      messagesByLocale.putIfAbsent(locale, () => {}).addAll(messages.messages);
     }
 
     messagesByLocale.forEach((locale, messages) {
@@ -161,7 +167,7 @@ abstract class MultipleLanguageFormat
   List<String> get supportedFileExtensions => [supportedFileExtension];
   String get supportedFileExtension;
 
-  Map<String, Map<String, BasicTranslatedMessage>> parseFile(String content);
+  List<MessagesForLocale> parseFile(String content);
 
   String generateTemplateFile(
       Map<String, Map<String, Message>> messages, TranslationTemplate metadata);
@@ -171,7 +177,7 @@ abstract class MultipleLanguageFormat
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
-    var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
+    final messagesByLocale = <String, MessagesForLocale>{};
 
     // In order to group these by locale, to support multiple input files,
     // we're reading all the data eagerly, which could be a memory
@@ -180,12 +186,12 @@ abstract class MultipleLanguageFormat
       final data = await file.readDataOfExactType<StringFileData>();
       final content = data.contents;
       final messages = parseFile(content);
-      messagesByLocale.addEntries(messages.entries);
+      messagesByLocale.addEntries(messages.map((e) => e.asEntry()));
     }
 
     catalog.translatedMessages = {};
     messagesByLocale.forEach((locale, messages) {
-      catalog.translatedMessages[locale] = messages.values.toList();
+      catalog.translatedMessages[locale] = messages.messages.values.toList();
     });
   }
 

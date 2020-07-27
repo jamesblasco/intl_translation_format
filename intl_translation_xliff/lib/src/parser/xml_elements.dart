@@ -1,5 +1,4 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_xliff/src/parser/xliff_data.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 import 'package:xml/xml_events.dart';
 
@@ -140,7 +139,7 @@ class XliffElement extends Element {
     final srcLang = attributes['srcLang'];
     final trgLang = attributes['trgLang'];
 
-    parserState.root = LocaleTranslationData({}, locale: srcLang);
+    parserState.root = MessagesForLocale({}, locale: srcLang);
 
     parserState.version = parseVersion(version);
   }

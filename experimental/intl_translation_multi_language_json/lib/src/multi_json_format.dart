@@ -7,7 +7,6 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 
 import '../intl_translation_multi_language_json.dart';
 
-
 class MultiJsonFormat extends MultipleLanguageFormat {
   static const key = 'multi_language_json';
 
@@ -33,13 +32,13 @@ class MultiJsonFormat extends MultipleLanguageFormat {
   }
 
   @override
-  Map<String, Map<String, BasicTranslatedMessage>> parseFile(String content) {
+  List<MessagesForLocale> parseFile(String content) {
     final values = MultipleLanguageJsonParser().parser.parse(content);
 
     if (values.isFailure) throw BadFormatException(values.message);
 
-    var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
-
+    final messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
+  
     values.value.forEach((key, messages) {
       messages.forEach((locale, messageString) {
         messagesByLocale.putIfAbsent(locale, () => {});
@@ -48,6 +47,9 @@ class MultiJsonFormat extends MultipleLanguageFormat {
         messagesByLocale[locale][key] = message;
       });
     });
-    return messagesByLocale;
+
+    return messagesByLocale.entries.map(
+      (e) => MessagesForLocale(e.value, locale: e.key),
+    ).toList();
   }
 }

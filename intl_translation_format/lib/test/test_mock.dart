@@ -3,6 +3,7 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
 
 import 'package:intl_translation/src/intl_message.dart';
+import 'package:intl_translation_format/src/utils/icu_helpers.dart';
 
 
 MainMessage simpleMessage(String key, String text, {String description}) {

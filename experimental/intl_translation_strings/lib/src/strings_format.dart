@@ -42,17 +42,19 @@ class StringsFormat extends SingleLanguageFormat {
   }
 
   @override
-  Map<String, BasicTranslatedMessage> parseFile(
+  MessagesForLocale parseFile(
     String content, {
     MessageGeneration generation,
   }) {
     final values = SimpleStringsParser().parser.parse(content);
 
     if (values.isFailure) throw BadFormatException(values.message);
-    return values.value.map((key, value) {
+    final messages = values.value.map((key, value) {
       final message = BasicTranslatedMessage(key, Message.from(value, null));
       return MapEntry(key, message);
     });
+
+    return MessagesForLocale(messages);
   }
 }
 

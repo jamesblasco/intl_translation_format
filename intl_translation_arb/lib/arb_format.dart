@@ -35,7 +35,7 @@ class ArbFormat extends SingleLanguageFormat {
   }
 
   @override
-  Map<String, BasicTranslatedMessage> parseFile(
+  MessagesForLocale parseFile(
     String content, {
     MessageGeneration generation,
   }) {
@@ -55,7 +55,8 @@ class ArbFormat extends SingleLanguageFormat {
     }
 
     final data = jsonDecoder.decode(content);
-    return messagesFromJson(data);
+    final messages = messagesFromJson(data);
+    return MessagesForLocale(messages, locale: data['@@locale']);
   }
 }
 

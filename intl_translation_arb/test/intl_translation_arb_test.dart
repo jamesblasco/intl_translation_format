@@ -1,7 +1,6 @@
+import 'package:intl_translation_arb/arb_format.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/src/models/formats.dart';
-import 'package:intl_translation_format/src/test_mock.dart';
-
+import 'package:intl_translation_format/test/test_mock.dart';
 import 'package:test/test.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
@@ -21,7 +20,7 @@ void main() {
   }
 }''';
         final result = ArbFormat().parseFile(file);
-        final parsed = result.map(
+        final parsed = result.messages.map(
           (key, m) => MapEntry(key, icuMessageToString(m.message)),
         );
         expect(parsed, {
@@ -42,7 +41,7 @@ void main() {
   }
 }''';
         final result = ArbFormat().parseFile(file);
-        final parsed = result.map(
+        final parsed = result.messages.map(
           (key, m) => MapEntry(key, icuMessageToString(m.message)),
         );
         expect(parsed, {
@@ -66,7 +65,7 @@ void main() {
 }''';
         final result = ArbFormat().parseFile(file);
         final mainMessage = MainMessage()..arguments = ['howMany'];
-        final parsed = result.map(
+        final parsed = result.messages.map(
           (key, m) => MapEntry(
               key, icuMessageToString(m.message..parent = mainMessage)),
         );
@@ -92,7 +91,7 @@ void main() {
 }''';
         final result = ArbFormat().parseFile(file);
         final mainMessage = MainMessage()..arguments = ['variable'];
-        final parsed = result.map(
+        final parsed = result.messages.map(
           (key, m) => MapEntry(
               key, icuMessageToString(m.message..parent = mainMessage)),
         );
@@ -105,7 +104,7 @@ void main() {
         final result = ArbFormat().parseFile(_basicArbFile);
 
         final parsed =
-            result.map((key, m) => MapEntry(key, m.message.expanded()));
+            result.messages.map((key, m) => MapEntry(key, m.message.expanded()));
         expect(parsed, {
           'simpleMessage': 'Simple Message',
           'messageWithMetadata': 'Message With Metadata',

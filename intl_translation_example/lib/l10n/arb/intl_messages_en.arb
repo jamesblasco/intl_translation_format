@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "@@last_modified": "2020-07-04T20:20:28.317849",
+  "@@last_modified": "2020-07-27T12:59:17.724955",
   "text": "text",
   "@text": {
     "type": "text",
@@ -12,6 +12,14 @@
     "type": "text",
     "placeholders": {},
     "source_text": "textWithMetadata"
+  },
+  "variable": "Hello {variable}",
+  "@variable": {
+    "type": "text",
+    "placeholders": {
+      "variable": {}
+    },
+    "source_text": "Hello {variable}"
   },
   "pluralExample": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}",
   "@pluralExample": {

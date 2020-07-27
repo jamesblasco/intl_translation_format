@@ -38,7 +38,7 @@ class MoFormat extends SingleBinaryLanguageFormat {
   }
 
   @override
-  Map<String, BasicTranslatedMessage> parseFile(List<int> content) {
+  MessagesForLocale parseFile(List<int> content) {
     final po = gettextParser.mo.parseBytes(content);
     var messages = <String, BasicTranslatedMessage>{};
 
@@ -57,6 +57,7 @@ class MoFormat extends SingleBinaryLanguageFormat {
         messages[id] = BasicTranslatedMessage(id, Message.from(message, null));
       });
     });
-    return messages;
+
+    return MessagesForLocale(messages);
   }
 }

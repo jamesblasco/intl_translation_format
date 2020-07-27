@@ -13,6 +13,7 @@ const xliffAttributes = {
 
 class XliffFormat extends SingleLanguageFormat {
   static const key = 'xliff-2';
+  
 
   @override
   String get fileExtension => 'xliff';
@@ -58,11 +59,11 @@ class XliffFormat extends SingleLanguageFormat {
   }
 
   @override
-  Map<String, BasicTranslatedMessage> parseFile(
+  MessagesForLocale parseFile(
     String content, {
     MessageGeneration generation,
   }) {
     final messages = XliffParser().parse(content);
-    return messages.messages;
+    return messages;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:intl_translation_xliff/src/parser/xliff_data.dart';
+
+import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/src/parser/xml_elements.dart';
 import 'package:intl_translation_xliff/src/parser/xml_parsers.dart';
 import 'package:xml/xml_events.dart';
@@ -16,7 +17,7 @@ class XliffParser {
   /// Parses SVG from a string to a [DrawableRoot].
   ///
   /// The [key] parameter is used for debugging purposes.
-  LocaleTranslationData parse(String str, {String key})  {
+  MessagesForLocale parse(String str, {String key})  {
     return  XliffParserState(parseEvents(str), key,
             displayWarnings: displayWarnings)
         .parse();
@@ -56,7 +57,7 @@ class XliffParserState {
 
   final String _key;
 
-  LocaleTranslationData root;
+  MessagesForLocale root;
   XliffVersion version;
 
   List<XmlEventAttribute> _currentAttributes;
@@ -126,7 +127,7 @@ class XliffParserState {
   Element currentElement;
 
   /// Drive the [XmlTextReader] to EOF and produce a [DrawableRoot].
-  LocaleTranslationData parse()  {
+  MessagesForLocale parse()  {
     for (final event in _readSubtree()) {
       if (event is XmlStartElementEvent) {
         if (startElement(event)) {

@@ -20,9 +20,9 @@ export 'package:intl_translation_xliff/intl_translation_xliff.dart';
 
 final defaultFormats = <String, TranslationFormatBuilder>{
   ArbFormat.key: () => ArbFormat(),
+  ...xliffFormats,
   JsonFormat.key: () => JsonFormat(),
   MultiJsonFormat.key: () => MultiJsonFormat(),
-  XliffFormat.key: () => XliffFormat(),
   StringsFormat.key: () => StringsFormat(),
   PoFormat.key: () => PoFormat(),
   MoFormat.key: () => MoFormat(),

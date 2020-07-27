@@ -23,10 +23,6 @@ dependencies:
     sdk: flutter
   intl: ^0.16.1
   derry: 
-  intl_translation_arb:
-    path: '../intl_translation_arb' 
-  intl_translation_json:
-    path: '../experimental/intl_translation_json'  
   intl_translation_ota_flutter:
     path: '../experimental/intl_translation_ota_flutter'    
   flutter_localizations:
@@ -39,8 +35,6 @@ dependencies:
 dev_dependencies:
   intl_translation_format:
     path: '../intl_translation_format'
-  intl_translation_multi_language_json:
-    path: '../experimental/intl_translation_multi_language_json'  
   
 
 # For information on the generic Dart part of this file, see the

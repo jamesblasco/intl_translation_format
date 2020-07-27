@@ -37,7 +37,7 @@ class PoFormat extends SingleLanguageFormat {
   }
 
    @override
-  Map<String, BasicTranslatedMessage> parseFile(
+  MessagesForLocale parseFile(
     String content, {
     MessageGeneration generation,
   }) {
@@ -59,6 +59,6 @@ class PoFormat extends SingleLanguageFormat {
         messages[id] = BasicTranslatedMessage(id, Message.from(message, null));
       });
     });
-    return messages;
+    return MessagesForLocale(messages);
   }
 }

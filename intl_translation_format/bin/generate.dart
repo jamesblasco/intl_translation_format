@@ -18,66 +18,9 @@
 
 library generate;
 
-import 'dart:io';
-
+import 'package:intl_translation_format/bin/extract.dart' as generate;
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-import 'package:intl_translation_format/src/utils/message_generation_config.dart';
-
-import 'package:intl_translation/src/directory_utils.dart';
-
 main(List<String> args) async {
-
-  final parser = GenerateArgParser()..parse(args);
-
-  final format = TranslationFormat.fromKey(parser.formatKey);
-
- final dartFiles = [
-    if (parser.configuration.sourceFiles != null) parser.configuration.sourceFiles,
-    ...args.where((x) => x.endsWith(".dart")),
-    ...linesFromFile(parser.sourcesListFile)
-  ].map((file) => LocalFile(file)).toList();
-
-
- final translationFiles = [
-    if (parser.configuration?.translationFiles != null) parser.configuration?.translationFiles,
-    ...args.where((x) => format.isFileSupported(x)).toList(),
-    ...linesFromFile(parser.translationsListFile)
-  ].map((file) => LocalFile(file)).toList();
-
-
-  if (dartFiles.isEmpty || translationFiles.isEmpty) {
-    print('No files added');
-    print('Usage: generate [options]'
-        ' file1.dart file2.dart ...'
-        ' translation1_<languageTag>.arb translation2.arb ...');
-    print(parser.usage);
-    exit(0);
-  }
-
-  // TODO(alanknight): There is a possible regression here. If a project is
-  // using the transformer and expecting it to provide names for messages with
-  // parameters, we may report those names as missing. We now have two distinct
-  // mechanisms for providing names: the transformer and just using the message
-  // text if there are no parameters. Previously this was always acting as if
-  // the transformer was in use, but that breaks the case of using the message
-  // text. The intent is to deprecate the transformer, but if this is an issue
-  // for real projects we could provide a command-line flag to indicate which
-  // sort of automated name we're using.
-  //extraction.suppressWarnings = true;
-
-  final catalog = TranslationCatalog(parser.projectName);
-  
-  await catalog.addTemplateMessages(
-    dartFiles,
-    config: parser.extractConfig,
-  );
-
-  await catalog.addTranslations(translationFiles, format: format);
-
-  final generatedFiles =
-      catalog.generateDartMessages(config: parser.generationConfig);
-
-  generatedFiles
-      .forEach((file) => LocalFile(parser.targetDir + file.name).write(file));
+  await generate.main(args, defaultFormats);
 }

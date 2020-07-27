@@ -3,9 +3,10 @@ import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/src/file/file_provider.dart';
 import 'package:intl_translation_format/src/translation_format.dart';
-import 'package:intl_translation_format/src/utils/message_generation_config.dart';
+import 'package:intl_translation_format/src/utils/translation_config.dart';
 
 import '../intl_translation_format.dart';
+
 
 class TranslationTemplate {
   ///  Project name for the translation project
