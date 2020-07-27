@@ -27,18 +27,28 @@ import 'package:intl_translation_format/src/utils/message_generation_config.dart
 import 'package:intl_translation/src/directory_utils.dart';
 
 main(List<String> args) async {
-  final parser = GenerateArgParser();
-  parser.parse(args);
+
+  final parser = GenerateArgParser()..parse(args);
 
   final format = TranslationFormat.fromKey(parser.formatKey);
 
-  var dartFiles = parser.configuration?.sourceFiles ??  args.where((x) => x.endsWith("dart")).toList();
-  var jsonFiles = parser.configuration?.translationFiles ?? args.where((x) => format.isFileSupported(x)).toList();
-  dartFiles.addAll(linesFromFile(parser.sourcesListFile));
-  jsonFiles.addAll(linesFromFile(parser.translationsListFile));
-  if (dartFiles.length == 0 || jsonFiles.length == 0) {
+ final dartFiles = [
+    if (parser.configuration.sourceFiles != null) parser.configuration.sourceFiles,
+    ...args.where((x) => x.endsWith(".dart")),
+    ...linesFromFile(parser.sourcesListFile)
+  ].map((file) => LocalFile(file)).toList();
+
+
+ final translationFiles = [
+    if (parser.configuration?.translationFiles != null) parser.configuration?.translationFiles,
+    ...args.where((x) => format.isFileSupported(x)).toList(),
+    ...linesFromFile(parser.translationsListFile)
+  ].map((file) => LocalFile(file)).toList();
+
+
+  if (dartFiles.isEmpty || translationFiles.isEmpty) {
     print('No files added');
-    print('Usage: generate_from_arb [options]'
+    print('Usage: generate [options]'
         ' file1.dart file2.dart ...'
         ' translation1_<languageTag>.arb translation2.arb ...');
     print(parser.usage);
@@ -56,19 +66,18 @@ main(List<String> args) async {
   // sort of automated name we're using.
   //extraction.suppressWarnings = true;
 
-  final files = jsonFiles.map((e) => LocalFile(e)).toList();
-  final dartFileRef = dartFiles.map((e) => LocalFile(e)).toList();
-
   final catalog = TranslationCatalog(parser.projectName);
+  
   await catalog.addTemplateMessages(
-    dartFileRef,
+    dartFiles,
     config: parser.extractConfig,
   );
 
-  await catalog.addTranslations(files, format: format);
+  await catalog.addTranslations(translationFiles, format: format);
 
   final generatedFiles =
       catalog.generateDartMessages(config: parser.generationConfig);
+
   generatedFiles
       .forEach((file) => LocalFile(parser.targetDir + file.name).write(file));
 }

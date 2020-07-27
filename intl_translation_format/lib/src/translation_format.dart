@@ -17,14 +17,14 @@ abstract class TranslationFormat<T extends FileData> {
   
   const TranslationFormat();
 
-  void parseMessagesFromFileIntoCatalog(
+  void parseFiles(
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   });
 
   // From a catalog of intl template messages it creates an
   // list of abstracted files in the desired format
-  List<T> buildTemplate(TranslationTemplate template);
+  List<T> generateTemplateFiles(TranslationTemplate template);
 
   List<String> get supportedFileExtensions;
 
@@ -58,12 +58,12 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
     MessageGeneration generation,
   });
 
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     TranslationTemplate catalog,
   );
 
   @override
-  Future parseMessagesFromFileIntoCatalog(
+  Future parseFiles(
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
@@ -88,11 +88,11 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
   }
 
   @override
-  List<StringFileData> buildTemplate(
+  List<StringFileData> generateTemplateFiles(
     TranslationTemplate catalog,
   ) {
     final file = StringFileData(
-      buildTemplateFileContent(catalog),
+      generateTemplateFile(catalog),
       '${catalog.projectName}_${catalog.defaultLocale}.$fileExtension',
     );
     return [file];
@@ -101,17 +101,18 @@ abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
 
 abstract class SingleBinaryLanguageFormat
     extends TranslationFormat<BinaryFileData> {
+
   Map<String, BasicTranslatedMessage> parseFile(Uint8List content);
 
   List<String> get supportedFileExtensions => [supportedFileExtension];
   String get supportedFileExtension;
 
-  Uint8List buildTemplateFileContent(
+  Uint8List generateTemplateFile(
     TranslationTemplate catalog,
   );
 
   @override
-  Future parseMessagesFromFileIntoCatalog(
+  Future parseFiles(
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
@@ -136,11 +137,11 @@ abstract class SingleBinaryLanguageFormat
   }
 
   @override
-  List<BinaryFileData> buildTemplate(
+  List<BinaryFileData> generateTemplateFiles(
     TranslationTemplate catalog,
   ) {
     final file = BinaryFileData(
-      buildTemplateFileContent(catalog),
+      generateTemplateFile(catalog),
       '${catalog.projectName}_${catalog.defaultLocale}.$supportedFileExtension',
     );
     return [file];
@@ -162,11 +163,11 @@ abstract class MultipleLanguageFormat
 
   Map<String, Map<String, BasicTranslatedMessage>> parseFile(String content);
 
-  String buildTemplateFileContent(
+  String generateTemplateFile(
       Map<String, Map<String, Message>> messages, TranslationTemplate metadata);
 
   @override
-  Future parseMessagesFromFileIntoCatalog(
+  Future parseFiles(
     List<RedeableFile> files, {
     TranslationCatalog catalog,
   }) async {
@@ -189,9 +190,9 @@ abstract class MultipleLanguageFormat
   }
 
   @override
-  List<StringFileData> buildTemplate(TranslationTemplate catalog) {
+  List<StringFileData> generateTemplateFiles(TranslationTemplate catalog) {
     final file = StringFileData(
-      buildTemplateFileContent(
+      generateTemplateFile(
         {catalog.defaultLocale: catalog.messages},
         catalog,
       ),

@@ -58,20 +58,22 @@ void main() {
     });
 
     test('xliff', () async {
-      final result = XliffParser(displayWarnings: false).parse(xliffBasicMessage);
+      final result =
+          XliffParser(displayWarnings: false).parse(xliffBasicMessage);
       final mainMessage = MainMessage()..arguments = ['howMany', 'variable'];
       final map = result.messages.map((key, value) {
         final message = value.message;
         message..parent = mainMessage;
 
-        return MapEntry(key, ICUParser().icuMessageToString(value.message));
+        return MapEntry(key, icuMessageToString(value.message));
       });
 
       expect(map, {
         'text': 'normal Text',
         'textWithMetadata': 'text With Metadata',
-        'pluralExample' : '{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}',
-        'variable' : 'Hello {variable}'
+        'pluralExample':
+            '{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}',
+        'variable': 'Hello {variable}'
       });
     });
   });

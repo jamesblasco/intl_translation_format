@@ -4,7 +4,6 @@ import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 import 'package:xml/xml.dart';
 
-
 const xliffAttributes = {
   'xmlns': 'urn:oasis:names:tc:xliff:document:2.0',
   'xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
@@ -19,7 +18,7 @@ class XliffFormat extends SingleLanguageFormat {
   String get fileExtension => 'xliff';
 
   @override
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     TranslationTemplate catalog,
   ) {
     final builder = XmlBuilder();
@@ -32,7 +31,7 @@ class XliffFormat extends SingleLanguageFormat {
     }, nest: () {
       builder.element('file', nest: () {
         catalog.messages.forEach((key, message) {
-          final text = ICUParser().icuMessageToString(message);
+          final text = icuMessageToString(message);
           builder.element('unit', attributes: {'id': key, 'name': key},
               nest: () {
             builder.element('segment', nest: () {

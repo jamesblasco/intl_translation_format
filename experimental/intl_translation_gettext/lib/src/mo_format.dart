@@ -13,7 +13,7 @@ class MoFormat extends SingleBinaryLanguageFormat {
   String get supportedFileExtension => 'mo';
 
   @override
-  Uint8List buildTemplateFileContent(
+  Uint8List generateTemplateFile(
     TranslationTemplate catalog,
   ) {
     return gettextParser.mo.compile({

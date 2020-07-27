@@ -9,71 +9,29 @@ class ArbFormat extends SingleLanguageFormat {
 
   @override
   String get fileExtension => 'arb';
-  
 
   @override
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     TranslationTemplate catalog, {
     bool suppressMetaData = false,
     bool includeSourceText = true,
   }) {
-    Map<String, dynamic> allMessages = {};
-    if (catalog.defaultLocale != null) {
-      allMessages["@@locale"] = catalog.defaultLocale;
-    }
-    if (catalog.lastModified != null) {
-      allMessages["@@last_modified"] = catalog.lastModified.toIso8601String();
-    }
+    final allMessages = <String, dynamic>{
+      if (catalog.defaultLocale != null) "@@locale": catalog.defaultLocale,
+      if (catalog.lastModified != null)
+        "@@last_modified": catalog.lastModified.toIso8601String(),
+    };
 
-    catalog.messages.forEach((k, v) => allMessages.addAll(_toARB(v,
-        suppressMetaData: suppressMetaData,
-        includeSourceText: includeSourceText)));
+    catalog.messages.forEach((k, v) {
+      allMessages.addAll(
+        _toARB(v,
+            suppressMetaData: suppressMetaData,
+            includeSourceText: includeSourceText),
+      );
+    });
 
-    final encoder =  JsonEncoder.withIndent('  ');
+    final encoder = JsonEncoder.withIndent('  ');
     return encoder.convert(allMessages);
-  }
-
-  Map<String, dynamic> _toARB(
-    MainMessage message, {
-    bool suppressMetaData = false,
-    bool includeSourceText = true,
-  }) {
-    if (message.messagePieces.isEmpty) return null;
-    Map<String, dynamic> out = {};
-    out[message.name] = ICUParser().icuMessageToString(message);
-
-    if (!suppressMetaData) {
-      out["@${message.name}"] = _arbMetadata(message);
-
-      if (includeSourceText) {
-        out["@${message.name}"]["source_text"] = out[message.name];
-      }
-    }
-
-    return out;
-  }
-
-  Map _arbMetadata(MainMessage message) {
-    var out = {};
-    var desc = message.description;
-    if (desc != null) {
-      out["description"] = desc;
-    }
-    out["type"] = "text";
-    var placeholders = {};
-    for (var arg in message.arguments) {
-      addArgumentFor(message, arg, placeholders);
-    }
-    out["placeholders"] = placeholders;
-    return out;
-  }
-
-  void addArgumentFor(MainMessage message, String arg, Map result) {
-    var extraInfo = {};
-    if (message.examples != null && message.examples[arg] != null) {
-      extraInfo["example"] = message.examples[arg];
-    }
-    result[arg] = extraInfo;
   }
 
   @override
@@ -81,23 +39,70 @@ class ArbFormat extends SingleLanguageFormat {
     String content, {
     MessageGeneration generation,
   }) {
+    Map<String, BasicTranslatedMessage> messagesFromJson(
+      Map<String, dynamic> data,
+    ) {
+      final translations = <String, BasicTranslatedMessage>{};
+
+      data.forEach((id, messageData) {
+        final message = recreateIntlObjects(id, messageData);
+        if (message != null) {
+          translations[id] = message;
+        }
+      });
+
+      return translations;
+    }
+
     final data = jsonDecoder.decode(content);
-    return _generateLocaleTranslation(data);
+    return messagesFromJson(data);
   }
 }
 
-Map<String, BasicTranslatedMessage> _generateLocaleTranslation(
-    Map<String, dynamic> localeData) {
-  Map<String, BasicTranslatedMessage> translations = {};
+// TODO: Move from bin to lib in intl_translation and remove here
 
-  localeData.forEach((id, messageData) {
-    BasicTranslatedMessage message = recreateIntlObjects(id, messageData);
-    if (message != null) {
-      translations[id] = message;
+Map<String, dynamic> _toARB(
+  MainMessage message, {
+  bool suppressMetaData = false,
+  bool includeSourceText = true,
+}) {
+  if (message.messagePieces.isEmpty) return null;
+  final out = <String, dynamic>{};
+
+  out[message.name] = icuMessageToString(message);
+
+  if (!suppressMetaData) {
+    out["@${message.name}"] = _arbMetadata(message);
+
+    if (includeSourceText) {
+      out["@${message.name}"]["source_text"] = out[message.name];
     }
-  });
+  }
 
-  return translations;
+  return out;
+}
+
+Map _arbMetadata(MainMessage message) {
+  var out = {};
+  var desc = message.description;
+  if (desc != null) {
+    out["description"] = desc;
+  }
+  out["type"] = "text";
+  var placeholders = {};
+  for (var arg in message.arguments) {
+    addArgumentFor(message, arg, placeholders);
+  }
+  out["placeholders"] = placeholders;
+  return out;
+}
+
+void addArgumentFor(MainMessage message, String arg, Map result) {
+  var extraInfo = {};
+  if (message.examples != null && message.examples[arg] != null) {
+    extraInfo["example"] = message.examples[arg];
+  }
+  result[arg] = extraInfo;
 }
 
 const jsonDecoder = const JsonCodec();

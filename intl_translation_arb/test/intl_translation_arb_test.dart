@@ -2,10 +2,8 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/src/models/formats.dart';
 import 'package:intl_translation_format/src/test_mock.dart';
 
-
 import 'package:test/test.dart';
 import 'package:intl_translation/src/intl_message.dart';
-
 
 void main() {
   group('Arb Format -', () {
@@ -24,7 +22,7 @@ void main() {
 }''';
         final result = ArbFormat().parseFile(file);
         final parsed = result.map(
-          (key, m) => MapEntry(key, ICUParser().icuMessageToString(m.message)),
+          (key, m) => MapEntry(key, icuMessageToString(m.message)),
         );
         expect(parsed, {
           'simpleMessage': 'Simple Message',
@@ -45,7 +43,7 @@ void main() {
 }''';
         final result = ArbFormat().parseFile(file);
         final parsed = result.map(
-          (key, m) => MapEntry(key, ICUParser().icuMessageToString(m.message)),
+          (key, m) => MapEntry(key, icuMessageToString(m.message)),
         );
         expect(parsed, {
           'messageWithMetadata': 'Message With Metadata',
@@ -69,8 +67,8 @@ void main() {
         final result = ArbFormat().parseFile(file);
         final mainMessage = MainMessage()..arguments = ['howMany'];
         final parsed = result.map(
-          (key, m) => MapEntry(key,
-              ICUParser().icuMessageToString(m.message..parent = mainMessage)),
+          (key, m) => MapEntry(
+              key, icuMessageToString(m.message..parent = mainMessage)),
         );
         expect(parsed, {
           'pluralExample':
@@ -95,8 +93,8 @@ void main() {
         final result = ArbFormat().parseFile(file);
         final mainMessage = MainMessage()..arguments = ['variable'];
         final parsed = result.map(
-          (key, m) => MapEntry(key,
-              ICUParser().icuMessageToString(m.message..parent = mainMessage)),
+          (key, m) => MapEntry(
+              key, icuMessageToString(m.message..parent = mainMessage)),
         );
         expect(parsed, {
           'messageWithVariable': 'Share {variable}',
@@ -126,7 +124,7 @@ void main() {
           },
         );
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
         expect(result.first.contents, '''
 {
   "@@locale": "en",
@@ -149,7 +147,7 @@ void main() {
           },
         );
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
         expect(result.first.contents, '''
 {
   "@@locale": "en",
@@ -174,7 +172,7 @@ void main() {
           },
         );
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
         expect(result.first.contents, '''
 {
   "@@locale": "en",
@@ -201,7 +199,7 @@ void main() {
           },
         );
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
         expect(result.first.contents, '''
 {
   "@@locale": "en",
@@ -233,7 +231,7 @@ void main() {
           },
         );
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
         expect(result.first.contents, '''
 {
   "@@locale": "en",
@@ -272,7 +270,7 @@ void main() {
       test('File name', () {
         final template = MockTemplate('intl', {});
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
 
         expect(result.first.name, 'intl_en.arb');
       });
@@ -280,7 +278,7 @@ void main() {
       test('Locale fr', () {
         final template = MockTemplate('intl', {}, locale: 'fr');
         template.lastModified = null;
-        final result = ArbFormat().buildTemplate(template);
+        final result = ArbFormat().generateTemplateFiles(template);
 
         expect(result.first.name, 'intl_fr.arb');
         expect(result.first.contents, '''
@@ -291,7 +289,6 @@ void main() {
     });
   });
 }
-
 
 const _basicArbFile = '''{
   "@@locale": "en",

@@ -12,13 +12,13 @@ class JsonFormat extends SingleLanguageFormat {
   String get fileExtension => 'json';
 
   @override
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     TranslationTemplate catalog,
   ) {
     final messages = catalog.messages;
     var json = '{\n';
     messages.forEach((key, value) {
-      final message = ICUParser().icuMessageToString(value);
+      final message = icuMessageToString(value);
       json += '  "$key": "$message",\n';
     });
     if (messages.isNotEmpty) json = json.substring(0, json.length - 2) + '\n';
@@ -26,7 +26,7 @@ class JsonFormat extends SingleLanguageFormat {
     return json;
   }
 
-   @override
+  @override
   Map<String, BasicTranslatedMessage> parseFile(
     String content, {
     MessageGeneration generation,
@@ -40,4 +40,3 @@ class JsonFormat extends SingleLanguageFormat {
     });
   }
 }
-

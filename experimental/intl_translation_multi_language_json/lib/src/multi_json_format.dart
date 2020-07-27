@@ -15,7 +15,7 @@ class MultiJsonFormat extends MultipleLanguageFormat {
   String get supportedFileExtension => 'json';
 
   @override
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     Map<String, Map<String, Message>> messages,
     TranslationTemplate catalog,
   ) {
@@ -24,7 +24,7 @@ class MultiJsonFormat extends MultipleLanguageFormat {
     messages.forEach((locale, messages) {
       messages.forEach((key, message) {
         messagesByKey.putIfAbsent(key, () => {});
-        messagesByKey[key][locale] = ICUParser().icuMessageToString(message);
+        messagesByKey[key][locale] = icuMessageToString(message);
       });
     });
 

@@ -12,24 +12,24 @@ class StringsFormat extends SingleLanguageFormat {
   String get fileExtension => 'strings';
 
   @override
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     TranslationTemplate catalog,
   ) {
     final messages = catalog.messages;
     var json = '\n';
     messages.forEach((key, value) {
-      final message = ICUParser().icuMessageToString(value);
+      final message = icuMessageToString(value);
       json += '"$key"= "$message";\n';
     });
     return json;
   }
 
   @override
-  List<StringFileData> buildTemplate(
+  List<StringFileData> generateTemplateFiles(
     TranslationTemplate catalog,
   ) {
     final file = StringFileData(
-      buildTemplateFileContent(catalog),
+      generateTemplateFile(catalog),
       '${catalog.projectName}_${catalog.defaultLocale}.$fileExtension',
     );
 
@@ -55,7 +55,6 @@ class StringsFormat extends SingleLanguageFormat {
     });
   }
 }
-
 
 final fakePluralFile = '''
 <?xml version="1.0" encoding="UTF-8"?>

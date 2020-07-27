@@ -54,7 +54,7 @@ class TranslationTemplate {
   }
 
   List<FileData> extractTemplate(TranslationFormat format) {
-    return format.buildTemplate(this);
+    return format.generateTemplateFiles(this);
   }
 }
 
@@ -89,7 +89,7 @@ class TranslationCatalog extends TranslationTemplate {
     List<RedeableFile> files, {
     TranslationFormat format,
   }) async {
-    await format.parseMessagesFromFileIntoCatalog(
+    await format.parseFiles(
       files,
       catalog: this,
     );

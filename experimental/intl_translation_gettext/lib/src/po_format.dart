@@ -12,7 +12,7 @@ class PoFormat extends SingleLanguageFormat {
   String get fileExtension => 'po';
 
   @override
-  String buildTemplateFileContent(
+  String generateTemplateFile(
     TranslationTemplate catalog,
   ) {
    return gettextParser.po.compile({
