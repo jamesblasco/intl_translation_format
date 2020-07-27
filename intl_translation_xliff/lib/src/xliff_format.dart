@@ -12,8 +12,9 @@ const xliffAttributes = {
 };
 
 class XliffFormat extends SingleLanguageFormat {
-  static const key = 'xliff-2';
+  final XliffVersion version;
   
+  XliffFormat([this.version = XliffVersion.v2]);
 
   @override
   String get fileExtension => 'xliff';
@@ -63,7 +64,6 @@ class XliffFormat extends SingleLanguageFormat {
     String content, {
     MessageGeneration generation,
   }) {
-    final messages = XliffParser().parse(content);
-    return messages;
+    return XliffParser(version: version).parse(content);
   }
 }

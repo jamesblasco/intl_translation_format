@@ -1,24 +1,26 @@
 import 'dart:math';
 
-
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/src/parser/xml_elements.dart';
 import 'package:intl_translation_xliff/src/parser/xml_parsers.dart';
 import 'package:xml/xml_events.dart';
 
-
-enum XliffVersion { v2, v1 }
-
 class XliffParser {
   final bool displayWarnings;
+  final XliffVersion version;
+  final bool multilingual;
 
-  XliffParser({this.displayWarnings = true});
+  XliffParser({
+    this.displayWarnings = true,
+    this.version = XliffVersion.v2,
+    this.multilingual = false,
+  });
 
   /// Parses SVG from a string to a [DrawableRoot].
   ///
   /// The [key] parameter is used for debugging purposes.
-  MessagesForLocale parse(String str, {String key})  {
-    return  XliffParserState(parseEvents(str), key,
+  MessagesForLocale parse(String str, {String key}) {
+    return XliffParserState(parseEvents(str), key, version,
             displayWarnings: displayWarnings)
         .parse();
   }
@@ -47,18 +49,21 @@ class XliffParserException implements Exception {
 /// Maintains state while pushing an [XmlPushReader] through the XML tree.
 class XliffParserState {
   /// Creates a new [XliffParserState].
-  XliffParserState(Iterable<XmlEvent> events, this._key,
-      {this.displayWarnings = true})
+  XliffParserState(Iterable<XmlEvent> events, this._key, this.version,
+      {this.multilingual = false, this.displayWarnings = true})
       : assert(events != null),
         _eventIterator = events.iterator;
 
   final Iterator<XmlEvent> _eventIterator;
+
+  final XliffVersion version;
+  final bool multilingual;
+
   bool displayWarnings;
 
   final String _key;
 
   MessagesForLocale root;
-  XliffVersion version;
 
   List<XmlEventAttribute> _currentAttributes;
   XmlStartElementEvent currentStartElement;
@@ -127,7 +132,7 @@ class XliffParserState {
   Element currentElement;
 
   /// Drive the [XmlTextReader] to EOF and produce a [DrawableRoot].
-  MessagesForLocale parse()  {
+  MessagesForLocale parse() {
     for (final event in _readSubtree()) {
       if (event is XmlStartElementEvent) {
         if (startElement(event)) {
@@ -135,7 +140,7 @@ class XliffParserState {
         }
         final parseFunc = elementParsers[event.name];
 
-        final element =  parseFunc?.call(this);
+        final element = parseFunc?.call(this);
 
         if (parseFunc == null) {
           if (!event.isSelfClosing) {

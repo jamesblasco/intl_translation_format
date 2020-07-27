@@ -15,7 +15,6 @@ final Map<String, _ParseFunc> elementParsers = <String, _ParseFunc>{
   'source': (e) => SourceElement(e),
   //v1.2
   'body': (e) => BodyElement(e),
-
 };
 
 abstract class Element {
@@ -24,7 +23,6 @@ abstract class Element {
         parent = _state.depth == _state.currentElement?.depth
             ? _state.currentElement?.parent
             : _state.currentElement {
-   
     _state.elementCountForCurrentDepth()[key] ??= 0;
     _state.elementCountForCurrentDepth()[key] += 1;
     if (!allowsMultiple && _state.elementCountForCurrentDepth()[key] > 1) {
@@ -139,17 +137,36 @@ class XliffElement extends Element {
     final srcLang = attributes['srcLang'];
     final trgLang = attributes['trgLang'];
 
-    parserState.root = MessagesForLocale({}, locale: srcLang);
+    if (!parserState.multilingual && trgLang != null) {
+      throw XliffParserException(
+          title: 'Invalid Xliff parser.',
+          description:
+              'Current format ${keyForVersion(parserState.version)} does not '
+              'support multiple locales in the same file, use '
+              '${keyForVersion(parserState.version, true)} instead',
+          context: 'In element <xliff>');
+    }
 
-    parserState.version = parseVersion(version);
+    final parsedVersion = parseVersion(version);
+    if (parserState.version != parsedVersion) {
+      throw XliffParserException(
+          title: 'Invalid Xliff version parser',
+          description: 'Using format ${keyForVersion(parserState.version)}, '
+              'while the file format ${version} requires ${parsedVersion}}',
+          context: 'In element <xliff>');
+    }
+
+    parserState.root = MessagesForLocale({}, locale: srcLang);
   }
 
   XliffVersion parseVersion(String version) {
     switch (version) {
       case '2.0':
         return XliffVersion.v2;
+      case '1.2':
+        return XliffVersion.v1;
       default:
-        throw 'Version $version is not supported';
+        throw 'Xliff version $version is not supported';
     }
   }
 }
@@ -203,7 +220,8 @@ class UnitElement extends Element {
   List<String> get requiredAttributes => ['id'];
 
   @override
-  String get key => parserState.version == XliffVersion.v2 ? 'unit' : 'trans-unit';
+  String get key =>
+      parserState.version == XliffVersion.v2 ? 'unit' : 'trans-unit';
 
   @override
   void onStart() {
@@ -314,8 +332,6 @@ class TargetElement extends Element {
   }
 } */
 
-
-
 /// V1.2
 class BodyElement extends Element {
   final XliffParserState parserState;
@@ -325,6 +341,5 @@ class BodyElement extends Element {
   String get key => 'body';
 
   @override
-  void onStart() {
-  }
+  void onStart() {}
 }

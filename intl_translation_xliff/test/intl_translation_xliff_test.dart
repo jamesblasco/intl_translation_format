@@ -19,7 +19,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result = XliffParser(displayWarnings: false).parse(content);
+        XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'Unsupported nested <xliff> element.');
         return;
@@ -34,7 +34,7 @@ void main() {
           </xliff>
       ''';
       try {
-        final result = XliffParser(displayWarnings: false).parse(content);
+        XliffParser(displayWarnings: false).parse(content);
       } on XliffParserException catch (e) {
         expect(e.title, 'version attribute is required for <xliff>');
         return;
@@ -42,16 +42,17 @@ void main() {
       throw 'Expected an error';
     });
 
-    test('Required attribute version is missing in <xliff>', () async {
+    test('Wrong xliff version in format', () async {
       final content = '''
           <?xml version="1.0 encoding="UTF-8""?>
-          <xliff  srcLang="en" $_xliffAttributes>
+          <xliff  srcLang="en" $_xliffAttributes version="2.0">
           </xliff>
       ''';
       try {
-        final result = XliffParser(displayWarnings: false).parse(content);
+        XliffParser(displayWarnings: false, version: XliffVersion.v1)
+            .parse(content);
       } on XliffParserException catch (e) {
-        expect(e.title, 'version attribute is required for <xliff>');
+        expect(e.title, 'Invalid Xliff version parser');
         return;
       }
       throw 'Expected an error';
