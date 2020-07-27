@@ -16,7 +16,7 @@ class TranslationConfig {
   final List<String> sourceFiles;
   final List<String> translationFiles;
 
-  TranslationConfig({
+  const TranslationConfig({
     this.projectName = 'intl_messages',
     this.outputDir = 'lib/intl/',
     this.defaultLocale = 'en',

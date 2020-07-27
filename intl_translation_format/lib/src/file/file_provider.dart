@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 import 'package:path/path.dart' as p;
 
-abstract class RedeableFile {
+abstract class RedableFile {
   String get name;
 
   Future<String> readAsString();
@@ -42,7 +42,7 @@ abstract class WritableFile {
   }
 }
 
-abstract class FileProvider with RedeableFile, WritableFile {
+abstract class FileProvider with RedableFile, WritableFile {
   @override
   String get name;
 

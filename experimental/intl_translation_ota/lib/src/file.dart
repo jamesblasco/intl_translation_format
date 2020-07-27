@@ -4,9 +4,7 @@ import 'dart:typed_data';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:http/http.dart' as http;
 
-
-
-class NetworkFile extends RedeableFile {
+class NetworkFile extends RedableFile {
   final String url;
   final String name;
 

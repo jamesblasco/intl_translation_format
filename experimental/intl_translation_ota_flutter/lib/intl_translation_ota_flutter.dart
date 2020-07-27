@@ -1,4 +1,5 @@
 library intl_translation_ota_flutter;
+
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -12,8 +13,7 @@ export 'package:intl_translation_ota/intl_translation_ota.dart';
 export 'src/app_strings.dart';
 export 'src/file.dart';
 
-
-class AssetFile extends RedeableFile {
+class AssetFile extends RedableFile {
   final String key;
 
   @override
@@ -32,6 +32,4 @@ class AssetFile extends RedeableFile {
   Future<String> readAsString() async {
     return await rootBundle.loadString(key);
   }
-
- 
 }

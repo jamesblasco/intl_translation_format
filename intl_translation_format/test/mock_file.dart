@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-class MockFile extends RedeableFile {
+class MockFile extends RedableFile {
   final FileData data;
   MockFile(this.data);
 

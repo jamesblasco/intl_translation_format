@@ -7,7 +7,6 @@ import 'package:intl_translation_format/src/utils/translation_config.dart';
 
 import '../intl_translation_format.dart';
 
-
 class TranslationTemplate {
   ///  Project name for the translation project
   ///  The name of translation files will need to follow the following pattern
@@ -87,7 +86,7 @@ class TranslationCatalog extends TranslationTemplate {
       : super(projectName, locale: locale);
 
   Future addTranslations(
-    List<RedeableFile> files, {
+    List<RedableFile> files, {
     TranslationFormat format,
   }) async {
     await format.parseFiles(
@@ -113,8 +112,7 @@ class TranslationCatalog extends TranslationTemplate {
     final files = <FileData>[];
     translatedMessages.forEach((locale, translation) {
       final messages = translation.map((e) => e.toCatalogMessage(this));
-      final content =
-          generation.contentForLocale(locale, messages);
+      final content = generation.contentForLocale(locale, messages);
       final file = StringFileData(content, '${basename}_$locale.dart');
       files.add(file);
     });
@@ -129,9 +127,8 @@ class TranslationCatalog extends TranslationTemplate {
 /// A TranslatedMessage that just uses the name as the id and knows how to look
 /// up its original messages in our [messages].
 class CatalogTranslatedMessage extends TranslatedMessage {
-  
   final TranslationCatalog catalog;
-  
+
   CatalogTranslatedMessage(
     String name,
     Message translated,

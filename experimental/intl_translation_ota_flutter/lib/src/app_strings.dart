@@ -6,7 +6,7 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_ota/intl_translation_ota.dart';
 
 class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
-  final Map<String, RedeableFile> translations;
+  final Map<String, RedableFile> translations;
   final TranslationFormat format;
 
   _AppStringsDelegate(this.translations, this.format);
@@ -32,7 +32,7 @@ class AppStrings {
   TranslationCatalog _catalog;
 
   static _AppStringsDelegate delegate(
-    Map<String, RedeableFile> translations,
+    Map<String, RedableFile> translations,
     TranslationFormat format,
   ) =>
       _AppStringsDelegate(translations, format);
@@ -42,7 +42,7 @@ class AppStrings {
 
   final String _localeName;
   final String _locale;
-  static Future<AppStrings> load(Locale locale, RedeableFile file,
+  static Future<AppStrings> load(Locale locale, RedableFile file,
       String _locale, TranslationFormat format) async {
     final catalog = TranslationCatalog('intl');
     await catalog.addTranslations([file], format: format);
@@ -51,11 +51,12 @@ class AppStrings {
   }
 
   static AppStrings of(BuildContext context) {
-    return Localizations.of<AppStrings>(context, AppStrings) ?? AppStrings(null, null, null);
+    return Localizations.of<AppStrings>(context, AppStrings) ??
+        AppStrings(null, null, null);
   }
 
   String string(String key) {
-    if(_catalog == null) return 'String $key not found';
+    if (_catalog == null) return 'String $key not found';
     final message = _catalog.translatedMessages[_locale]
         ?.firstWhere((message) => message.id == key);
     if (message == null) return 'String $key not found';
