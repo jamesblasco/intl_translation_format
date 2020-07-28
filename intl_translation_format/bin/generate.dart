@@ -18,7 +18,7 @@
 
 library generate;
 
-import 'package:intl_translation_format/bin/extract.dart' as generate;
+import 'package:intl_translation_format/bin/generate.dart' as generate;
 import 'package:intl_translation_format/intl_translation_format.dart';
 
 main(List<String> args) async {

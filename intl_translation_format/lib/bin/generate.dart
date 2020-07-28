@@ -34,7 +34,7 @@ main(
       TranslationFormat.fromKey(parser.formatKey, supportedFormats: formats);
 
   final dartFiles = <String>[
-    ...?parser.configuration.sourceFiles,
+    ...?parser.configuration?.sourceFiles,
     ...args.where((x) => x.endsWith(".dart")),
     ...linesFromFile(parser.sourcesListFile)
   ].map((file) => LocalFile(file)).toList();
