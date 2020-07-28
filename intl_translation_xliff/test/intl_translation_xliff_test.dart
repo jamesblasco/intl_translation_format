@@ -4,11 +4,17 @@ import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 import 'package:test/test.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
-final _xliffAttributes = xliffAttributes.entries
+import 'xliff_v2_test.dart' as xliff2;
+import 'xliff_v1_test.dart' as xliff1;
+
+final _xliffAttributes = attributesForVersion(XliffVersion.v2).entries
     .map((e) => '${e.key}="${e.value}"')
     .reduce((value, element) => '$value $element');
 
 void main() {
+  xliff2.main();
+  xliff1.main();
+  
   group('Xliff parser:', () {
     test('Nested <xliff> not allowed', () async {
       final content = '''
@@ -45,7 +51,7 @@ void main() {
     test('Wrong xliff version in format', () async {
       final content = '''
           <?xml version="1.0 encoding="UTF-8""?>
-          <xliff  srcLang="en" $_xliffAttributes version="2.0">
+          <xliff  source-language="en" $_xliffAttributes version="2.0">
           </xliff>
       ''';
       try {
@@ -81,7 +87,7 @@ void main() {
 }
 
 const xliffBasicMessage = '''
-      <?xml version="1.0 encoding="UTF-8""?>
+<?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" srcLang="en">
   <file>
     <unit id="text" name="text">

@@ -11,7 +11,7 @@ class XliffParser {
   final bool multilingual;
 
   XliffParser({
-    this.displayWarnings = true,
+    this.displayWarnings = false,
     this.version = XliffVersion.v2,
     this.multilingual = false,
   });
@@ -20,9 +20,12 @@ class XliffParser {
   ///
   /// The [key] parameter is used for debugging purposes.
   MessagesForLocale parse(String str, {String key}) {
-    return XliffParserState(parseEvents(str), key, version,
-            displayWarnings: displayWarnings)
-        .parse();
+    return XliffParserState(
+      parseEvents(str),
+      key,
+      version,
+      displayWarnings: displayWarnings,
+    ).parse();
   }
 }
 
@@ -49,9 +52,13 @@ class XliffParserException implements Exception {
 /// Maintains state while pushing an [XmlPushReader] through the XML tree.
 class XliffParserState {
   /// Creates a new [XliffParserState].
-  XliffParserState(Iterable<XmlEvent> events, this._key, this.version,
-      {this.multilingual = false, this.displayWarnings = true})
-      : assert(events != null),
+  XliffParserState(
+    Iterable<XmlEvent> events,
+    this._key,
+    this.version, {
+    this.multilingual = false,
+    this.displayWarnings = true,
+  })  : assert(events != null),
         _eventIterator = events.iterator;
 
   final Iterator<XmlEvent> _eventIterator;

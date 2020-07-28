@@ -8,13 +8,17 @@ typedef _ParseFunc = Element Function(XliffParserState parserState);
 final Map<String, _ParseFunc> elementParsers = <String, _ParseFunc>{
   'xliff': (e) => XliffElement(e),
   'file': (e) => FileElement(e),
+  'source': (e) => SourceElement(e),
+
+  //v2.0
   'group': (e) => GroupElement(e),
   'unit': (e) => UnitElement(e),
   'segment': (e) => SegmentElement(e),
   'ignorable': (e) => IgnorableElement(e),
-  'source': (e) => SourceElement(e),
+
   //v1.2
   'body': (e) => BodyElement(e),
+  'trans-unit': (e) => UnitElement(e),
 };
 
 abstract class Element {
@@ -116,7 +120,13 @@ class XliffElement extends Element {
   bool get required => true;
 
   @override
-  List<String> get requiredAttributes => ['version', 'srcLang'];
+  List<String> get requiredAttributes => [
+        'version',
+        if (parserState.version == XliffVersion.v2)
+          'srcLang'
+        else
+          'source-language'
+      ];
   @override
   List<String> get optionalAttributes => ['trgLang', 'xml:space'];
 
@@ -134,7 +144,20 @@ class XliffElement extends Element {
     }
 
     final version = attributes['version'];
-    final srcLang = attributes['srcLang'];
+
+
+    final parsedVersion = parseVersion(version);
+    if (parserState.version != parsedVersion) {
+      throw XliffParserException(
+          title: 'Invalid Xliff version parser',
+          description: 'Using format ${keyForVersion(parserState.version)}, '
+              'while the file format ${version} requires ${parsedVersion}}',
+          context: 'In element <xliff>');
+    }
+
+    final srcLang = parserState.version == XliffVersion.v2
+        ? attributes['srcLang']
+        : attributes['source-language'];
     final trgLang = attributes['trgLang'];
 
     if (!parserState.multilingual && trgLang != null) {
@@ -144,15 +167,6 @@ class XliffElement extends Element {
               'Current format ${keyForVersion(parserState.version)} does not '
               'support multiple locales in the same file, use '
               '${keyForVersion(parserState.version, true)} instead',
-          context: 'In element <xliff>');
-    }
-
-    final parsedVersion = parseVersion(version);
-    if (parserState.version != parsedVersion) {
-      throw XliffParserException(
-          title: 'Invalid Xliff version parser',
-          description: 'Using format ${keyForVersion(parserState.version)}, '
-              'while the file format ${version} requires ${parsedVersion}}',
           context: 'In element <xliff>');
     }
 
