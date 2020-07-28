@@ -2,7 +2,6 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/intl_translation_xliff.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 import 'package:test/test.dart';
-import 'package:intl_translation/src/intl_message.dart';
 
 import 'xliff_v2_test.dart' as xliff2;
 import 'xliff_v1_test.dart' as xliff1;
@@ -64,25 +63,7 @@ void main() {
       throw 'Expected an error';
     });
 
-    test('xliff', () async {
-      final result =
-          XliffParser(displayWarnings: false).parse(xliffBasicMessage);
-      final mainMessage = MainMessage()..arguments = ['howMany', 'variable'];
-      final map = result.messages.map((key, value) {
-        final message = value.message;
-        message..parent = mainMessage;
-
-        return MapEntry(key, icuMessageToString(value.message));
-      });
-
-      expect(map, {
-        'text': 'normal Text',
-        'textWithMetadata': 'text With Metadata',
-        'pluralExample':
-            '{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}',
-        'variable': 'Hello {variable}'
-      });
-    });
+   
   });
 }
 

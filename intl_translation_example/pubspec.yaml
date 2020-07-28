@@ -35,6 +35,10 @@ dependencies:
 dev_dependencies:
   intl_translation_format:
     path: '../intl_translation_format'
+  intl_translation:
+    git:
+      url: https://github.com/jamesblasco/intl_translation/
+      ref: gsoc
   
 
 # For information on the generic Dart part of this file, see the

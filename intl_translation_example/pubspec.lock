@@ -84,7 +84,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.16.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -173,7 +173,7 @@ packages:
     source: hosted
     version: "0.16.1"
   intl_translation:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       path: "."
       ref: gsoc

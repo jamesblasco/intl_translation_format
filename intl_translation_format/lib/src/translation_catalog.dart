@@ -32,7 +32,7 @@ class TranslationTemplate {
         defaultLocale = locale ?? 'en';
 
   Future addTemplateMessages(
-    List<FileProvider> dartFiles, {
+    List<RedableFile> dartFiles, {
     ExtractConfig config,
   }) async {
     final extraction = MessageExtraction();

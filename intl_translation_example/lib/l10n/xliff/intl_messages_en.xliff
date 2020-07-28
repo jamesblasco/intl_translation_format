@@ -33,5 +33,13 @@
         <source>{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}</source>
       </segment>
     </unit>
+    <unit id="embedded" name="embedded">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Emmbeded Plural: {howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}</source>
+      </segment>
+    </unit>
   </file>
 </xliff>

@@ -19,15 +19,12 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'es';
 
-  static m0(howMany) => "${Intl.plural(howMany, zero: 'Ningun elemento', one: 'Un elemento', many: 'Muchos elementos', other: '${howMany} elementos')}";
-
-  static m1(variable) => "Hello ${variable}";
+  static m1(howMany) => "${Intl.plural(howMany, zero: 'Ningún articulo', one: 'One item', many: 'Un montón de artículos', other: '${howMany} artículos')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "pluralExample" : m0,
-    "text" : MessageLookupByLibrary.simpleMessage("text"),
-    "textWithMetadata" : MessageLookupByLibrary.simpleMessage("texto con metadata"),
-    "variable" : m1
+    "pluralExample" : m1,
+    "text" : MessageLookupByLibrary.simpleMessage("texto"),
+    "textWithMetadata" : MessageLookupByLibrary.simpleMessage("texto con metadata")
   };
 }
