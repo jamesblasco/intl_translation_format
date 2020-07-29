@@ -11,22 +11,19 @@ class MultiJsonFormat extends MultipleLanguageFormat {
   static const key = 'multi_language_json';
 
   @override
-  String get supportedFileExtension => 'json';
+  String get fileExtension => 'json';
 
   @override
   String generateTemplateFile(
-    Map<String, Map<String, Message>> messages,
     TranslationTemplate catalog,
   ) {
     final messagesByKey = <String, Map<String, String>>{};
-
-    messages.forEach((locale, messages) {
-      messages.forEach((key, message) {
+  
+    catalog.messages.forEach((key, message) {
         messagesByKey.putIfAbsent(key, () => {});
-        messagesByKey[key][locale] = icuMessageToString(message);
-      });
+        messagesByKey[key][catalog.defaultLocale] = icuMessageToString(message);
     });
-
+    
     final encoder = JsonEncoder.withIndent('  ');
     return encoder.convert(messagesByKey);
   }

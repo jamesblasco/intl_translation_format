@@ -16,54 +16,64 @@ class XliffFormat extends SingleLanguageFormat {
   List<String> get supportedFileExtensions => ['xliff', 'xlf'];
 
   @override
-  String generateTemplateFile(
-    TranslationTemplate catalog,
-  ) {
-    final builder = XmlBuilder();
-    builder.processing('xml', 'version="1.0 encoding="UTF-8""');
-    builder.element('xliff', attributes: {
-      ...attributesForVersion(version),
-      if (version == XliffVersion.v1) ...{
-        'version': '1.2',
-        'source-language': catalog.defaultLocale,
-      } else ...{
-        'version': '2.0',
-        'srcLang': catalog.defaultLocale,
-      }
+  String generateTemplateFile(TranslationTemplate template) {
+    return generateTemplate(template, version);
+  }
 
-      //trgLang="es"  Templates don't need target
-    }, nest: () {
-      builder.element('file', nest: () {
-        catalog.messages.forEach((key, message) {
-          final text = icuMessageToString(message);
-          if (version == XliffVersion.v2) {
-            builder.element('unit', attributes: {'id': key, 'name': key},
-                nest: () {
-              builder.element('segment', nest: () {
-                builder.element('notes', nest: () {
-                  builder.element('note', attributes: {'category': 'format'},
-                      nest: () {
-                    builder.text('icu');
-                  });
-                  if (message.description != null) {
-                    builder.element('note',
-                        attributes: {'category': 'description'}, nest: () {
-                      builder.text(message.description);
-                    });
-                  }
-                });
-                builder.element('source', nest: () {
-                  builder.text(text);
-                });
-                // Templates don't need target
-                // builder.element('target', nest: () {
-                //   builder.attribute('lang', 'english');
-                //   builder.text('todo');
-                // });
-              });
-            });
-          } else {
-            builder.element('trans-unit', attributes: {'id': key}, nest: () {
+  @override
+  MessagesForLocale parseFile(
+    String content, {
+    MessageGeneration generation,
+  }) {
+    return XliffParser(version: version).parse(content);
+  }
+}
+
+class MultipleLanguageXliffFormat extends MultipleLanguageFormat {
+  final XliffVersion version;
+
+  MultipleLanguageXliffFormat([this.version = XliffVersion.v2]);
+
+  @override
+  String get fileExtension => 'xliff';
+
+  @override
+  List<String> get supportedFileExtensions => ['xliff', 'xlf'];
+
+  @override
+  String generateTemplateFile(TranslationTemplate catalog) {
+    return generateTemplate(catalog, version);
+  }
+
+  @override
+  List<MessagesForLocale> parseFile(
+    String content, {
+    MessageGeneration generation,
+  }) {
+    return XliffParser(version: version).parseMultiLanguage(content);
+  }
+}
+
+String generateTemplate(TranslationTemplate template, XliffVersion version) {
+  final builder = XmlBuilder();
+  builder.processing('xml', 'version="1.0 encoding="UTF-8""');
+  builder.element('xliff', attributes: {
+    ...attributesForVersion(version),
+    if (version == XliffVersion.v1) ...{
+      'version': '1.2',
+      'source-language': template.defaultLocale,
+    } else ...{
+      'version': '2.0',
+      'srcLang': template.defaultLocale,
+    }
+  }, nest: () {
+    builder.element('file', nest: () {
+      template.messages.forEach((key, message) {
+        final text = icuMessageToString(message);
+        if (version == XliffVersion.v2) {
+          builder.element('unit', attributes: {'id': key, 'name': key},
+              nest: () {
+            builder.element('segment', nest: () {
               builder.element('notes', nest: () {
                 builder.element('note', attributes: {'category': 'format'},
                     nest: () {
@@ -80,18 +90,28 @@ class XliffFormat extends SingleLanguageFormat {
                 builder.text(text);
               });
             });
-          }
-        });
+          });
+        } else {
+          builder.element('trans-unit', attributes: {'id': key}, nest: () {
+            builder.element('notes', nest: () {
+              builder.element('note', attributes: {'category': 'format'},
+                  nest: () {
+                builder.text('icu');
+              });
+              if (message.description != null) {
+                builder.element('note', attributes: {'category': 'description'},
+                    nest: () {
+                  builder.text(message.description);
+                });
+              }
+            });
+            builder.element('source', nest: () {
+              builder.text(text);
+            });
+          });
+        }
       });
     });
-    return builder.build().toXmlString(pretty: true);
-  }
-
-  @override
-  MessagesForLocale parseFile(
-    String content, {
-    MessageGeneration generation,
-  }) {
-    return XliffParser(version: version).parse(content);
-  }
+  });
+  return builder.build().toXmlString(pretty: true);
 }

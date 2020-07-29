@@ -25,7 +25,13 @@ class XliffParser {
       key,
       version,
       displayWarnings: displayWarnings,
-    ).parse();
+    ).parse().first;
+  }
+
+  List<MessagesForLocale> parseMultiLanguage(String str, {String key}) {
+    return XliffParserState(parseEvents(str), key, version,
+            displayWarnings: displayWarnings, multilingual: true)
+        .parse();
   }
 }
 
@@ -70,13 +76,15 @@ class XliffParserState {
 
   final String _key;
 
-  MessagesForLocale root;
+  MessagesForLocale sourceMessages;
+  MessagesForLocale targetMessages;
 
   List<XmlEventAttribute> _currentAttributes;
   XmlStartElementEvent currentStartElement;
 
   String currentTranslationId;
   String currentTranslationMessage;
+  String currentTargetTranslationMessage;
 
   final Map<int, Map<String, int>> _elementCountByDepth = {};
 
@@ -139,7 +147,7 @@ class XliffParserState {
   Element currentElement;
 
   /// Drive the [XmlTextReader] to EOF and produce a [DrawableRoot].
-  MessagesForLocale parse() {
+  List<MessagesForLocale> parse() {
     for (final event in _readSubtree()) {
       if (event is XmlStartElementEvent) {
         if (startElement(event)) {
@@ -172,7 +180,7 @@ class XliffParserState {
         }
       }
     }
-    return root;
+    return [sourceMessages, if (multilingual) targetMessages];
   }
 
   /// The XML Attributes of the current node in the tree.

@@ -110,8 +110,8 @@ abstract class SingleBinaryLanguageFormat
     extends TranslationFormat<BinaryFileData> {
   MessagesForLocale parseFile(Uint8List content);
 
-  List<String> get supportedFileExtensions => [supportedFileExtension];
-  String get supportedFileExtension;
+  List<String> get supportedFileExtensions => [fileExtension];
+  String get fileExtension;
 
   Uint8List generateTemplateFile(
     TranslationTemplate catalog,
@@ -148,7 +148,7 @@ abstract class SingleBinaryLanguageFormat
   ) {
     final file = BinaryFileData(
       generateTemplateFile(catalog),
-      '${catalog.projectName}_${catalog.defaultLocale}.$supportedFileExtension',
+      '${catalog.projectName}_${catalog.defaultLocale}.$fileExtension',
     );
     return [file];
   }
@@ -164,13 +164,14 @@ String localeFromName(
 
 abstract class MultipleLanguageFormat
     extends TranslationFormat<StringFileData> {
-  List<String> get supportedFileExtensions => [supportedFileExtension];
-  String get supportedFileExtension;
+  List<String> get supportedFileExtensions => [fileExtension];
+  String get fileExtension;
 
   List<MessagesForLocale> parseFile(String content);
 
   String generateTemplateFile(
-      Map<String, Map<String, Message>> messages, TranslationTemplate metadata);
+    TranslationTemplate catalog,
+  );
 
   @override
   Future parseFiles(
@@ -195,14 +196,13 @@ abstract class MultipleLanguageFormat
     });
   }
 
-  @override
-  List<StringFileData> generateTemplateFiles(TranslationTemplate catalog) {
+ @override
+  List<StringFileData> generateTemplateFiles(
+    TranslationTemplate catalog,
+  ) {
     final file = StringFileData(
-      generateTemplateFile(
-        {catalog.defaultLocale: catalog.messages},
-        catalog,
-      ),
-      catalog.projectName + '.' + supportedFileExtension,
+      generateTemplateFile(catalog),
+      '${catalog.projectName}_${catalog.defaultLocale}.$fileExtension',
     );
     return [file];
   }

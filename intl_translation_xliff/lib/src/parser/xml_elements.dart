@@ -9,6 +9,7 @@ final Map<String, _ParseFunc> elementParsers = <String, _ParseFunc>{
   'xliff': (e) => XliffElement(e),
   'file': (e) => FileElement(e),
   'source': (e) => SourceElement(e),
+  'target': (e) => TargetElement(e),
 
   //v2.0
   'group': (e) => GroupElement(e),
@@ -125,7 +126,11 @@ class XliffElement extends Element {
         if (parserState.version == XliffVersion.v2)
           'srcLang'
         else
-          'source-language'
+          'source-language',
+        if (parserState.version == XliffVersion.v2 && parserState.multilingual)
+          'trgLang'
+        else if (parserState.multilingual)
+          'target-language'
       ];
   @override
   List<String> get optionalAttributes => ['trgLang', 'xml:space'];
@@ -135,7 +140,7 @@ class XliffElement extends Element {
 
   @override
   void onStart() {
-    if (parserState.root != null) {
+    if (parserState.sourceMessages != null) {
       throw XliffParserException(
           title: 'Unsupported nested <xliff> element.',
           description:
@@ -144,7 +149,6 @@ class XliffElement extends Element {
     }
 
     final version = attributes['version'];
-
 
     final parsedVersion = parseVersion(version);
     if (parserState.version != parsedVersion) {
@@ -158,7 +162,11 @@ class XliffElement extends Element {
     final srcLang = parserState.version == XliffVersion.v2
         ? attributes['srcLang']
         : attributes['source-language'];
-    final trgLang = attributes['trgLang'];
+    final trgLang = parserState.version == XliffVersion.v2
+        ? attributes['trgLang']
+        : attributes['target-language'];
+
+    parserState.sourceMessages = MessagesForLocale({}, locale: srcLang);
 
     if (!parserState.multilingual && trgLang != null) {
       throw XliffParserException(
@@ -168,9 +176,15 @@ class XliffElement extends Element {
               'support multiple locales in the same file, use '
               '${keyForVersion(parserState.version, true)} instead',
           context: 'In element <xliff>');
+    } else if (parserState.multilingual && trgLang == null) {
+      throw XliffParserException(
+          title: 'Target lanugage required',
+          description: 'Current format ${keyForVersion(parserState.version)} '
+              'uses mulilanguage xliff and requires a target language ',
+          context: 'In element <xliff>');
+    } else if (parserState.multilingual) {
+      parserState.targetMessages = MessagesForLocale({}, locale: trgLang);
     }
-
-    parserState.root = MessagesForLocale({}, locale: srcLang);
   }
 
   XliffVersion parseVersion(String version) {
@@ -252,16 +266,29 @@ class UnitElement extends Element {
     assert(parserState.currentTranslationId != null,
         'The current state is not parsing this element id: $id');
 
-    if (parserState.root.messages[id] != null) {
+    if (parserState.sourceMessages.messages[id] != null) {
       warn(
           'A message with the same id $id already exits and it will be overrided');
     }
-    parserState.root.messages[id] = BasicTranslatedMessage(
+    parserState.sourceMessages.messages[id] = BasicTranslatedMessage(
       id,
       messageParser.parse(parserState.currentTranslationMessage).value,
     );
+
+    if (parserState.multilingual) {
+      if (parserState.currentTargetTranslationMessage == null) {
+        throw XliffParserException(
+            title: 'Not target message found.', context: 'In element <$key>');
+      }
+      parserState.targetMessages.messages[id] = BasicTranslatedMessage(
+        id,
+        messageParser.parse(parserState.currentTargetTranslationMessage).value,
+      );
+    }
+
     parserState.currentTranslationId = null;
     parserState.currentTranslationMessage = null;
+    parserState.currentTargetTranslationMessage = null;
   }
 }
 
@@ -326,12 +353,8 @@ class SourceElement extends Element {
   }
 }
 
-/* 
-TBD
-
-
 /// The translation of the sibling <source> element.
-/// 
+///
 ///
 class TargetElement extends Element {
   final XliffParserState parserState;
@@ -341,10 +364,18 @@ class TargetElement extends Element {
   String get key => 'target';
 
   @override
-  void parse() {
-   
+  void onStart() {}
+
+  @override
+  bool get shouldParseTextChild => true;
+
+
+  @override
+  void parseTextChild(XmlTextEvent event) {
+    parserState.currentTargetTranslationMessage ??= '';
+    parserState.currentTargetTranslationMessage += event.text;
   }
-} */
+}
 
 /// V1.2
 class BodyElement extends Element {

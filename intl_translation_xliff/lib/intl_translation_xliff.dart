@@ -10,6 +10,10 @@ enum XliffVersion { v2, v1 }
 final xliffFormats = <String, TranslationFormatBuilder>{
   keyForVersion(XliffVersion.v1): () => XliffFormat(XliffVersion.v1),
   keyForVersion(XliffVersion.v2): () => XliffFormat(XliffVersion.v2),
+  keyForVersion(XliffVersion.v1, true): () =>
+      MultipleLanguageXliffFormat(XliffVersion.v1),
+  keyForVersion(XliffVersion.v2, false): () =>
+      MultipleLanguageXliffFormat(XliffVersion.v2),
 };
 
 // TODO: This will be better as an extension

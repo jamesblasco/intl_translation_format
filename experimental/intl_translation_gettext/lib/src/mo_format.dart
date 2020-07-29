@@ -10,7 +10,7 @@ class MoFormat extends SingleBinaryLanguageFormat {
   static const key = 'mo';
 
   @override
-  String get supportedFileExtension => 'mo';
+  String get fileExtension => 'mo';
 
   @override
   Uint8List generateTemplateFile(
