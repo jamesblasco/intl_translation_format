@@ -30,6 +30,11 @@ g-arb:
   (scripts): 
     - cd intl_translation_example
     - flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/arb/intl_messages_en.arb lib/l10n/arb/intl_messages_es.arb --output-dir lib/l10n/ --project-name intl_messages --format arb
+g-arb-old:
+  (execution): once 
+  (scripts): 
+    - cd intl_translation_example
+    - flutter pub run intl_translation:generate_from_arb lib/main.dart lib/l10n/arb/intl_messages_en.arb lib/l10n/arb/intl_messages_es.arb --output-dir lib/l10n/ 
 g-multi-json:
   (execution): once 
   (scripts): 
@@ -73,7 +78,11 @@ e-json2:
   (scripts):
     - cd intl_translation_example
     - flutter pub run intl_translation_format:extract lib/main.dart --locale en --output-dir lib/l10n/json/ --project-name intl_messages --format json
-
+e-arb-old:
+  (execution): once 
+  (scripts):
+    - cd intl_translation_example
+    - flutter pub run intl_translation:extract_to_arb lib/main.dart --locale en --output-dir lib/l10n/arb/ 
 e-arb:
   (execution): once 
   (scripts):
