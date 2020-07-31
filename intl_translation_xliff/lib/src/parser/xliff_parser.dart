@@ -39,8 +39,11 @@ class XliffParser {
 }
 
 class XliffParserException extends XmlParserException {
-  XliffParserException({String title, String description, String context})
-      : super(
+  XliffParserException({
+    String title,
+    String description,
+    String context,
+  }) : super(
           title: title,
           description: description,
           context: context,

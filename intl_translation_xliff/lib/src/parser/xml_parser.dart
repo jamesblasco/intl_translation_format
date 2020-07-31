@@ -46,7 +46,7 @@ abstract class Element<T extends XmlParserState> {
     }
 
     attributes = Map.fromEntries(
-      _generateAttributes(_attributes).map(
+      _verifiedAttributes(_attributes).map(
         (e) => MapEntry(e.name, e.value),
       ),
     );
@@ -71,7 +71,7 @@ abstract class Element<T extends XmlParserState> {
 
   Map<String, String> attributes;
 
-  Iterable<XmlEventAttribute> _generateAttributes(
+  Iterable<XmlEventAttribute> _verifiedAttributes(
       Iterable<XmlEventAttribute> attributes) sync* {
     final _attributes = List.from(attributes);
     for (final att in requiredAttributes) {
@@ -138,7 +138,7 @@ abstract class XmlParserState<T> {
   }
 
   void _discardSubtree() {
-    for (final subtree in _readSubtree()) {
+    for (final _ in _readSubtree()) {
       // Ignore all subtrees
     }
   }
@@ -174,7 +174,7 @@ abstract class XmlParserState<T> {
 
   T get value;
 
-  Map<String, ElementBuilder<T>> get elementHandlers;
+  Map<String, ElementBuilder> get elementHandlers;
 
   /// Drive the [XmlTextReader] to EOF and produce a [DrawableRoot].
   T parse() {
