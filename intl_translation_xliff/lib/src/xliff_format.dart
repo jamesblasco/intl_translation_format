@@ -69,7 +69,7 @@ String generateTemplate(TranslationTemplate template, XliffVersion version) {
   }, nest: () {
     builder.element('file', nest: () {
       template.messages.forEach((key, message) {
-        final text = icuMessageToString(message);
+        final text = messageToIcuString(message);
         if (version == XliffVersion.v2) {
           builder.element('unit', attributes: {'id': key, 'name': key},
               nest: () {

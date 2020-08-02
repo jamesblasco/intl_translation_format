@@ -18,7 +18,7 @@ class StringsFormat extends SingleLanguageFormat {
     final messages = catalog.messages;
     var json = '\n';
     messages.forEach((key, value) {
-      final message = icuMessageToString(value);
+      final message = messageToIcuString(value);
       json += '"$key"= "$message";\n';
     });
     return json;

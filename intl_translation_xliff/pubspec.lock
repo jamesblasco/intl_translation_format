@@ -84,7 +84,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.16.2"
   dart_style:
     dependency: "direct dev"
     description:
@@ -142,7 +142,7 @@ packages:
     source: hosted
     version: "0.16.1"
   intl_translation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
       ref: gsoc

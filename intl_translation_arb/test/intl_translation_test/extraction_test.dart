@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:test/test.dart';
@@ -82,7 +80,7 @@ main() {
       final name = r"'<>{}= +-_$()&^%$#@!~`'";
       final message = messages[name];
       expect(message.name, name);
-      expect(icuMessageToString(message), name);
+      expect(messageToIcuString(message), name);
     });
 
     test('Extract message with type variables ', () {
@@ -98,7 +96,7 @@ main() {
       final message = messages['types'];
       expect(message.name, 'types');
       expect(message.description, 'types');
-      expect(icuMessageToString(message), '{a}, {b}, {c}');
+      expect(messageToIcuString(message), '{a}, {b}, {c}');
       expect(message.arguments, ['a', 'b', 'c']);
     });
 
@@ -119,7 +117,7 @@ main() {
       expect(message.name, 'alwaysTranslated');
       expect(message.description, 'always translated');
       expect(message.locale, 'fr');
-      expect(icuMessageToString(message), 'This string is always translated');
+      expect(messageToIcuString(message), 'This string is always translated');
     });
 
     test('Extract message that contains interpolation with curly braces', () {
@@ -138,7 +136,7 @@ main() {
       expect(message.name, 'trickyInterpolation');
       expect(message.description, 'interpolation');
       expect(message.arguments, ['s']);
-      expect(icuMessageToString(message),
+      expect(messageToIcuString(message),
           'Interpolation is tricky when it ends a sentence like {s}.');
     });
 
@@ -153,7 +151,7 @@ main() {
       final message = messages['"So-called"'];
       expect(message.name, '"So-called"');
       expect(message.description, 'so-called');
-      expect(icuMessageToString(message), '"So-called"');
+      expect(messageToIcuString(message), '"So-called"');
     });
 
     test('Message with characters not in the basic multilingual plane', () {
@@ -167,7 +165,7 @@ main() {
       final message = messages['Ancient Greek hangman characters: 𐅆𐅇.'];
       expect(message.name, 'Ancient Greek hangman characters: 𐅆𐅇.');
       expect(message.description, 'non-BMP');
-      expect(icuMessageToString(message),
+      expect(messageToIcuString(message),
           'Ancient Greek hangman characters: 𐅆𐅇.');
     });
 
@@ -205,7 +203,7 @@ Skipping invalid Intl.message invocation
 
       final message = messages['escapable'];
       expect(message.name, 'escapable');
-      expect(icuMessageToString(message), 'Escapable characters here: ');
+      expect(messageToIcuString(message), 'Escapable characters here: ');
     });
 
     test('Message with outer plural', () {
@@ -224,7 +222,7 @@ Skipping invalid Intl.message invocation
       expect(message.name, 'outerPlural');
       expect(message.arguments, ['n']);
 
-      expect(icuMessageToString(message),
+      expect(messageToIcuString(message),
           '{n,plural, =0{none}=1{one}other{some}}');
     });
 
@@ -245,7 +243,7 @@ Skipping invalid Intl.message invocation
       expect(message.arguments, ['g']);
 
       expect(
-          icuMessageToString(message), '{g,select, female{f}male{m}other{o}}');
+          messageToIcuString(message), '{g,select, female{f}male{m}other{o}}');
     });
 
     test('Message with plural that fails parsing', () {
@@ -264,7 +262,7 @@ Skipping invalid Intl.message invocation
       final message = messages['pluralThatFailsParsing'];
       expect(message.name, 'pluralThatFailsParsing');
       expect(message.arguments, ['noOfThings']);
-      expect(icuMessageToString(message),
+      expect(messageToIcuString(message),
           '{noOfThings,plural, =1{1 thing:}other{{noOfThings} things:}}');
       throw 'Shouldnt this fail?';
     });
@@ -308,7 +306,7 @@ Skipping invalid Intl.message invocation
       final message = messages['outerSelect'];
       expect(message.name, 'outerSelect');
       expect(message.arguments, ['currency', 'amount']);
-      expect(icuMessageToString(message),
+      expect(messageToIcuString(message),
           '{currency,select, CDN{{amount} Canadian dollars}other{{amount} some currency or other.}}');
     });
 
@@ -344,7 +342,7 @@ Processing <Intl.select(currency, {"this.should.fail" : "not valid", "other" : "
       expect(message.name, 'nestedOuter');
       expect(message.arguments, ['number', 'gen']);
       //print(icuMessageToString(message));
-      expect(icuMessageToString(message),
+      expect(messageToIcuString(message),
           '{number,plural, other{{gen, select .....}}}');
     });
 
@@ -367,11 +365,11 @@ String differentNameSameContents() => Intl.message("Hello World",
 
       final message = messages['sameContentsDifferentName'];
       expect(message.name, 'sameContentsDifferentName');
-      expect(icuMessageToString(message), 'Hello World');
+      expect(messageToIcuString(message), 'Hello World');
 
       final message2 = messages['differentNameSameContents'];
       expect(message2.name, 'differentNameSameContents');
-      expect(icuMessageToString(message2), 'Hello World');
+      expect(messageToIcuString(message2), 'Hello World');
     });
 
     test('Messages with same content, different name and meaning', () {
@@ -391,12 +389,12 @@ String rentAsVerb() => Intl.message("rent",
       final message = messages['rentToBePaid'];
       expect(message.name, 'rentToBePaid');
       expect(message.meaning, 'Money for rent');
-      expect(icuMessageToString(message), 'rent');
+      expect(messageToIcuString(message), 'rent');
 
       final message2 = messages['rentAsVerb'];
       expect(message2.name, 'rentAsVerb');
       expect(message2.meaning, 'rent as a verb');
-      expect(icuMessageToString(message2), 'rent');
+      expect(messageToIcuString(message2), 'rent');
     });
 
     test('Messages with literal dollar', () {
@@ -411,7 +409,7 @@ String literalDollar() => Intl.message(
 
       final message = messages['literalDollar'];
       expect(message.name, 'literalDollar');
-      expect(icuMessageToString(message), 'Five cents is US\$0.05');
+      expect(messageToIcuString(message), 'Five cents is US\$0.05');
     });
 
     test('Messages should extract', () {
@@ -427,7 +425,7 @@ String extractable() => Intl.message(
 
       final message = messages['extractable'];
       expect(message.name, 'extractable');
-      expect(icuMessageToString(message), 'This message should be extractable');
+      expect(messageToIcuString(message), 'This message should be extractable');
     });
 
     test('Skip Messages', () {

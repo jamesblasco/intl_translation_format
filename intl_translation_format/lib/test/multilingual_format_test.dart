@@ -9,13 +9,14 @@ dynamic _expectMessages(
   List<String> arguments = const [],
 }) {
   final result = format.parseFile(content);
-  final MainMessage mainMessage = MainMessage()..arguments = arguments;
+  final MainMessage mainMessage = MainMessage();
+  mainMessage..arguments = arguments;
 
   result.forEach((element) {
     final parsed = element.messages.map(
       (key, m) => MapEntry(
         key,
-        icuMessageToString(m.message..parent = mainMessage),
+        messageToIcuString(m.message..parent = mainMessage),
       ),
     );
     return expect(parsed, messages[element.locale]);
@@ -138,7 +139,7 @@ testMultiLingualFormatWithDefaultMessages(
       });
     }
   });
-  
+
   /*  group('Generate template:', () {
     if (simpleMessage != null) {
       test('Simple Message', () {

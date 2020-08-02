@@ -3,7 +3,6 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/test/test_mock.dart';
 import 'package:intl_translation_format/test/format_test.dart';
 import 'package:test/test.dart';
-import 'package:intl_translation/src/intl_message.dart';
 
 void main() {
 

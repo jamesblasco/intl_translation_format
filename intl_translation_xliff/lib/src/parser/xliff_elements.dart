@@ -178,7 +178,7 @@ class UnitElement extends XliffElement {
     }
     state.sourceMessages.messages[id] = BasicTranslatedMessage(
       id,
-      messageParser.parse(state.currentTranslationMessage).value,
+      IcuMessage.fromIcu(state.currentTranslationMessage),
     );
 
     if (state.multilingual) {
@@ -188,7 +188,7 @@ class UnitElement extends XliffElement {
       }
       state.targetMessages.messages[id] = BasicTranslatedMessage(
         id,
-        messageParser.parse(state.currentTargetTranslationMessage).value,
+        IcuMessage.fromIcu(state.currentTargetTranslationMessage),
       );
     }
 

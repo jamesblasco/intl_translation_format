@@ -9,7 +9,7 @@ dynamic expectExtractedMessages(
   final template = TranslationTemplate('intl');
   await template.addTemplateMessages([file]);
   final result = template.messages.map(
-    (key, value) => MapEntry(key, icuMessageToString(value)),
+    (key, value) => MapEntry(key, messageToIcuString(value)),
   );
 
   expect(result, messages);

@@ -13,7 +13,7 @@ dynamic expectMessages(
   final parsed = result.messages.map(
     (key, m) => MapEntry(
       key,
-      icuMessageToString(m.message..parent = mainMessage),
+      messageToIcuString(m.message..parent = mainMessage),
     ),
   );
   return expect(parsed, messages);

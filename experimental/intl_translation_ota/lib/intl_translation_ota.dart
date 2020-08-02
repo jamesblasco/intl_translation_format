@@ -21,7 +21,7 @@ class OntheGoLookup extends MessageLookupByLibrary {
           (message) => MapEntry(
             message.id,
             MessageLookupByLibrary.simpleMessage(
-              icuMessageToString(message.message),
+              messageToIcuString(message.message),
             ),
           ),
         ),

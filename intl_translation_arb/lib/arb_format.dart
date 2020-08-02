@@ -70,7 +70,7 @@ Map<String, dynamic> _toARB(
   if (message.messagePieces.isEmpty) return null;
   final out = <String, dynamic>{};
 
-  out[message.name] = icuMessageToString(message);
+  out[message.name] = messageToIcuString(message);
 
   if (!suppressMetaData) {
     out["@${message.name}"] = _arbMetadata(message);

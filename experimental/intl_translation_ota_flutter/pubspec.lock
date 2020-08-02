@@ -77,7 +77,7 @@ packages:
       name: csslib
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.16.1"
+    version: "0.16.2"
   dart_style:
     dependency: "direct dev"
     description:
@@ -133,11 +133,11 @@ packages:
     source: hosted
     version: "0.16.1"
   intl_translation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "."
-      ref: gsoc
-      resolved-ref: "8a39a5fd8cf008c3bb358262b22de92e7daeb32c"
+      ref: test-variable-name
+      resolved-ref: "988596b2b22255edf6621f869061acddaefdee3c"
       url: "https://github.com/jamesblasco/intl_translation/"
     source: git
     version: "0.17.10"

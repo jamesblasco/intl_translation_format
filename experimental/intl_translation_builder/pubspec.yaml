@@ -8,10 +8,6 @@ environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  intl_translation:
-    git:
-      url: https://github.com/jamesblasco/intl_translation/
-      ref: gsoc
   intl_translation_format:
     path: './../../intl_translation_format'
   build: ^1.1.6

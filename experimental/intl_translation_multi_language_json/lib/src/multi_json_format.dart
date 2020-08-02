@@ -21,7 +21,7 @@ class MultiJsonFormat extends MultipleLanguageFormat {
   
     catalog.messages.forEach((key, message) {
         messagesByKey.putIfAbsent(key, () => {});
-        messagesByKey[key][catalog.defaultLocale] = icuMessageToString(message);
+        messagesByKey[key][catalog.defaultLocale] = messageToIcuString(message);
     });
     
     final encoder = JsonEncoder.withIndent('  ');
