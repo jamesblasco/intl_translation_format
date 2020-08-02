@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:test/test.dart';
@@ -66,18 +68,21 @@ main() {
       expect(message.name, 'This string extends across multiple lines.');
       expect(message.description, 'multi-line');
       expect(message.messagePieces.map((e) => (e as LiteralString).string),
-          ['This ','string ','extends ','across ','multiple ','lines.']);
+          ['This ', 'string ', 'extends ', 'across ', 'multiple ', 'lines.']);
     });
 
     test('Extract message with wierd characters and no name', () {
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      final messages = extraction.parseContent(r'''
     String get interestingCharactersNoName => Intl.message(
       "'<>{}= +-_\$()&^%\$#@!~`'",
       desc: "interesting characters",
     );
     ''', 'example.dart');
-      prints(messages);
+      final name = r"'<>{}= +-_$()&^%$#@!~`'";
+      final message = messages[name];
+      expect(message.name, name);
+      expect(icuMessageToString(message), name);
     });
 
     test('Extract message with type variables ', () {
@@ -139,7 +144,7 @@ main() {
 
     test('Message with leading quotes', () {
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      final messages = extraction.parseContent(r'''
     String get leadingQuotes => Intl.message(
       "\"So-called\"",
       desc: "so-called",
@@ -287,12 +292,12 @@ Skipping invalid Intl.message invocation
 
     test('Gender message without name or args', () {
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      final messages = extraction.parseContent(r'''
     String outerSelect(currency, amount) => Intl.select(
           currency,
           {
-            "CDN": "\$amount Canadian dollars",
-            "other": "\$amount some currency or other."
+            "CDN": "$amount Canadian dollars",
+            "other": "$amount some currency or other."
           },
           name: "outerSelect",
           desc: "Select",
@@ -327,9 +332,9 @@ Processing <Intl.select(currency, {"this.should.fail" : "not valid", "other" : "
       // A trivial nested plural/gender where both are done directly rather than
       // in interpolations.
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      final messages = extraction.parseContent(r'''
     String nestedOuter(number, gen) => Intl.plural(number,
-        other: Intl.gender(gen, male: "\$number male", other: "\$number other"),
+        other: Intl.gender(gen, male: "$number male", other: "$number other"),
         name: 'nestedOuter',
         args: [number, gen],
         desc: "Gender inside plural");
@@ -396,7 +401,7 @@ String rentAsVerb() => Intl.message("rent",
 
     test('Messages with literal dollar', () {
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      final messages = extraction.parseContent(r'''
 String literalDollar() => Intl.message(
       "Five cents is US\$0.05",
       name: "literalDollar",
@@ -482,6 +487,150 @@ String skipSelect(name) => Intl.select(
     skip: true);    
 ''', 'example.dart');
       expect(messages.length, 0);
+    });
+  });
+
+  group('findMessages denied usages', () {
+    test('fails with message on non-literal examples Map', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+final variable = 'foo';
+
+String message(String string) =>
+    Intl.select(string, {'foo': 'foo', 'bar': 'bar'},
+        name: 'message', args: [string], examples: {'string': variable});
+      ''', 'test.dart');
+
+      expect(extraction.warnings,
+          anyElement(contains('Examples must be a const Map literal.')));
+    });
+
+    test('fails with message on prefixed expression in interpolation', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent(
+        'String message(object) => Intl.message("\${object.property}", args: [object], name: "message");',
+        '',
+      );
+      expect(
+          extraction.warnings,
+          anyElement(
+              contains('Only simple identifiers and Intl.plural/gender/select '
+                  'expressions are allowed in message interpolation '
+                  'expressions')));
+    });
+
+    test('fails on call with name referencing variable name inside a function',
+        () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        String functionName() {
+          final String variableName = Intl.message('message string',
+            name: 'variableName' );
+        }
+      }''', 'main.dart');
+
+      expect(
+          extraction.warnings,
+          anyElement(contains('The \'name\' argument for Intl.message '
+              'must match either the name of the containing function '
+              'or <ClassName>_<methodName>')));
+    });
+
+    test('fails on referencing a name from listed fields declaration', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        String first, second = Intl.message('message string',
+            name: 'first' );
+      }''', 'main.dart');
+
+      expect(
+          extraction.warnings,
+          anyElement(contains('The \'name\' argument for Intl.message '
+              'must match either the name of the containing function '
+              'or <ClassName>_<methodName>')));
+    });
+  });
+
+  group('findMessages accepted usages', () {
+    test('succeeds on Intl call from class getter', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        String get messageName => Intl.message("message string",
+          name: 'messageName', desc: 'abc');
+      }''', 'main.dart');
+
+      expect(messages.values.map((m) => m.name),
+          anyElement(contains('messageName')));
+      expect(extraction.warnings, isEmpty);
+    });
+
+    test('succeeds on Intl call in top variable declaration', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent(
+          'List<String> list = [Intl.message("message string", '
+              'name: "list", desc: "in list")];',
+          'main.dart');
+
+      expect(messages.values.map((m) => m.name), anyElement(contains('list')));
+      expect(extraction.warnings, isEmpty);
+    });
+
+    test('succeeds on Intl call in member variable declaration', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        final String messageName = Intl.message("message string",
+          name: 'MessageTest_messageName', desc: 'test');
+      }''', 'main.dart');
+
+      expect(messages.values.map((m) => m.name),
+          anyElement(contains('MessageTest_messageName')));
+      expect(extraction.warnings, isEmpty);
+    });
+
+    // Note: this type of usage is not recommended.
+    test('succeeds on Intl call inside a function as variable declaration', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        String functionName() {
+          final String variableName = Intl.message('message string',
+            name: 'functionName', desc: 'test' );
+        }
+      }''', 'main.dart');
+
+      expect(messages.values.map((m) => m.name),
+          anyElement(contains('functionName')));
+      expect(extraction.warnings, isEmpty);
+    });
+
+    test('succeeds on list field declaration', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        String first, second = Intl.message('message string', desc: 'test');
+      }''', 'main.dart');
+
+      expect(messages.values.map((m) => m.name),
+          anyElement(contains('message string')));
+      expect(extraction.warnings, isEmpty);
+    });
+
+    test('succeeds on prefixed Intl call', () {
+      final extraction = new MessageExtraction();
+      final messages = extraction.parseContent('''
+      class MessageTest {
+        static final String prefixedMessage =
+            prefix.Intl.message('message', desc: 'xyz');
+      }
+      ''', 'main.dart');
+
+      expect(
+          messages.values.map((m) => m.name), anyElement(contains('message')));
+      expect(extraction.warnings, isEmpty);
     });
   });
 }
