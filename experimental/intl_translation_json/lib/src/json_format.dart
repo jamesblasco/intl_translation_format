@@ -5,7 +5,7 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 
 import 'json_parser.dart';
 
-class JsonFormat extends SingleLanguageFormat {
+class JsonFormat extends MonoLingualFormat {
   static const key = 'json';
 
   @override

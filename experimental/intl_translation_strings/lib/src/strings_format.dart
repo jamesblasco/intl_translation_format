@@ -5,7 +5,7 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 
 import 'strings_parser.dart';
 
-class StringsFormat extends SingleLanguageFormat {
+class StringsFormat extends MonoLingualFormat {
   static const key = 'strings';
 
   @override

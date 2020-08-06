@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 dynamic expectMessages(
   String content,
-  SingleLanguageFormat format, {
+  MonoLingualFormat format, {
   Map<String, String> messages = const {},
   List<String> arguments = const [],
 }) {
@@ -21,7 +21,7 @@ dynamic expectMessages(
 
 dynamic expectContentForMessages(
   String content,
-  SingleLanguageFormat format, {
+  MonoLingualFormat format, {
   Map<String, MainMessage> messages = const {},
   List<String> arguments = const [],
 }) {
@@ -34,7 +34,7 @@ dynamic expectContentForMessages(
   expect(result, content);
 }
 
-testFormatParserWithDefaultMessages(SingleLanguageFormat format,
+testFormatParserWithDefaultMessages(MonoLingualFormat format,
     {String simpleMessage,
     String messageWithMetadata,
     String pluralMessage,

@@ -4,7 +4,7 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation/src/icu_parser.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-class ArbFormat extends SingleLanguageFormat {
+class ArbFormat extends MonoLingualFormat {
   static const String key = 'arb';
 
   @override

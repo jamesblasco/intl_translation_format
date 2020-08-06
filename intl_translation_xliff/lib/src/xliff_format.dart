@@ -4,7 +4,7 @@ import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 import 'package:xml/xml.dart';
 
-class XliffFormat extends SingleLanguageFormat {
+class XliffFormat extends MonoLingualFormat {
   final XliffVersion version;
 
   XliffFormat([this.version = XliffVersion.v2]);
@@ -29,7 +29,7 @@ class XliffFormat extends SingleLanguageFormat {
   }
 }
 
-class MultipleLanguageXliffFormat extends MultipleLanguageFormat {
+class MultipleLanguageXliffFormat extends MultiLingualFormat {
   final XliffVersion version;
 
   MultipleLanguageXliffFormat([this.version = XliffVersion.v2]);

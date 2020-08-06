@@ -4,7 +4,7 @@ import 'package:test/test.dart';
 
 dynamic _expectMessages(
   String content,
-  MultipleLanguageFormat format, {
+  MultiLingualFormat format, {
   Map<String, Map<String, String>> messages = const {},
   List<String> arguments = const [],
 }) {
@@ -25,7 +25,7 @@ dynamic _expectMessages(
 
 dynamic _expectContentForMessages(
   String content,
-  SingleLanguageFormat format, {
+  MonoLingualFormat format, {
   Map<String, MainMessage> messages = const {},
   List<String> arguments = const [],
 }) {
@@ -39,7 +39,7 @@ dynamic _expectContentForMessages(
 }
 
 testMultiLingualFormatWithDefaultMessages(
-  MultipleLanguageFormat format, {
+  MultiLingualFormat format, {
   String simpleMessage,
   String messageWithMetadata,
   String pluralMessage,

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:intl_translation/generate_localized.dart';
-import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/src/file/file_provider.dart';
 import 'package:intl_translation_format/src/utils/formats.dart';
@@ -55,7 +54,7 @@ abstract class TranslationFormat<T extends FileData> {
   }
 }
 
-abstract class SingleLanguageFormat extends TranslationFormat<StringFileData> {
+abstract class MonoLingualFormat extends TranslationFormat<StringFileData> {
   List<String> get supportedFileExtensions => [fileExtension];
   String get fileExtension;
 
@@ -162,8 +161,7 @@ String localeFromName(
   return locale;
 }
 
-abstract class MultipleLanguageFormat
-    extends TranslationFormat<StringFileData> {
+abstract class MultiLingualFormat extends TranslationFormat<StringFileData> {
   List<String> get supportedFileExtensions => [fileExtension];
   String get fileExtension;
 
@@ -196,7 +194,7 @@ abstract class MultipleLanguageFormat
     });
   }
 
- @override
+  @override
   List<StringFileData> generateTemplateFiles(
     TranslationTemplate catalog,
   ) {

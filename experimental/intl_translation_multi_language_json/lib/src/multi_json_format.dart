@@ -7,7 +7,7 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 
 import '../intl_translation_multi_language_json.dart';
 
-class MultiJsonFormat extends MultipleLanguageFormat {
+class MultiJsonFormat extends MultiLingualFormat {
   static const key = 'multi_language_json';
 
   @override

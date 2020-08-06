@@ -5,7 +5,7 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:gettext_parser/gettext_parser.dart' as gettextParser;
 
 
-class PoFormat extends SingleLanguageFormat {
+class PoFormat extends MonoLingualFormat {
   static const key = 'po';
 
   @override
