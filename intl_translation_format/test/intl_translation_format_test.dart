@@ -33,6 +33,7 @@ class Test {
     await expectExtractedMessages(fileContent, {
       'simpleMessage': 'Simple Message',
     });
+
   });
 
   test('Extract Simple Message - 2', () async {
@@ -40,7 +41,7 @@ class Test {
     final String simpleMessage = Intl.message('Simple Message');
     ''';
     await expectExtractedMessages(fileContent, {
-      'simpleMessage': 'Simple Message',
+      'Simple Message': 'Simple Message',
     });
   });
 
