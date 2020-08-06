@@ -7,7 +7,6 @@ import 'package:intl_translation_format/src/utils/translation_config.dart';
 import 'formats.dart';
 
 
-
 class TranslationArgParser {
   String projectName;
   String outputDir;
