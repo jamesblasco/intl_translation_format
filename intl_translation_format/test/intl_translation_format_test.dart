@@ -24,17 +24,6 @@ void main() {
       'simpleMessage': 'Simple Message',
     });
   });
- test('Extract Simple Message', () async {
-    final fileContent = '''
-class Test {
-   static final String simpleMessage = Intl.message('Simple Message', name: 'simpleMessage');
-}
-    ''';
-    await expectExtractedMessages(fileContent, {
-      'simpleMessage': 'Simple Message',
-    });
-
-  });
 
   test('Extract Simple Message - 2', () async {
     final fileContent = '''

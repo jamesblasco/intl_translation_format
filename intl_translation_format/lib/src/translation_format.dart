@@ -14,7 +14,7 @@ class MessagesForLocale {
 
   MessagesForLocale(this.messages, {this.locale});
 
-  MapEntry asEntry() => MapEntry(locale, messages);
+  MapEntry<String, MessagesForLocale> asEntry() => MapEntry(locale, this);
 }
 
 //

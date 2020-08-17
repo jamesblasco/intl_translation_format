@@ -58,7 +58,7 @@ void main() {
           'required-attribute': () => RequiredAttributeElement(),
         },
       );
-      prints(log);
+    
       final expected = [
         'Start Event <required-attribute>',
         'Attributes for <required-attribute>: {att: example}',
@@ -75,7 +75,6 @@ void main() {
     ''', handlers: {
         'basic': () => BasicElement(),
       }, key: 'test');
-      prints(log);
       final expected = [
         'Start Event <basic>',
         'Extra arguments att in <basic> will not be parsed',
@@ -92,7 +91,6 @@ void main() {
     ''', handlers: {
         'optional': () => OptionalAttributeElement(),
       }, key: 'test');
-      prints(log);
       final expected = [
         'Start Event <optional>',
         'Attributes for <optional>: {att: example}',

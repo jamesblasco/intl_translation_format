@@ -4,7 +4,7 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/src/file/file_provider.dart';
 import 'package:intl_translation_format/src/translation_format.dart';
 import 'package:intl_translation_format/src/utils/translation_config.dart';
-
+import 'package:meta/meta.dart';
 import '../intl_translation_format.dart';
 
 class TranslationTemplate {
@@ -21,7 +21,8 @@ class TranslationTemplate {
 
   DateTime lastModified = DateTime.now();
 
-  Map<String, List<MainMessage>> _originalMessage = {};
+  @visibleForTesting
+  Map<String, List<MainMessage>> originalMessage = {};
 
   final Map<String, MainMessage> messages = {};
 
@@ -44,7 +45,7 @@ class TranslationTemplate {
       final result = extraction.parseContent(data, file.name, false);
 
       result.forEach((key, value) {
-        _originalMessage.putIfAbsent(key, () => <MainMessage>[]).add(value);
+        originalMessage.putIfAbsent(key, () => <MainMessage>[]).add(value);
       });
 
       messages.addAll(result);
@@ -95,11 +96,9 @@ class TranslationCatalog extends TranslationTemplate {
     );
   }
 
-  List<FileData> generateDartMessages({GenerationConfig config}) {
+  List<StringFileData> generateDartMessages({GenerationConfig config}) {
     final generation = (config ?? GenerationConfig()).getMessageGeneration();
     generation.allLocales.addAll(locales);
-
-    print(translatedMessages);
 
     final nameHasMessageWord = projectName.endsWith('_messages');
     final basenameWithoutMessage = nameHasMessageWord
@@ -109,7 +108,7 @@ class TranslationCatalog extends TranslationTemplate {
     final basename = '${basenameWithoutMessage}messages';
     generation.generatedFilePrefix = basenameWithoutMessage;
 
-    final files = <FileData>[];
+    final files = <StringFileData>[];
     translatedMessages.forEach((locale, translation) {
       final messages = translation.map((e) => e.toCatalogMessage(this));
       final content = generation.contentForLocale(locale, messages);
@@ -142,7 +141,7 @@ class CatalogTranslatedMessage extends TranslatedMessage {
   // We know that our [id] is the name of the message, which is used as the
   //key in [messages].
   List<MainMessage> _findOriginals() =>
-      originalMessages = catalog._originalMessage[id];
+      originalMessages = catalog.originalMessage[id];
 }
 
 /// A TranslatedMessage that just uses the name as the id and knows how to look

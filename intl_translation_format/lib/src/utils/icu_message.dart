@@ -59,7 +59,7 @@ class _IcuParser {
   Parser get gender =>
       preface & selectLiteral & comma & genderClause.plus() & closeCurly;
   Parser get intlGender => gender.map((values) {
-       _extractArgumentIfNeeded(values.first);
+        _extractArgumentIfNeeded(values.first);
         Gender.from(values.first, values[3], null);
       });
   Parser get selectClause =>
@@ -98,9 +98,9 @@ class _IcuParser {
     interiorText.set(contents.plus() | empty);
   }
 
-  // If extractArguments is true and a MainMessage parent exits it will 
+  // If extractArguments is true and a MainMessage parent exits it will
   // extract the arguments to the MainMessage
-  // 
+  //
   // This is used when the templated is not generated from intl dart code.
   _extractArgumentIfNeeded(String arg) {
     if (mainMessage == null || !extractArguments) return;
@@ -125,8 +125,11 @@ class IcuMessage {
 class IcuMainMessage extends MainMessage {
   IcuMainMessage._();
 
-  factory IcuMainMessage(String icuString) {
-    final message = IcuMainMessage._();
+  factory IcuMainMessage(String icuString, [String name]) {
+    final message = IcuMainMessage._()
+      ..arguments = []
+      ..name = name
+      ..id = name;
 
     final _IcuParser parser = _IcuParser(message, true);
     message.addPieces([parser.message.parse(icuString).value]);
