@@ -1,14 +1,11 @@
 import 'dart:convert';
 
-import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-import '../intl_translation_multi_language_json.dart';
-
 class MultiJsonFormat extends MultiLingualFormat {
-  static const key = 'multi_language_json';
+  static const key = 'multi_json';
 
   @override
   String get fileExtension => 'json';
@@ -40,7 +37,7 @@ class MultiJsonFormat extends MultiLingualFormat {
       messages.forEach((locale, messageString) {
         messagesByLocale.putIfAbsent(locale, () => {});
         final message =
-            BasicTranslatedMessage(key, Message.from(messageString, null));
+            BasicTranslatedMessage(key, IcuMessage.fromIcu(messageString));
         messagesByLocale[locale][key] = message;
       });
     });

@@ -10,14 +10,11 @@ environment:
 dependencies:
   intl_translation:
     git:
-      url: https://github.com/jamesblasco/intl_translation/
-      ref: gsoc
+      url: https://github.com/dart-lang/intl_translation/
   intl_translation_arb:
     path: '../intl_translation_arb'
   intl_translation_json:
     path: '../experimental/intl_translation_json'  
-  intl_translation_multi_language_json:
-    path: '../experimental/intl_translation_multi_language_json'  
   intl_translation_xliff:
     path: '../intl_translation_xliff'  
   intl_translation_strings:
@@ -33,3 +30,4 @@ dev_dependencies:
   intl: '>=0.15.3 <0.17.0'
   path: '>=0.9.0 <2.0.0'
   petitparser: '>=1.1.3 < 3.0.2'
+  meta: '>=0.9.0 <2.0.0'
