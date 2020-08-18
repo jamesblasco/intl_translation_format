@@ -6,7 +6,7 @@ const url =
     'https://firebasestorage.googleapis.com/v0/b/jaimeblascoandres.appspot.com/o/gsoc%2Fintl_messages_fr.json?alt=media&token=6debf01c-1049-4959-a3e3-c9bd4acd8a8f';
 
 const proxy = 'https://cors-anywhere.herokuapp.com/';
-const translationJsonFileUrl = kDebugMode? proxy + url: url;
+const translationJsonFileUrl = kDebugMode ? proxy + url : url;
 
 class LocalizationControl extends StatelessWidget {
   final Locale locale;
@@ -28,11 +28,12 @@ class LocalizationControl extends StatelessWidget {
           groupValue: locale,
           children: {
             Locale('en'): Text('en'),
-            Locale('es'):
+            Locale('es'): Text('es'),
+            Locale('gr'):
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Icon(Icons.folder_open, size: 16),
               SizedBox(width: 10),
-              Text('es'),
+              Text('gr'),
             ]),
             Locale('fr'):
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [

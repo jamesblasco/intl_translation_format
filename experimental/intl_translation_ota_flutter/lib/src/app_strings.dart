@@ -23,8 +23,8 @@ class _AppStringsDelegate extends LocalizationsDelegate<AppStrings> {
 
   @override
   bool shouldReload(_AppStringsDelegate old) {
-    //Improve this
-    return translations.length != translations.length;
+    // Improve this
+    return translations.length != old.translations.length;
   }
 }
 
@@ -42,9 +42,11 @@ class AppStrings {
 
   final String _localeName;
   final String _locale;
-  static Future<AppStrings> load(Locale locale, RedableFile file,
-      String _locale, TranslationFormat format) async {
-    final catalog = TranslationCatalog('intl');
+
+  static Future<AppStrings> load(
+      Locale locale, RedableFile file, String _locale, TranslationFormat format,
+      [String projectName = 'intl_messages']) async {
+    final catalog = TranslationCatalog(projectName);
     await catalog.addTranslations([file], format: format);
     await TranslationLoader(catalog).initializeMessages(locale.toString());
     return AppStrings(locale, catalog, _locale);
@@ -56,7 +58,7 @@ class AppStrings {
   }
 
   String string(String key) {
-    if (_catalog == null) return 'String $key not found';
+    print(_catalog.translatedMessages);
     final message = _catalog.translatedMessages[_locale]
         ?.firstWhere((message) => message.id == key);
     if (message == null) return 'String $key not found';

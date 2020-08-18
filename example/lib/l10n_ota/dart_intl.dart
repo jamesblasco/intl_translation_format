@@ -11,35 +11,7 @@ import 'package:intl_translation_ota_flutter/intl_translation_ota_flutter.dart';
 import '../main.dart';
 import 'common.dart';
 
-Future loadAssetsTranslations() async {
-  final catalog = TranslationCatalog('intl');
-  await catalog.addTranslations(
-    [
-      AssetFile('assets/l10n/intl_messages_es.json'),
-      AssetFile('assets/l10n/intl_messages_en.json'),
-    ],
-    format: JsonFormat(),
-  );
-  TranslationLoader(catalog).initializeMessages('es');
-}
-
-Future loadNetworkTranslations() async {
-  final catalog = TranslationCatalog('intl');
-
-  await catalog.addTranslations(
-    [
-      NetworkFile(
-        translationJsonFileUrl,
-        'intl_messages_fr.json',
-      )
-    ],
-    format: JsonFormat(),
-  );
-
-  TranslationLoader(catalog).initializeMessages('fr');
-}
-
-class Localized extends StatelessWidget {
+class Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,13 +19,9 @@ class Localized extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(text),
-        Text(
-          textWithMetadata,
-        ),
-        Text(
-          pluralExample(0),
-        ),
-      
+        Text(textWithMetadata),
+        Text(pluralExample(0)),
+        Text(pluralExample(2)),
       ],
     );
   }
@@ -69,7 +37,7 @@ class _DartIntlState extends State<DartIntl> {
 
   set currentLocale(String locale) => Intl.defaultLocale = locale;
 
-  List<String> availableLanguages = ['en'];
+  List<String> availableLanguages = ['en', 'es'];
 
   @override
   void initState() {
@@ -82,7 +50,7 @@ class _DartIntlState extends State<DartIntl> {
   Future setup() async {
     for (final local in availableLanguages) {
       final couldLoad = await initializeMessages(local);
-      log('Local $local loaded: $couldLoad');
+      log('Local "$local" loaded: $couldLoad');
     }
 
     setState(() {
@@ -90,22 +58,38 @@ class _DartIntlState extends State<DartIntl> {
     });
   }
 
-  Future addAssetTranslation() async {
+  Future addGermanTranslationFromAssets() async {
     try {
-      log('asset');
-      await loadAssetsTranslations();
-      log('loaded');
-      availableLanguages.add('es');
+      final catalog = TranslationCatalog('intl_messages');
+      await catalog.addTranslations(
+        [AssetFile('assets/l10n/intl_messages_gr.json')],
+        format: JsonFormat(),
+      );
+      TranslationLoader(catalog).initializeMessages('gr');
+
+      availableLanguages.add('gr');
       setState(() {
-        currentLocale = 'es';
+        currentLocale = 'gr';
       });
     } catch (e) {
       log(e);
     }
   }
 
-  Future addNetworkTranslation() async {
-    await loadNetworkTranslations();
+  Future addFrenchTranslationFromNetwork() async {
+    final catalog = TranslationCatalog('intl_messages');
+
+    await catalog.addTranslations(
+      [
+        NetworkFile(
+          translationJsonFileUrl,
+          'intl_messages_fr.json',
+        )
+      ],
+      format: JsonFormat(),
+    );
+
+    TranslationLoader(catalog).initializeMessages('fr');
     availableLanguages.add('fr');
     setState(() {
       currentLocale = 'fr';
@@ -132,7 +116,7 @@ class _DartIntlState extends State<DartIntl> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Padding(
               padding: EdgeInsets.all(20),
-              child: Localized(),
+              child: Messages(),
             ),
           ),
           SizedBox(height: 20),
@@ -143,9 +127,9 @@ class _DartIntlState extends State<DartIntl> {
                 if (availableLanguages.contains(locale)) {
                   setState(() => this.currentLocale = locale);
                 } else if (locale == 'fr') {
-                  await addNetworkTranslation();
-                } else if (locale == 'es') {
-                  await addAssetTranslation();
+                  await addFrenchTranslationFromNetwork();
+                } else if (locale == 'gr') {
+                  await addGermanTranslationFromAssets();
                 }
               }),
         ],

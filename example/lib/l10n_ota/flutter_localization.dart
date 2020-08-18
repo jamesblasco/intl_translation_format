@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:intl_translation_json/intl_translation_json.dart';
 import 'package:intl_translation_ota_flutter/intl_translation_ota_flutter.dart';
 
 import 'common.dart';
-import 'dart_intl.dart';
+
+
+
 
 class LocalizationFlutter extends StatefulWidget {
   @override
@@ -13,7 +15,7 @@ class LocalizationFlutter extends StatefulWidget {
 }
 
 class _LocalizationFlutterState extends State<LocalizationFlutter> {
-  Locale locale = Locale('en');
+  Locale locale = Locale('gr');
   @override
   Widget build(BuildContext context) {
     return Localizations.override(
@@ -26,8 +28,7 @@ class _LocalizationFlutterState extends State<LocalizationFlutter> {
               translationJsonFileUrl,
               'intl_messages_fr.json',
             ),
-            'es': AssetFile('assets/l10n/intl_messages_es.json'),
-            'en': AssetFile('assets/l10n/intl_messages_en.json'),
+            'gr': AssetFile('assets/l10n/intl_messages_gr.json'),
           },
           JsonFormat(),
         ),
@@ -59,6 +60,7 @@ class _LocalizationFlutterState extends State<LocalizationFlutter> {
                         Text(
                           AppStrings.of(context).string('textWithMetadata'),
                         ),
+                       
                       ],
                     ),
                   ),

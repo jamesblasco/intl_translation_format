@@ -6,12 +6,10 @@ import 'dart:typed_data';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:path/path.dart' as p;
-import 'package:flutter/foundation.dart';
-import 'dart:convert';
 
 export 'package:intl_translation_ota/intl_translation_ota.dart';
 export 'src/app_strings.dart';
-export 'src/file.dart';
+
 
 class AssetFile extends RedableFile {
   final String key;

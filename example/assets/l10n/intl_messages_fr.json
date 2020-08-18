@@ -1,5 +1,0 @@
-{
-  "text": "text_fr",
-  "textWithMetadata": "textWithMetadata_fr",
-  "pluralExample": "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}_fr"
-}
