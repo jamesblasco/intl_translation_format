@@ -3,10 +3,7 @@ import 'package:intl_translation/generate_localized.dart';
 import 'package:yaml/yaml.dart';
 
 /// Configuration for a traslation catalog.
-/// Usually definded in a yaml file
-///
-///
-///
+/// Defined as a yaml file
 ///
 class TranslationConfig {
   final String projectName;

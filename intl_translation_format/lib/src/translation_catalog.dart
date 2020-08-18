@@ -7,6 +7,9 @@ import 'package:intl_translation_format/src/utils/translation_config.dart';
 import 'package:meta/meta.dart';
 import '../intl_translation_format.dart';
 
+///  Catalog that stores all message templates.
+///
+///
 class TranslationTemplate {
   ///  Project name for the translation project
   ///  The name of translation files will need to follow the following pattern
@@ -32,6 +35,7 @@ class TranslationTemplate {
   })  : assert(projectName != null),
         defaultLocale = locale ?? 'en';
 
+  /// Extract template messages from Intl classes inside dart files
   Future addTemplateMessages(
     List<RedableFile> dartFiles, {
     ExtractConfig config,
@@ -54,7 +58,8 @@ class TranslationTemplate {
     lastModified = DateTime.now();
   }
 
-  List<FileData> extractTemplate(TranslationFormat format) {
+  /// Generate a translation template file in the desired format
+  List<FileData> generateTemplate(TranslationFormat format) {
     return format.generateTemplateFiles(this);
   }
 }
@@ -68,7 +73,7 @@ class TranslationCatalog extends TranslationTemplate {
   ///  {projectName}_{locale}.{format}  eg: intl_en.arb
   ///
   ///  Generated dart files will be named {projectName}_messages_{locale}.dart
-  ///  eg: intl_messages.ard
+  ///  eg: intl_messages.arb
   ///
   String projectName;
 
@@ -124,7 +129,7 @@ class TranslationCatalog extends TranslationTemplate {
 }
 
 /// A TranslatedMessage that just uses the name as the id and knows how to look
-/// up its original messages in our [messages].
+/// up its original messages inside a [TranslationCatalog].
 class CatalogTranslatedMessage extends TranslatedMessage {
   final TranslationCatalog catalog;
 
@@ -134,9 +139,8 @@ class CatalogTranslatedMessage extends TranslatedMessage {
     this.catalog,
   ) : super(name, translated);
 
-  List<MainMessage> get originalMessages => (super.originalMessages == null)
-      ? _findOriginals()
-      : super.originalMessages;
+  List<MainMessage> get originalMessages =>
+      super.originalMessages ?? _findOriginals();
 
   // We know that our [id] is the name of the message, which is used as the
   //key in [messages].
@@ -144,8 +148,7 @@ class CatalogTranslatedMessage extends TranslatedMessage {
       originalMessages = catalog.originalMessage[id];
 }
 
-/// A TranslatedMessage that just uses the name as the id and knows how to look
-/// up its original messages in our [messages].
+/// A TranslatedMessage that just uses the name as the id.
 class BasicTranslatedMessage extends TranslatedMessage {
   BasicTranslatedMessage(
     String name,

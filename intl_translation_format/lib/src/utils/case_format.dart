@@ -38,6 +38,9 @@ enum Case {
   doubleColonCase,
 }
 
+
+/// CaseFormat is for formatting strings into a different case.
+///
 class CaseFormat {
   static final RegExp _upperAlphaRegex = RegExp(r'[A-Z]');
   static final RegExp _symbolRegex = RegExp(r'[ ./_\-:]');
@@ -45,7 +48,7 @@ class CaseFormat {
   final Case textCase;
   CaseFormat(this.textCase);
 
-  String parse(String text) {
+  String format(String text) {
     final _words = _groupIntoWords(text);
     switch (textCase) {
       case Case.camelCase:

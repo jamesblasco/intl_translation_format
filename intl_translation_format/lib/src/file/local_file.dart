@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'file_provider.dart';
 import 'package:path/path.dart' as p;
 
+///  A reference to a file on the file system.
+///
 class LocalFile extends FileProvider {
   final String path;
 
@@ -13,16 +15,14 @@ class LocalFile extends FileProvider {
   String get name => p.basename(path);
 
   @override
-  Future<Uint8List> readAsBytes() async => File(path).readAsBytesSync();
+  Future<Uint8List> readAsBytes() => File(path).readAsBytes();
 
   @override
-  Future<String> readAsString() async => File(path).readAsStringSync();
+  Future<String> readAsString() => File(path).readAsString();
 
   @override
-  Future writeAsBytes(Uint8List bytes) async =>
-      File(path).writeAsBytesSync(bytes);
+  Future writeAsBytes(Uint8List bytes) => File(path).writeAsBytes(bytes);
 
   @override
-  Future writeAsString(String contents) async =>
-      File(path).writeAsString(contents);
+  Future writeAsString(String contents) => File(path).writeAsString(contents);
 }

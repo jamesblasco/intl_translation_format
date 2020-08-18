@@ -22,7 +22,7 @@ main(List<String> args, [Map<String, TranslationFormatBuilder> formats]) async {
 
   await template.addTemplateMessages(dartFiles, config: parser.extractConfig);
 
-  final templateFiles = template.extractTemplate(translationFormat);
+  final templateFiles = template.generateTemplate(translationFormat);
 
   for (final file in templateFiles) {
     await LocalFile(parser.outputDir + file.name).write(file);

@@ -1,9 +1,8 @@
-import 'dart:developer';
 
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:petitparser/petitparser.dart';
-import 'package:intl_translation/src/icu_parser.dart';
 
+/// Parser from a icu string to a Message object
 class _IcuParser {
   Parser get openCurly => char('{');
 
@@ -111,6 +110,9 @@ class _IcuParser {
   }
 }
 
+/// A message generated from a icu string.
+/// The arguments are added to the parent from
+/// the message instead from the dart functions
 class IcuMessage {
   static Message fromIcu(String icuString, [Message parent]) {
     final _IcuParser parser = _IcuParser();
@@ -120,7 +122,7 @@ class IcuMessage {
 }
 
 /// A main message generated from a icu string.
-/// The arguments from MainMessage are extracted from
+/// The arguments are extracted from
 /// the message instead from the dart functions
 class IcuMainMessage extends MainMessage {
   IcuMainMessage._();
