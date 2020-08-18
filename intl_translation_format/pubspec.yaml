@@ -14,13 +14,13 @@ dependencies:
   intl_translation_arb:
     path: '../arb'
   intl_translation_json:
-    path: '../experimental/intl_translation_json'  
+    path: '../experimental/json'  
   intl_translation_xliff:
     path: '../xliff'  
   intl_translation_strings:
-    path: '../experimental/intl_translation_strings'    
+    path: '../experimental/strings'    
   intl_translation_gettext:
-    path: '../experimental/intl_translation_gettext'    
+    path: '../experimental/gettext'    
   yaml: ^2.2.1  
 dev_dependencies:
   test: ^1.15.1
