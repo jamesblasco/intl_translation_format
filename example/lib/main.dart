@@ -70,14 +70,3 @@ String pluralExample(int howMany) => Intl.plural(howMany,
     other: '$howMany items',
     name: 'pluralExample',
     args: [howMany]);
-
-String embedded(int howMany) => Intl.message(
-      'Emmbeded Plural: ${Intl.plural(howMany,
-    zero: 'No items',
-    one: 'One item',
-    many: 'A lot of items',
-    other: '$howMany items',
-    )}',
-      args: [howMany],
-      name: 'embedded',
-    );

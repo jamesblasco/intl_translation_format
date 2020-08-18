@@ -1,0 +1,2 @@
+# General generate
+flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/xliff/intl_messages_en.xliff lib/l10n/xliff/intl_messages_es.xliff --output-dir lib/l10n/ --project-name intl_messages --format xliff-2

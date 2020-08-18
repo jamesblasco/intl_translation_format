@@ -53,9 +53,7 @@ class Localized extends StatelessWidget {
         Text(
           pluralExample(0),
         ),
-        Text(
-          embedded(0),
-        ),
+      
       ],
     );
   }

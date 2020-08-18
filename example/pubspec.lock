@@ -176,15 +176,15 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: gsoc
-      resolved-ref: "8a39a5fd8cf008c3bb358262b22de92e7daeb32c"
-      url: "https://github.com/jamesblasco/intl_translation/"
+      ref: HEAD
+      resolved-ref: b20a558f049730d38f84bbf2f2084163ecddbcba
+      url: "https://github.com/dart-lang/intl_translation/"
     source: git
     version: "0.17.10"
   intl_translation_arb:
     dependency: transitive
     description:
-      path: "../intl_translation_arb"
+      path: "../arb"
       relative: true
     source: path
     version: "0.0.1"
@@ -206,13 +206,6 @@ packages:
     dependency: transitive
     description:
       path: "../experimental/intl_translation_json"
-      relative: true
-    source: path
-    version: "0.0.1"
-  intl_translation_multi_language_json:
-    dependency: transitive
-    description:
-      path: "../experimental/intl_translation_multi_language_json"
       relative: true
     source: path
     version: "0.0.1"
@@ -240,7 +233,7 @@ packages:
   intl_translation_xliff:
     dependency: transitive
     description:
-      path: "../intl_translation_xliff"
+      path: "../xliff"
       relative: true
     source: path
     version: "0.0.1"

@@ -1,5 +1,5 @@
 // DO NOT EDIT. This is code generated via package:intl/generate_localized.dart
-// This is a library that provides messages for a messages_en locale. All the
+// This is a library that provides messages for a en locale. All the
 // messages from the main program should be duplicated here with the same
 // function name.
 
@@ -17,20 +17,17 @@ final messages = new MessageLookup();
 typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 
 class MessageLookup extends MessageLookupByLibrary {
-  String get localeName => 'messages_en';
+  String get localeName => 'en';
 
-  static m0(howMany) => "Emmbeded Plural: {howMany,plural, =0{No items}=1{One item}many{A lot of items}other{${howMany} items}}";
+  static m0(howMany) => "${Intl.plural(howMany, zero: 'No items', one: 'One item', many: 'A lot of items', other: '${howMany} items')}";
 
-  static m1(howMany) => "${Intl.plural(howMany, zero: 'No items', one: 'One item', many: 'A lot of items', other: '${howMany} items')}";
-
-  static m2(variable) => "Hello ${variable}";
+  static m1(variable) => "Hello ${variable}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "embedded" : m0,
-    "pluralExample" : m1,
+    "pluralExample" : m0,
     "text" : MessageLookupByLibrary.simpleMessage("text"),
     "textWithMetadata" : MessageLookupByLibrary.simpleMessage("textWithMetadata"),
-    "variable" : m2
+    "variable" : m1
   };
 }

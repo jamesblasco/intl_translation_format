@@ -12,11 +12,11 @@ dependencies:
     git:
       url: https://github.com/dart-lang/intl_translation/
   intl_translation_arb:
-    path: '../intl_translation_arb'
+    path: '../arb'
   intl_translation_json:
     path: '../experimental/intl_translation_json'  
   intl_translation_xliff:
-    path: '../intl_translation_xliff'  
+    path: '../xliff'  
   intl_translation_strings:
     path: '../experimental/intl_translation_strings'    
   intl_translation_gettext:

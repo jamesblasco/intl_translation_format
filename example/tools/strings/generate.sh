@@ -1,0 +1,1 @@
+flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/gettext/intl_messages_en.mo lib/l10n/gettext/intl_messages_es.mo --output-dir lib/l10n/ --project-name intl_messages --format mo
