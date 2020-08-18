@@ -212,6 +212,11 @@ void main() {
     }, 'en');
   });
 
+
+  // There is a global state _methodNameCounter in intl_translation. 
+  // So when generating the method name it is different if the test 
+  // is running isolated or part of a group of test with Generation
+  // https://github.com/dart-lang/intl_translation/blob/b20a558f049730d38f84bbf2f2084163ecddbcba/lib/generate_localized.dart#L488
   test('Message with plural', () async {
     final enContent = '${localeFileHeader('en')}'
         'final messages = new MessageLookup();\n'
@@ -221,11 +226,11 @@ void main() {
         'class MessageLookup extends MessageLookupByLibrary {\n'
         '  String get localeName => \'en\';\n'
         '\n'
-        '  static m0(howMany) => "\${Intl.plural(howMany, zero: \'No items\', one: \'One item\', many: \'A lot of items\', other: \'\${howMany} items\')}";\n'
+        '  static m1(howMany) => "\${Intl.plural(howMany, zero: \'No items\', one: \'One item\', many: \'A lot of items\', other: \'\${howMany} items\')}";\n'
         '\n'
         '  final messages = _notInlinedMessages(_notInlinedMessages);\n'
         '  static _notInlinedMessages(_) => <String, Function> {\n'
-        '    "pluralExample" : m0\n'
+        '    "pluralExample" : m1\n'
         '  };\n'
         '}\n'
         '';
@@ -237,11 +242,11 @@ void main() {
         'class MessageLookup extends MessageLookupByLibrary {\n'
         '  String get localeName => \'es\';\n'
         '\n'
-        '  static m0(howMany) => "\${Intl.plural(howMany, zero: \'Ningún elemento\', one: \'Un elemento\', many: \'Muchos elementos\', other: \'\${howMany} elementos\')}";\n'
+        '  static m1(howMany) => "\${Intl.plural(howMany, zero: \'Ningún elemento\', one: \'Un elemento\', many: \'Muchos elementos\', other: \'\${howMany} elementos\')}";\n'
         '\n'
         '  final messages = _notInlinedMessages(_notInlinedMessages);\n'
         '  static _notInlinedMessages(_) => <String, Function> {\n'
-        '    "pluralExample" : m0\n'
+        '    "pluralExample" : m1\n'
         '  };\n'
         '}\n'
         '';
