@@ -2,7 +2,7 @@ import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:gettext_parser/gettext_parser.dart' as gettextParser;
+import 'package:gettext_parser/gettext_parser.dart' as gettext;
 
 
 class PoFormat extends MonoLingualFormat {
@@ -15,7 +15,7 @@ class PoFormat extends MonoLingualFormat {
   String generateTemplateFile(
     TranslationTemplate catalog,
   ) {
-   return gettextParser.po.compile({
+   return gettext.po.compile({
       'charset': 'iso-8859-1',
       'headers': {
         'content-type': 'text/plain; charset=iso-8859-1',
@@ -41,7 +41,7 @@ class PoFormat extends MonoLingualFormat {
     String content, {
     MessageGeneration generation,
   }) {
-    final po = gettextParser.po.parse(content);
+    final po = gettext.po.parse(content);
     var messages = <String, BasicTranslatedMessage>{};
 
     Map.from(po['translations']).forEach((key, value) {

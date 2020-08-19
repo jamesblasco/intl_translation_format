@@ -53,18 +53,7 @@ main(
     print(parser.usage);
     exit(0);
   }
-
-  // TODO(alanknight): There is a possible regression here. If a project is
-  // using the transformer and expecting it to provide names for messages with
-  // parameters, we may report those names as missing. We now have two distinct
-  // mechanisms for providing names: the transformer and just using the message
-  // text if there are no parameters. Previously this was always acting as if
-  // the transformer was in use, but that breaks the case of using the message
-  // text. The intent is to deprecate the transformer, but if this is an issue
-  // for real projects we could provide a command-line flag to indicate which
-  // sort of automated name we're using.
-  //extraction.suppressWarnings = true;
-
+  
   final catalog = TranslationCatalog(parser.projectName);
 
   await catalog.addTemplateMessages(

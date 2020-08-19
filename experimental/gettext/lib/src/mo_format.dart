@@ -1,10 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation/src/intl_message.dart';
 
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:gettext_parser/gettext_parser.dart' as gettextParser;
+import 'package:gettext_parser/gettext_parser.dart' as gettext;
 
 class MoFormat extends SingleBinaryLanguageFormat {
   static const key = 'mo';
@@ -16,7 +15,7 @@ class MoFormat extends SingleBinaryLanguageFormat {
   Uint8List generateTemplateFile(
     TranslationTemplate catalog,
   ) {
-    return gettextParser.mo.compile({
+    return gettext.mo.compile({
       'charset': 'iso-8859-1',
       'headers': {
         'content-type': 'text/plain; charset=iso-8859-1',
@@ -39,7 +38,7 @@ class MoFormat extends SingleBinaryLanguageFormat {
 
   @override
   MessagesForLocale parseFile(List<int> content) {
-    final po = gettextParser.mo.parseBytes(content);
+    final po = gettext.mo.parseBytes(content);
     var messages = <String, BasicTranslatedMessage>{};
 
     Map.from(po['translations']).forEach((key, value) {

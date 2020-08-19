@@ -34,9 +34,4 @@ class NetworkFile extends RedableFile {
     return null;
   }
 
-  @override
-  Future writeAsBytes(Uint8List bytes) async {}
-
-  @override
-  Future writeAsString(String content) async {}
 }

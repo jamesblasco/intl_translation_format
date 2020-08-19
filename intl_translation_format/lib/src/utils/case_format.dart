@@ -38,7 +38,6 @@ enum Case {
   doubleColonCase,
 }
 
-
 /// CaseFormat is for formatting strings into a different case.
 ///
 class CaseFormat {
@@ -76,6 +75,7 @@ class CaseFormat {
       case Case.doubleColonCase:
         return _getSnakeCase(_words, separator: '::');
     }
+    return null;
   }
 
   static List<String> _groupIntoWords(String text) {
@@ -127,7 +127,7 @@ class CaseFormat {
     return _words.join(separator);
   }
 
-  static String _getSentenceCase(List<String> words, {String separator: ' '}) {
+  static String _getSentenceCase(List<String> words, {String separator = ' '}) {
     List<String> _words = words.map((word) => word.toLowerCase()).toList();
     _words[0] = _upperCaseFirstLetter(words[0]);
 

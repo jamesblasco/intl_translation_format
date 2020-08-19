@@ -1,10 +1,7 @@
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/test/format_test.dart';
 import 'package:test/test.dart';
-
-
 
 main() {
   group('Format to Arb  -', () {
@@ -102,11 +99,6 @@ main() {
       );
     });
 
-
-
-    
-
-
     test('Message with outer plural', () {
       final extraction = MessageExtraction();
       final messages = extraction.parseContent('''
@@ -151,7 +143,7 @@ main() {
       // A standalone gender message where we don't provide name or args. This should
       // be rejected by validation code.
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      extraction.parseContent('''
     String invalidOuterGender(g) => Intl.gender(
       g,
       other: 'o',
@@ -192,7 +184,7 @@ Skipping invalid Intl.message invocation
 
     test('Invalid select message', () {
       final extraction = MessageExtraction();
-      final messages = extraction.parseContent('''
+      extraction.parseContent('''
     String failedSelect(currency) => Intl.select(
       currency,
       {"this.should.fail": "not valid", "other": "doesn't matter"},
@@ -206,8 +198,8 @@ Error IntlMessageExtractionException: Invalid select keyword: 'this.should.fail'
 Processing <Intl.select(currency, {"this.should.fail" : "not valid", "other" : "doesn't matter"}, name: "failedSelect", args: [currency], desc: "Invalid select")>    from example.dart    line: 1, column: 38''');
     });
 
-    // There is an error with nested select and plurals in intl_translation 
-    // and this test fails. 
+    // There is an error with nested select and plurals in intl_translation
+    // and this test fails.
     /* test('Nested select and plural message without interpolation', () {
       // A trivial nested plural/gender where both are done directly rather than
       // in interpolations.
@@ -372,8 +364,8 @@ String skipSelect(name) => Intl.select(
 
   group('findMessages denied usages', () {
     test('fails with message on non-literal examples Map', () {
-      final extraction = new MessageExtraction();
-      final messages = extraction.parseContent('''
+      final extraction = MessageExtraction();
+      extraction.parseContent('''
 final variable = 'foo';
 
 String message(String string) =>
@@ -386,8 +378,8 @@ String message(String string) =>
     });
 
     test('fails with message on prefixed expression in interpolation', () {
-      final extraction = new MessageExtraction();
-      final messages = extraction.parseContent(
+      final extraction = MessageExtraction();
+      extraction.parseContent(
         'String message(object) => Intl.message("\${object.property}", args: [object], name: "message");',
         '',
       );
@@ -401,8 +393,8 @@ String message(String string) =>
 
     test('fails on call with name referencing variable name inside a function',
         () {
-      final extraction = new MessageExtraction();
-      final messages = extraction.parseContent('''
+      final extraction = MessageExtraction();
+      extraction.parseContent('''
       class MessageTest {
         String functionName() {
           final String variableName = Intl.message('message string',
@@ -418,8 +410,8 @@ String message(String string) =>
     });
 
     test('fails on referencing a name from listed fields declaration', () {
-      final extraction = new MessageExtraction();
-      final messages = extraction.parseContent('''
+      final extraction = MessageExtraction();
+      extraction.parseContent('''
       class MessageTest {
         String first, second = Intl.message('message string',
             name: 'first' );
@@ -435,7 +427,7 @@ String message(String string) =>
 
   group('findMessages accepted usages', () {
     test('succeeds on Intl call from class getter', () {
-      final extraction = new MessageExtraction();
+      final extraction = MessageExtraction();
       final messages = extraction.parseContent('''
       class MessageTest {
         String get messageName => Intl.message("message string",
@@ -448,7 +440,7 @@ String message(String string) =>
     });
 
     test('succeeds on Intl call in top variable declaration', () {
-      final extraction = new MessageExtraction();
+      final extraction = MessageExtraction();
       final messages = extraction.parseContent(
           'List<String> list = [Intl.message("message string", '
               'name: "list", desc: "in list")];',
@@ -459,7 +451,7 @@ String message(String string) =>
     });
 
     test('succeeds on Intl call in member variable declaration', () {
-      final extraction = new MessageExtraction();
+      final extraction = MessageExtraction();
       final messages = extraction.parseContent('''
       class MessageTest {
         final String messageName = Intl.message("message string",
@@ -473,7 +465,7 @@ String message(String string) =>
 
     // Note: this type of usage is not recommended.
     test('succeeds on Intl call inside a function as variable declaration', () {
-      final extraction = new MessageExtraction();
+      final extraction = MessageExtraction();
       final messages = extraction.parseContent('''
       class MessageTest {
         String functionName() {
@@ -488,7 +480,7 @@ String message(String string) =>
     });
 
     test('succeeds on list field declaration', () {
-      final extraction = new MessageExtraction();
+      final extraction = MessageExtraction();
       final messages = extraction.parseContent('''
       class MessageTest {
         String first, second = Intl.message('message string', desc: 'test');
@@ -500,7 +492,7 @@ String message(String string) =>
     });
 
     test('succeeds on prefixed Intl call', () {
-      final extraction = new MessageExtraction();
+      final extraction = MessageExtraction();
       final messages = extraction.parseContent('''
       class MessageTest {
         static final String prefixedMessage =

@@ -1,7 +1,6 @@
 library intl_translation_xliff;
 
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 export 'src/xliff_format.dart';
 

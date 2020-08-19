@@ -76,8 +76,8 @@ BasicTranslatedMessage recreateIntlObjects(String id, data) {
   if (parsed is LiteralString && parsed.string.isEmpty) {
     parsed = _plainParser.parse(data).value;
   }
-  return new BasicTranslatedMessage(id, parsed);
+  return BasicTranslatedMessage(id, parsed);
 }
 
-final _pluralAndGenderParser = new IcuParser().message;
-final _plainParser = new IcuParser().nonIcuMessage;
+final _pluralAndGenderParser = IcuParser().message;
+final _plainParser = IcuParser().nonIcuMessage;

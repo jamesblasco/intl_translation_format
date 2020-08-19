@@ -246,8 +246,6 @@ class SourceElement extends XliffElement {
   @override
   void onStart() {}
 
-  @override
-  bool get shouldParseTextChild => true;
 
   @override
   void parseTextChild(XmlTextEvent event) {
@@ -267,9 +265,6 @@ class TargetElement extends XliffElement {
 
   @override
   void onStart() {}
-
-  @override
-  bool get shouldParseTextChild => true;
 
   @override
   void parseTextChild(XmlTextEvent event) {

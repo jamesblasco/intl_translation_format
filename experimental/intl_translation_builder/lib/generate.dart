@@ -22,11 +22,10 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:args/args.dart';
 import 'package:build/build.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-import 'package:intl_translation/src/directory_utils.dart';
+
 
 import 'package:path/path.dart' as p;
 
@@ -66,7 +65,7 @@ class GenerateBuilder extends Builder {
         buildStep.inputId.package,
         p.join('lib/l10n', 'messages_all.intl.dart'),
       );
-      final file = (files.last as StringFileData).contents.replaceAll('.dart\' deferred as messages_', '.intl.dart\' deferred as messages_');
+      final file = files.last.contents.replaceAll('.dart\' deferred as messages_', '.intl.dart\' deferred as messages_');
       return await BuildFile(id, buildStep).writeAsString(file);
     }
 

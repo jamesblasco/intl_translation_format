@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:intl_translation/src/intl_message.dart';
 
 import 'package:intl_translation_format/intl_translation_format.dart';
 
