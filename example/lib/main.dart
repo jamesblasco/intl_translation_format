@@ -55,9 +55,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
- String get text => Intl.message('text');
+String get text => Intl.message('text');
 
- String get textWithMetadata =>
+String get textWithMetadata =>
     Intl.message('textWithMetadata', examples: {'a': 'hello'});
 
 String variable(int variable) =>

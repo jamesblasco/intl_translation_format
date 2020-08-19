@@ -17,10 +17,7 @@ class OntheGoLookup extends MessageLookupByLibrary {
   final messages;
   static _notInlinedMessages(List<CatalogTranslatedMessage> messages) {
     final entries = messages.map(
-      (message) => MapEntry(
-        message.id,
-        messageToLookup(message)
-      ),
+      (message) => MapEntry(message.id, messageToLookup(message)),
     );
     return Map.fromEntries(entries);
   }

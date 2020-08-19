@@ -6,9 +6,6 @@ import 'package:intl_translation_ota_flutter/intl_translation_ota_flutter.dart';
 
 import 'common.dart';
 
-
-
-
 class LocalizationFlutter extends StatefulWidget {
   @override
   _LocalizationFlutterState createState() => _LocalizationFlutterState();
@@ -60,7 +57,6 @@ class _LocalizationFlutterState extends State<LocalizationFlutter> {
                         Text(
                           AppStrings.of(context).string('textWithMetadata'),
                         ),
-                       
                       ],
                     ),
                   ),

@@ -25,8 +25,6 @@ import 'dart:typed_data';
 import 'package:build/build.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 
-
-
 import 'package:path/path.dart' as p;
 
 class GenerateBuilder extends Builder {
@@ -51,12 +49,11 @@ class GenerateBuilder extends Builder {
           .map((e) => LocalFile(Directory.current.path + '/' + e))
           .toList();
 
-       catalog = TranslationCatalog(parser.projectName);
+      catalog = TranslationCatalog(parser.projectName);
       await catalog.addTemplateMessages(
         dartFileRef,
         config: parser.extractConfig,
       );
-     
     }
 
     if (buildStep.inputId.path == r'lib/$lib$') {
@@ -65,7 +62,9 @@ class GenerateBuilder extends Builder {
         buildStep.inputId.package,
         p.join('lib/l10n', 'messages_all.intl.dart'),
       );
-      final file = files.last.contents.replaceAll('.dart\' deferred as messages_', '.intl.dart\' deferred as messages_');
+      final file = files.last.contents.replaceAll(
+          '.dart\' deferred as messages_',
+          '.intl.dart\' deferred as messages_');
       return await BuildFile(id, buildStep).writeAsString(file);
     }
 

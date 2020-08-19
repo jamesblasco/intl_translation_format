@@ -92,8 +92,7 @@ void main() {
     });
   });
 
-  
-   test('Extract Embeded Plural Message', () async {
+  test('Extract Embeded Plural Message', () async {
     final fileContent = '''
    embeddedPlural2(n) => Intl.message(
     "\${Intl.plural(n, zero: 'none', one: 'one', other: 'some')} plus text.",
@@ -103,6 +102,4 @@ void main() {
       'embeddedPlural2': '{n,plural, =0{none}=1{one}other{some}} plus text.',
     });
   });
-
 }
-

@@ -1,4 +1,5 @@
 import 'package:petitparser/petitparser.dart';
+
 class SimpleStringsParser {
   Parser<String> get _doubleQuotes => char('"');
   Parser<String> get _safeDoubleQuotes => string('\\"');

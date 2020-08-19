@@ -1,4 +1,3 @@
-
 import 'package:intl_translation_arb/intl_translation_arb.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_gettext/intl_translation_gettext.dart';

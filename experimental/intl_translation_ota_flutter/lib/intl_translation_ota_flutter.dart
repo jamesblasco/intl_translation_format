@@ -9,7 +9,6 @@ import 'package:path/path.dart' as p;
 export 'package:intl_translation_ota/intl_translation_ota.dart';
 export 'src/app_strings.dart';
 
-
 class AssetFile extends RedableFile {
   final String key;
 

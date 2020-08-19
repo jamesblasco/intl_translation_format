@@ -1,7 +1,6 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/test.dart';
 
-
 import 'package:intl_translation_xliff/intl_translation_xliff.dart';
 import 'package:test/test.dart';
 

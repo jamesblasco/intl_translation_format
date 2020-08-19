@@ -2,7 +2,6 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 
 import 'package:intl_translation/src/intl_message.dart';
 
-
 MainMessage simpleMessage(String key, String text, {String description}) {
   final mainMessage = MainMessage();
   mainMessage.id = key;

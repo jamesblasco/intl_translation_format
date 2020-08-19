@@ -4,7 +4,6 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:gettext_parser/gettext_parser.dart' as gettext;
 
-
 class PoFormat extends MonoLingualFormat {
   static const key = 'po';
 
@@ -15,7 +14,7 @@ class PoFormat extends MonoLingualFormat {
   String generateTemplateFile(
     TranslationTemplate catalog,
   ) {
-   return gettext.po.compile({
+    return gettext.po.compile({
       'charset': 'iso-8859-1',
       'headers': {
         'content-type': 'text/plain; charset=iso-8859-1',
@@ -36,7 +35,7 @@ class PoFormat extends MonoLingualFormat {
     });
   }
 
-   @override
+  @override
   MessagesForLocale parseFile(
     String content, {
     MessageGeneration generation,

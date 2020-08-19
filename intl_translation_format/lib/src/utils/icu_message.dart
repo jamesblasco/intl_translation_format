@@ -1,4 +1,3 @@
-
 import 'package:intl_translation/src/intl_message.dart';
 import 'package:petitparser/petitparser.dart';
 

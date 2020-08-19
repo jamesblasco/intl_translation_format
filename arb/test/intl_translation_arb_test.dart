@@ -4,7 +4,6 @@ import 'package:intl_translation_format/test/format_test.dart';
 import 'package:test/test.dart';
 
 void main() {
-
   group('Arb Format -', () {
     testFormatParserWithDefaultMessages(
       ArbFormat(),
@@ -56,26 +55,25 @@ void main() {
       allMessages: _basicArbFile,
     );
 
-      test('File name', () {
-        final template = MockTemplate('intl', {});
-        template.lastModified = null;
-        final result = ArbFormat().generateTemplateFiles(template);
+    test('File name', () {
+      final template = MockTemplate('intl', {});
+      template.lastModified = null;
+      final result = ArbFormat().generateTemplateFiles(template);
 
-        expect(result.first.name, 'intl_en.arb');
-      });
+      expect(result.first.name, 'intl_en.arb');
+    });
 
-      test('Locale fr', () {
-        final template = MockTemplate('intl', {}, locale: 'fr');
-        template.lastModified = null;
-        final result = ArbFormat().generateTemplateFiles(template);
+    test('Locale fr', () {
+      final template = MockTemplate('intl', {}, locale: 'fr');
+      template.lastModified = null;
+      final result = ArbFormat().generateTemplateFiles(template);
 
-        expect(result.first.name, 'intl_fr.arb');
-        expect(result.first.contents, '''
+      expect(result.first.name, 'intl_fr.arb');
+      expect(result.first.contents, '''
 {
   "@@locale": "fr"
 }''');
-      });
-
+    });
   });
 }
 

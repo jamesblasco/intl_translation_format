@@ -212,9 +212,8 @@ void main() {
     }, 'en');
   });
 
-
-  // There is a global state _methodNameCounter in intl_translation. 
-  // So when generating the method name it is different if the test 
+  // There is a global state _methodNameCounter in intl_translation.
+  // So when generating the method name it is different if the test
   // is running isolated or part of a group of test with Generation
   // https://github.com/dart-lang/intl_translation/blob/b20a558f049730d38f84bbf2f2084163ecddbcba/lib/generate_localized.dart#L488
   test('Message with plural', () async {

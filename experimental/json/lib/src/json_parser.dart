@@ -1,7 +1,4 @@
-
 import 'package:petitparser/petitparser.dart';
-
-
 
 class SimpleJsonParser {
   Parser<String> get _openCurly => char('{');
@@ -46,8 +43,6 @@ class SimpleJsonParser {
     return parser.parse(content).value;
   }
 }
-
-
 
 class MultipleLanguageJsonParser {
   Parser<String> get _openCurly => char('{');

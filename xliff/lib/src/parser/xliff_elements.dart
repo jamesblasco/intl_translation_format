@@ -246,7 +246,6 @@ class SourceElement extends XliffElement {
   @override
   void onStart() {}
 
-
   @override
   void parseTextChild(XmlTextEvent event) {
     state.currentTranslationMessage ??= '';

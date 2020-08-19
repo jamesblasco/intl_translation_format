@@ -32,7 +32,7 @@ class JsonFormat extends MonoLingualFormat {
   }) {
     final values = SimpleJsonParser().parser.parse(content);
     if (values.isFailure) throw BadFormatException(values.message);
-      final messages = values.value.map((key, value) {
+    final messages = values.value.map((key, value) {
       final message = BasicTranslatedMessage(key, IcuMessage.fromIcu(value));
       return MapEntry(key, message);
     });

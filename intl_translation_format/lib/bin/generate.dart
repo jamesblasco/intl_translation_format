@@ -53,7 +53,7 @@ main(
     print(parser.usage);
     exit(0);
   }
-  
+
   final catalog = TranslationCatalog(parser.projectName);
 
   await catalog.addTemplateMessages(

@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:args/args.dart';
 
-
 import 'package:intl_translation_format/src/utils/translation_config.dart';
 
 import 'formats.dart';
-
 
 class TranslationArgParser {
   String projectName;
@@ -137,8 +135,6 @@ class ExtractArgParser extends TranslationArgParser {
     return _parser;
   }
 }
-
-
 
 class GenerateArgParser extends TranslationArgParser {
   String translationsListFile;

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:path/path.dart' as p;
 
 /// File abstraction that can be read and written
-/// 
+///
 /// A FileProvider instance is an object that holds a [name] on which operations can
 /// be performed.
 ///
@@ -61,7 +61,7 @@ enum FileDataType { text, binary }
 
 /// File data that can be stored in text or binary
 /// See related [StringFileData], [BinaryFileData]
- class FileData {
+class FileData {
   final String name;
   String get extension => p.extension(name);
   String get nameWithoutExtension => p.basenameWithoutExtension(name);
@@ -94,7 +94,6 @@ enum FileDataType { text, binary }
         _contents = null,
         type = FileDataType.binary;
 }
-
 
 /// File data that is stored as text
 class StringFileData extends FileData {

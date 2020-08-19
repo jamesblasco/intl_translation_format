@@ -33,5 +33,4 @@ class NetworkFile extends RedableFile {
     }
     return null;
   }
-
 }

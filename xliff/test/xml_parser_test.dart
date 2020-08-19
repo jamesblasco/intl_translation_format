@@ -42,7 +42,8 @@ void main() {
         throwsA(
           predicate((e) =>
               e is XmlParserException &&
-              e.title == '\'att\' attribute is required for <required-attribute>'),
+              e.title ==
+                  '\'att\' attribute is required for <required-attribute>'),
         ),
       );
     });
@@ -58,7 +59,7 @@ void main() {
           'required-attribute': () => RequiredAttributeElement(),
         },
       );
-    
+
       final expected = [
         'Start Event <required-attribute>',
         'Attributes for <required-attribute>: {att: example}',

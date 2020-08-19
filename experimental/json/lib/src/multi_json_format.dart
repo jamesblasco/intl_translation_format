@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:intl_translation_format/intl_translation_format.dart';
 
 class MultiJsonFormat extends MultiLingualFormat {
@@ -14,12 +13,12 @@ class MultiJsonFormat extends MultiLingualFormat {
     TranslationTemplate catalog,
   ) {
     final messagesByKey = <String, Map<String, String>>{};
-  
+
     catalog.messages.forEach((key, message) {
-        messagesByKey.putIfAbsent(key, () => {});
-        messagesByKey[key][catalog.defaultLocale] = messageToIcuString(message);
+      messagesByKey.putIfAbsent(key, () => {});
+      messagesByKey[key][catalog.defaultLocale] = messageToIcuString(message);
     });
-    
+
     final encoder = JsonEncoder.withIndent('  ');
     return encoder.convert(messagesByKey);
   }
@@ -31,7 +30,7 @@ class MultiJsonFormat extends MultiLingualFormat {
     if (values.isFailure) throw BadFormatException(values.message);
 
     final messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
-  
+
     values.value.forEach((key, messages) {
       messages.forEach((locale, messageString) {
         messagesByLocale.putIfAbsent(locale, () => {});
@@ -41,8 +40,10 @@ class MultiJsonFormat extends MultiLingualFormat {
       });
     });
 
-    return messagesByLocale.entries.map(
-      (e) => MessagesForLocale(e.value, locale: e.key),
-    ).toList();
+    return messagesByLocale.entries
+        .map(
+          (e) => MessagesForLocale(e.value, locale: e.key),
+        )
+        .toList();
   }
 }
