@@ -1,0 +1,69 @@
+# Created with package:mono_repo v2.3.0
+language: dart
+
+jobs:
+  include:
+    - stage: analyze_and_format
+      name: "SDK: dev; PKGS: intl_translation_arb, intl_translation_format, intl_translation_xliff; TASKS: `dartanalyzer --fatal-infos --fatal-warnings .`"
+      dart: dev
+      os: linux
+      env: PKGS="intl_translation_arb intl_translation_format intl_translation_xliff"
+      script: ./tool/travis.sh dartanalyzer
+    - stage: analyze_and_format
+      name: "SDK: dev; PKGS: intl_translation_arb, intl_translation_format, intl_translation_xliff; TASKS: `dartfmt -n --set-exit-if-changed .`"
+      dart: dev
+      os: linux
+      env: PKGS="intl_translation_arb intl_translation_format intl_translation_xliff"
+      script: ./tool/travis.sh dartfmt
+    - stage: unit_test
+      name: "SDK: dev; PKG: intl_translation_arb; TASKS: `pub run build_runner test --delete-conflicting-outputs -- -P presubmit`"
+      dart: dev
+      os: linux
+      env: PKGS="intl_translation_arb"
+      script: ./tool/travis.sh command
+    - stage: unit_test
+      name: "SDK: dev; PKG: intl_translation_arb; TASKS: `pub run build_runner test --delete-conflicting-outputs -- -P presubmit`"
+      dart: dev
+      os: windows
+      env: PKGS="intl_translation_arb"
+      script: ./tool/travis.sh command
+    - stage: unit_test
+      name: "SDK: dev; PKG: intl_translation_format; TASKS: `pub run build_runner test --delete-conflicting-outputs -- -P presubmit`"
+      dart: dev
+      os: linux
+      env: PKGS="intl_translation_format"
+      script: ./tool/travis.sh command
+    - stage: unit_test
+      name: "SDK: dev; PKG: intl_translation_format; TASKS: `pub run build_runner test --delete-conflicting-outputs -- -P presubmit`"
+      dart: dev
+      os: windows
+      env: PKGS="intl_translation_format"
+      script: ./tool/travis.sh command
+    - stage: unit_test
+      name: "SDK: dev; PKG: intl_translation_xliff; TASKS: `pub run build_runner test --delete-conflicting-outputs -- -P presubmit`"
+      dart: dev
+      os: linux
+      env: PKGS="intl_translation_xliff"
+      script: ./tool/travis.sh command
+    - stage: unit_test
+      name: "SDK: dev; PKG: intl_translation_xliff; TASKS: `pub run build_runner test --delete-conflicting-outputs -- -P presubmit`"
+      dart: dev
+      os: windows
+      env: PKGS="intl_translation_xliff"
+      script: ./tool/travis.sh command
+
+stages:
+  - analyze_and_format
+  - unit_test
+
+# Only building master means that we don't run two builds for each pull request.
+branches:
+  only:
+    - master
+
+cache:
+  directories:
+    - "$HOME/.pub-cache"
+    - intl_translation_arb/.dart_tool/build
+    - intl_translation_format/.dart_tool/build
+    - intl_translation_xliff/.dart_tool/build
