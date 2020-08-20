@@ -1,45 +1,79 @@
-# intl_translation_format
+This repository contains multiple packages
 
-GSoC Project Proposal
+# Intl_translation_format
+
+This package provides the tools to support a new translation format file with Intl package: 
+
+- Message extraction from dart code
+- Code generation from translated messages 
+
+It also implements arb, xliff formats by default.
+
+Current supported formats:
+
+- [X] **Arb** - [Specification](https://github.com/google/app-resource-bundle)
+- [X] **Xliff v1.2** - [Specification](http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html)
+- [X] **Xliff v2.0** - [Specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html)
 
 
-**intl_translation_format**
+### Getting started
 
-This package abstract part of the logic located in bin directory from int_translation_package. 
-And allows to support multiple formats
+#### 1. Add package
+Add this to your package's pubspec.yaml file:
+```yaml
+dev_dependencies:
+  intl_translation_format: [current version]
+```
 
-**intl_translation_example**
+#### 2. Add messages
+Create your messages using the [intl](https://pub.dev/packages/intl) package
 
-Example project using `intl_translation_format`
+```dart
+ String continueMessage() => Intl.message(
+      'Hit any key to continue',
+      name: 'continueMessage');
+```
 
-**intl_translation_arb**
+#### 3. Export messages
 
-This package works the same as intl_translation but with the intl_translation_format implemented.
+Run the following command to export the messages to the desired format:
 
-**intl_translation_xliff**
+```zsh
+pub run intl_translation_format:extract 
+    lib/main.dart --output-dir lib/l10n/ --format arb
+```
 
-Generate and export translations to xliff using intl_translation_format
+#### 4. Translate messages
 
-**intl_translation_json**
+Translate the messages manually or with a translation tool
 
-Generate and export translations to simple key/value json  using intl_translation_format
+#### 5. Generate translations
 
-**intl_translation_string**
+Run the following command to generate the code from translation messages:
 
-Generate and export translations to ios .strings using intl_translation_format
+```zsh
+pub run intl_translation_format:generate 
+    --project-name intl_messages
+    --output-dir lib/l10n/  
+    --format arb
+    lib/main.dart 
+    lib/l10n/arb/intl_messages_en.arb 
+    lib/l10n/arb/intl_messages_es.arb   
+```
 
-**intl_translation_multi_json**
 
-Generate and export translations to multi_language json using intl_translation_format
 
-**intl_translation_gettext**
 
-Experimental package for generating and exporting translations to po/mo using intl_translation_format
 
-**intl_translation_ota**
 
-Experimental package for loading translations on the go with intl library
+# **intl_translation_arb**
 
-**intl_translation_ota_flutter**
+This package implements intl_translation_format for arb files
 
-Experimental package for loading translations on the go with Flutter localization delegates
+
+# **intl_translation_xliff**
+
+This package implements intl_translation_format for xliff files
+
+
+GSoC 2020 Project by Jaime Blasco Andres
