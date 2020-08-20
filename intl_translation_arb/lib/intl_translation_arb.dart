@@ -26,11 +26,10 @@ class ArbFormat extends MonoLingualFormat {
     };
 
     catalog.messages.forEach((k, v) {
-      allMessages.addAll(
-        toARB(v,
-            supressMetadata: suppressMetaData,
-            includeSourceText: includeSourceText),
-      );
+      final messages = Map<String, dynamic>.from(toARB(v,
+          supressMetadata: suppressMetaData,
+          includeSourceText: includeSourceText));
+      allMessages.addAll(messages);
     });
 
     final encoder = JsonEncoder.withIndent('  ');

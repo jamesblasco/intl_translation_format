@@ -6,7 +6,7 @@ stages:
     - dartfmt
     - dartanalyzer: --fatal-infos --fatal-warnings .
   - unit_test:
-    - command: pub run build_runner test --delete-conflicting-outputs -- -P presubmit
+    - command: pub run test 
       os:
         - linux
         - windows
