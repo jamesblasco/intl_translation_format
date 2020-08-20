@@ -1,6 +1,6 @@
 import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/test/format_test.dart';
+import 'package:intl_translation_format/test_utils.dart';
 import 'package:test/test.dart';
 
 main() {

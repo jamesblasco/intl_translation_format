@@ -1,5 +1,4 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/test/test_mock.dart' as mock;
 import 'package:test/test.dart';
 
 dynamic _expectMessages(
@@ -23,7 +22,7 @@ dynamic _expectMessages(
   });
 }
 
-dynamic _expectContentForMessages(
+/* dynamic _expectContentForMessages(
   String content,
   MonoLingualFormat format, {
   Map<String, MainMessage> messages = const {},
@@ -36,7 +35,7 @@ dynamic _expectContentForMessages(
   template.lastModified = null;
   final result = format.generateTemplateFile(template);
   expect(result, content);
-}
+} */
 
 testMultiLingualFormatWithDefaultMessages(
   MultiLingualFormat format, {

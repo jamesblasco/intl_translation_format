@@ -1,6 +1,5 @@
 import 'package:intl_translation_arb/intl_translation_arb.dart';
-import 'package:intl_translation_format/test/test_mock.dart';
-import 'package:intl_translation_format/test/format_test.dart';
+import 'package:intl_translation_format/test_utils.dart';
 import 'package:test/test.dart';
 
 void main() {

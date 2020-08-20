@@ -1,8 +1,5 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
-import 'package:intl_translation_format/src/utils/case_format.dart';
 import 'package:test/test.dart';
-
-import 'intl_translation_format_test.dart';
 
 dynamic expectTranslatedMessages(
   List<String> files,
