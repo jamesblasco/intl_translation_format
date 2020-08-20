@@ -55,8 +55,8 @@ for PKG in ${PKGS}; do
     echo -e "\033[1mPKG: ${PKG}; TASK: ${TASK}\033[22m"
     case ${TASK} in
     command)
-      echo 'pub run build_runner test --delete-conflicting-outputs -- -P presubmit'
-      pub run build_runner test --delete-conflicting-outputs -- -P presubmit || EXIT_CODE=$?
+      echo 'pub run test'
+      pub run test || EXIT_CODE=$?
       ;;
     dartanalyzer)
       echo 'dartanalyzer --fatal-infos --fatal-warnings .'
