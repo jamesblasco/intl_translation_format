@@ -1,1 +1,0 @@
-flutter pub run intl_translation_format:generate lib/main.dart lib/l10n/multi_json/intl_messages_multi.json --output-dir lib/l10n/ --format multi_language_json --project-name intl_messages

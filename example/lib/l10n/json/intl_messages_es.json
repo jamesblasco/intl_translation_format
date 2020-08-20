@@ -1,5 +1,0 @@
-{
-  "text": "texto",
-  "textWithMetadata": "texto con metadata",
-  "pluralExample": "{howMany,plural, =0{Ningún articulo}=1{One item}many{Un montón de artículos}other{{howMany} artículos}"
-}

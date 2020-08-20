@@ -1,1 +1,0 @@
-flutter pub run intl_translation_format:extract lib/main.dart --locale en --output-dir lib/l10n/ --output-file intl_messages_en.arb --format arb

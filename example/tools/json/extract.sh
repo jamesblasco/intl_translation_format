@@ -1,1 +1,0 @@
-flutter pub run intl_translation_format:extract --config intl_config/intl_json.yaml

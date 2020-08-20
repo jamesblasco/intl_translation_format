@@ -1,4 +1,0 @@
-
-"text"= "text";
-"textWithMetadata"= "textWithMetadata";
-"pluralExample"= "{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}";
