@@ -2,12 +2,11 @@ This repository contains multiple packages
 
 # Intl_translation_format
 
-This package provides the tools to support a new translation format file with Intl package: 
+This package provides the tools to support a new translation format to work with the intl_translation package: 
 
-- Message extraction from dart code
+- Message extraction from Dart code
 - Code generation from translated messages 
-
-It also implements arb, xliff formats by default.
+- New formats can be added without modifying this package, but it includes the ARB and XLIFF formats by default.
 
 Current supported formats:
 
@@ -68,12 +67,12 @@ pub run intl_translation_format:generate
 
 # **intl_translation_arb**
 
-This package implements intl_translation_format for arb files
+This package implements intl_translation_format for ARB files
 
 
 # **intl_translation_xliff**
 
-This package implements intl_translation_format for xliff files
+This package implements intl_translation_format for XLIFF files
 
 
 GSoC 2020 Project by Jaime Blasco Andres
