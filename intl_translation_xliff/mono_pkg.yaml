@@ -1,0 +1,16 @@
+dart:
+  - dev
+
+stages:
+  - analyze_and_format:
+    - dartfmt
+    - dartanalyzer: --fatal-infos --fatal-warnings .
+  - unit_test:
+    - command: pub run test 
+      os:
+        - linux
+        - windows
+
+cache:
+  directories:
+    - .dart_tool/build        

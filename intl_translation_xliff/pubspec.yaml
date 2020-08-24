@@ -1,24 +1,23 @@
-name: intl_translation_arb
-description: Extract messages to arb files and generate translations from arb file
+name: intl_translation_xliff
+description: Extract messages to a xliff file and generate translations from xliff files
 version: 0.0.1
 author:
 homepage:
 
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  intl_translation:
-    git:
-      url: https://github.com/dart-lang/intl_translation/
   intl_translation_format:
     path: './../intl_translation_format'
+  xml: ^4.2.0  
 
 dev_dependencies:
+  test: ^1.15.0
   analyzer: '>=0.36.0 <0.40.0'
   args: '>=0.12.1 <2.0.0'
   dart_style: ^1.0.0
   intl: '>=0.15.3 <0.17.0'
   path: '>=0.9.0 <2.0.0'
-  petitparser: '>=1.1.3 <= 3.0.2'
-  test: ^1.15.1
+  petitparser: '>=1.0.0 < 4.0.0'
+  pedantic: ^1.8.0
