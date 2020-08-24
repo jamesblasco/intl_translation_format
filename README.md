@@ -1,4 +1,4 @@
-This repository contains multiple packages
+This repository contains multiple packages:
 
 # Intl_translation_format
 
@@ -60,19 +60,24 @@ pub run intl_translation_format:generate
     lib/l10n/arb/intl_messages_es.arb   
 ```
 
+# intl_translation_arb
+
+This package implements `intl_translation_format` for **ARB** files
+
+Formats:
+- `arb`
+
+# intl_translation_xliff
+
+This package implements `intl_translation_format` for **XLIFF** files
+
+Formats 
+- `xliff-2`
+- `xliff-2-multi`
+- `xliff-1.2`
+- `xliff-1.2-multi`
 
 
+<br><br><br>
+GSoC 2020 Project by Jaime Blasco Andrés
 
-
-
-# **intl_translation_arb**
-
-This package implements intl_translation_format for ARB files
-
-
-# **intl_translation_xliff**
-
-This package implements intl_translation_format for XLIFF files
-
-
-GSoC 2020 Project by Jaime Blasco Andres
