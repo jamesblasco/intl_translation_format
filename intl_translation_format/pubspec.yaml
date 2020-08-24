@@ -8,9 +8,7 @@ environment:
   sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
-  intl_translation:
-    git:
-      url: https://github.com/dart-lang/intl_translation/
+  intl_translation: ^0.17.10+1
   intl_translation_arb:
     path: '../intl_translation_arb'
   intl_translation_xliff:
