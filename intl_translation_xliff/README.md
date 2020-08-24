@@ -1,14 +1,19 @@
 # intl_translation_xliff
 
-Extract messages to xliff files and generate translations from xliff file
+Extract intl messages to XLIFF and generate translations from XLIFF files
 
-## Getting Started
+- [X] **Xliff v1.2** - [Specification](http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html)
+- [X] **Xliff v2.0** - [Specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html)
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+See full guide a [intl_translation_format](https://github.com/jamesblasco/intl_translation_format).
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+If you only need XLIFF, you can execute the same commands from `intl_translation_format` with this package.
+
+`pub run intl_translation_xliff:extract --format xliff-2`
+
+Available Formats 
+- `xliff-2`
+- `xliff-2-multi`
+- `xliff-1.2`
+- `xliff-1.2-multi`
+

@@ -1,6 +1,6 @@
 This repository contains multiple packages:
 
-# Intl_translation_format
+# intl_translation_format
 
 This package provides the tools to support a new translation format to work with the intl_translation package: 
 
@@ -15,7 +15,25 @@ Current supported formats:
 - [X] **Xliff v2.0** - [Specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html)
 
 
-### Getting started
+# [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_arb)
+
+This package implements `intl_translation_format` for **ARB** files
+
+Formats:
+- `arb`
+
+# [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_xliff)
+
+This package implements `intl_translation_format` for **XLIFF** files
+
+Formats 
+- `xliff-2`
+- `xliff-2-multi`
+- `xliff-1.2`
+- `xliff-1.2-multi`
+
+
+# Getting started
 
 #### 1. Add package
 Add this to your package's pubspec.yaml file:
@@ -59,23 +77,6 @@ pub run intl_translation_format:generate
     lib/l10n/arb/intl_messages_en.arb 
     lib/l10n/arb/intl_messages_es.arb   
 ```
-
-# intl_translation_arb
-
-This package implements `intl_translation_format` for **ARB** files
-
-Formats:
-- `arb`
-
-# intl_translation_xliff
-
-This package implements `intl_translation_format` for **XLIFF** files
-
-Formats 
-- `xliff-2`
-- `xliff-2-multi`
-- `xliff-1.2`
-- `xliff-1.2-multi`
 
 
 <br><br><br>

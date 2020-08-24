@@ -1,14 +1,14 @@
 # intl_translation_arb
 
-Extract messages to arb files and generate translations from arb file
+Extract intl messages to ARB and generate translations from ARB files
 
-## Getting Started
+- [X] **Arb** - [Specification](https://github.com/google/app-resource-bundle)
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+See full guide a [intl_translation_format](https://github.com/jamesblasco/intl_translation_format).
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+If you only need ARB, you can execute the same commands from `intl_translation_format` with this package.
+
+`pub run intl_translation_arb:extract --format arb`
+
+Available Formats 
+- `arb`
