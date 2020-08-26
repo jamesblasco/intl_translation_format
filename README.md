@@ -1,6 +1,5 @@
-This repository contains multiple packages:
 
-# intl_translation_format
+# [intl_translation_format](https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_format)
 
 This package provides the tools to support a new translation format to work with the intl_translation package: 
 
