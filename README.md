@@ -22,7 +22,7 @@ This package implements `intl_translation_format` for **ARB** files
 Formats:
 - `arb`
 
-# [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_xliff)
+# [intl_translation_xliff](https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_xliff)
 
 This package implements `intl_translation_format` for **XLIFF** files
 
