@@ -7,8 +7,6 @@ import 'package:test/test.dart';
 import 'xliff_v2_test.dart' as xliff2;
 import 'xliff_v1_test.dart' as xliff1;
 
-
-
 import 'xml_parser_test.dart' as xml;
 
 final _xliffAttributes = attributesForVersion(XliffVersion.v2)
@@ -20,8 +18,6 @@ void main() {
   xml.main();
   xliff2.main();
   xliff1.main();
-
-
 
   group('Xliff parser:', () {
     test('Nested <xliff> not allowed', () async {

@@ -3,18 +3,17 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:test/test.dart';
 import 'format_test.dart';
 
-
 void testFormat(FormatTester tester) {
   tester._test();
 }
 
-/// An abstract class that allows to test a [TranslationFormat] into a standarized 
+/// An abstract class that allows to test a [TranslationFormat] into a standarized
 /// test with diverse messages.
 ///
-/// It is recommended to use the implmentations [MonolingualFormatTester] for 
-/// monolingual formats, and [MultilingualParsingTester], 
+/// It is recommended to use the implmentations [MonolingualFormatTester] for
+/// monolingual formats, and [MultilingualParsingTester],
 /// [MultilingualGenerateTemplateTester] for formats with multiple locales.
-///  
+///
 /// See [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_arb/test/intl_translation_arb_test.dart)
 /// for an actual implementation of a FormatTester.
 ///
@@ -88,7 +87,7 @@ abstract class GenerateTranslationTester<T> implements FormatTester<T> {
 abstract class MonolingualFormatTester extends FormatTester<String>
     implements ParsingFormatTester<String>, GenerateTranslationTester<String> {
   @override
-  TranslationFormat<StringFileData> get format;
+  MonoLingualFormat get format;
 
   String get templateSimpleMessage => simpleMessage;
   String get templateMessageWithMetadata => messageWithMetadata;
@@ -211,7 +210,6 @@ abstract class MonolingualFormatTester extends FormatTester<String>
 
 abstract class MultilingualParsingTester extends FormatTester<String>
     implements ParsingFormatTester<String> {
-
   @override
   TranslationFormat<StringFileData> get format;
 

@@ -1,14 +1,12 @@
 import 'package:intl_translation_arb/intl_translation_arb.dart';
-import 'package:intl_translation_format/src/file/file_provider.dart';
 import 'package:intl_translation_format/src/translation_format.dart';
 import 'package:intl_translation_format/test_utils.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Arb Format -', () {
-
     testFormat(ArbDefaultFormatTester());
- 
+
     test('File name', () {
       final template = MockTemplate('intl', {});
       template.lastModified = null;
@@ -33,7 +31,7 @@ void main() {
 
 class ArbDefaultFormatTester extends MonolingualFormatTester {
   @override
-  TranslationFormat<StringFileData> get format => ArbFormat();
+  MonoLingualFormat get format => ArbFormat();
 
   @override
   String get simpleMessage => '''
@@ -91,8 +89,6 @@ class ArbDefaultFormatTester extends MonolingualFormatTester {
   @override
   String get allMessages => _basicArbFile;
 }
-
-
 
 const _basicArbFile = '''{
   "@@locale": "en",

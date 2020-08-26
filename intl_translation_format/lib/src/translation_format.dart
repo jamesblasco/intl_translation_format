@@ -54,7 +54,6 @@ abstract class TranslationFormat<T extends FileData> {
   }
 }
 
-
 abstract class MonoLingualFormat extends TranslationFormat<StringFileData> {
   List<String> get supportedFileExtensions => [fileExtension];
   String get fileExtension;
@@ -105,7 +104,6 @@ abstract class MonoLingualFormat extends TranslationFormat<StringFileData> {
     return [file];
   }
 }
-
 
 abstract class SingleBinaryLanguageFormat
     extends TranslationFormat<BinaryFileData> {

@@ -2,9 +2,9 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:test/test.dart';
 
 /// Mock Template used for testing
-/// 
+///
 /// The messages are added programatically in the constructor
-/// 
+///
 class MockTemplate extends TranslationTemplate {
   MockTemplate(
     String projectName,
@@ -26,7 +26,7 @@ dynamic expectMessage(Message message, Message expected) {
   );
 }
 
-/// Compares a file content with the messages that are expected 
+/// Compares a file content with the messages that are expected
 /// after parsing the file with the indicated [format]
 dynamic expectFormatParsing(
   String content,
@@ -42,13 +42,13 @@ dynamic expectFormatParsing(
   }
 }
 
-/// Compares a file content with the messages that are expected 
+/// Compares a file content with the messages that are expected
 /// after parsing the file with the indicated [format]
 ///
 /// While [expectFormatParsing] works with monolingual files,
-/// [expectMulipluralFormatParsing] allows to test formats that 
+/// [expectMulipluralFormatParsing] allows to test formats that
 /// contains multiple languages
-/// 
+///
 dynamic expectMulipluralFormatParsing(
   String content,
   MultiLingualFormat format, {
@@ -67,9 +67,9 @@ dynamic expectMulipluralFormatParsing(
   }
 }
 
-/// Compares MainMessages with the template file that would be 
+/// Compares MainMessages with the template file that would be
 /// generated using the indicated [format].
-/// 
+///
 dynamic expectFormatTemplateGeneration(
   String content,
   TranslationFormat<StringFileData> format, {
