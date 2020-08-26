@@ -1,0 +1,37 @@
+<?xml version="1.0 encoding="UTF-8""?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="es">
+  <file>
+    <unit id="Flutter Demo Home Page" name="Flutter Demo Home Page">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Página Principal de Flutter Demo</source>
+      </segment>
+    </unit>
+    <unit id="counterText" name="counterText">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>{value,plural, =0{No has pulsado el botón aún}=1{Has pulsado el botón una vez}other{Has pulsado el botón {value} veces}}</source>
+      </segment>
+    </unit>
+     <unit id="Increment" name="Increment">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Aumentar</source>
+      </segment>
+    </unit>
+    <unit id="Decrement" name="Decrement">
+      <segment>
+        <notes>
+          <note category="format">icu</note>
+        </notes>
+        <source>Reducir</source>
+      </segment>
+    </unit>
+  </file>
+</xliff>

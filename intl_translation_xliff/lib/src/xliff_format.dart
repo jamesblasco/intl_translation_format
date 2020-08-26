@@ -113,5 +113,5 @@ String generateTemplate(TranslationTemplate template, XliffVersion version) {
       });
     });
   });
-  return builder.buildDocument().toXmlString(pretty: true);
+  return builder.build().toXmlString(pretty: true);
 }

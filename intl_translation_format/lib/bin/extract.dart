@@ -27,9 +27,4 @@ main(List<String> args, [Map<String, TranslationFormatBuilder> formats]) async {
   for (final file in templateFiles) {
     await LocalFile(parser.outputDir + file.name).write(file);
   }
-
-  // Todo: Check where to add this.
-  /* if (extraction.hasWarnings && parser.warningsAreErrors) {
-    exit(1);
-  } */
 }

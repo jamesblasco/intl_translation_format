@@ -11,7 +11,7 @@ final xliffFormats = <String, TranslationFormatBuilder>{
   keyForVersion(XliffVersion.v2): () => XliffFormat(XliffVersion.v2),
   keyForVersion(XliffVersion.v1, true): () =>
       MultipleLanguageXliffFormat(XliffVersion.v1),
-  keyForVersion(XliffVersion.v2, false): () =>
+  keyForVersion(XliffVersion.v2, true): () =>
       MultipleLanguageXliffFormat(XliffVersion.v2),
 };
 
