@@ -113,5 +113,6 @@ String generateTemplate(TranslationTemplate template, XliffVersion version) {
       });
     });
   });
+  // ignore: deprecated_member_use
   return builder.build().toXmlString(pretty: true);
 }

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:example/l10n/intl_messages_all.dart';
 import 'package:example/locale_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -27,8 +26,7 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
-            home: MyHomePage(
-                title: homePageTitle + ' - ${locale}'),
+            home: MyHomePage(title: homePageTitle + ' - ${locale}'),
           );
         },
       ),
