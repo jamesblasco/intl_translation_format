@@ -1,6 +1,10 @@
+
 # Example
 
 This is an example Flutter app using intl_translation_format and xliff translation files.
+
+<img  height="250px" src="https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_format/example/screenshot.gif?raw"/>
+
 
 ## Getting Started
 
@@ -13,7 +17,7 @@ This is an example Flutter app using intl_translation_format and xliff translati
 
 3. Add translations
   - Translations for `es` and `gr` are added already.
-  - To add a translation:
+  - If you want to add support for a new locale:
     - Create the a new translation file `lib/l10n/intl_{locale}.xliff`
     - Add the file path to the file `./tool/generage.sh`
     - Add the new locale inside the `availableLocales` list param at `lib/main.dart`
