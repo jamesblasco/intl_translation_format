@@ -4,7 +4,7 @@ dart:
 stages:
   - analyze_and_format:
     - dartfmt
-    - dartanalyzer: --fatal-infos --fatal-warnings .
+    - dartanalyzer: --fatal-infos --fatal-warnings lib test
   - unit_test:
     - command: pub run test 
       os:
