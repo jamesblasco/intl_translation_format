@@ -14,7 +14,7 @@ main() {
           ..addPieces([LiteralString('This is a message', message)]);
         return message;
       }();
-      expectContentForMessages(
+      expectFormatParsing(
         '{\n'
         '  "@@locale": "en",\n'
         '  "message1": "This is a message",\n'
@@ -25,9 +25,7 @@ main() {
         '  }\n'
         '}',
         ArbFormat(),
-        messages: {
-          'message1': messsage,
-        },
+        messages: [messsage],
       );
     });
 
@@ -47,7 +45,7 @@ main() {
           ]);
         return message;
       }();
-      expectContentForMessages(
+      expectFormatParsing(
         '{\n'
         '  "@@locale": "en",\n'
         '  "message2": "Another message with parameter {x}",\n'
@@ -63,9 +61,7 @@ main() {
         '  }\n'
         '}',
         ArbFormat(),
-        messages: {
-          'message2': messsage,
-        },
+        messages: [messsage],
       );
     });
 
@@ -81,7 +77,7 @@ main() {
           ]);
         return message;
       }();
-      expectContentForMessages(
+      expectFormatParsing(
         '{\n'
         '  "@@locale": "en",\n'
         '  "\'<>{}= +-_\$()&^%\$#@!~`\'": "<>{}= +-_\$()&^%\$#@!~`",\n'
@@ -93,9 +89,7 @@ main() {
         '  }\n'
         '}',
         ArbFormat(),
-        messages: {
-          'message2': messsage,
-        },
+        messages: [messsage],
       );
     });
 
