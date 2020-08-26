@@ -1,5 +1,22 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
+import 'package:intl_translation_format/test/test_mock.dart';
 import 'package:test/test.dart';
+
+dynamic expectContentForMessages(
+  String content,
+  TranslationFormat<StringFileData> format, {
+  Map<String, MainMessage> messages = const {},
+  List<String> arguments = const [],
+}) {
+  final template = MockTemplate(
+    'intl',
+    messages,
+  );
+  template.lastModified = null;
+  final result = format.generateTemplateFiles(template).first.contents;
+  expect(result, content);
+}
+
 
 dynamic _expectMessages(
   String content,
@@ -7,7 +24,7 @@ dynamic _expectMessages(
   Map<String, Map<String, String>> messages = const {},
   List<String> arguments = const [],
 }) {
-  final result = format.parseFile(content);
+  final result = format.parseFile(content, 'en');
   final MainMessage mainMessage = MainMessage();
   mainMessage..arguments = arguments;
 
@@ -37,6 +54,38 @@ dynamic _expectMessages(
   expect(result, content);
 } */
 
+testMultiLingualFormat(
+  String name,
+  MultiLingualFormat format, {
+  String file,
+  String template,
+  Map<String, Map<String, String>> icuMessageForLocale,
+  String defaultLocale = 'en',
+  List<String> locales = const ['en', 'es'],
+}) {
+  group(name, () {
+    test('Parse file', () {
+      _expectMessages(
+        file,
+        format,
+        messages: icuMessageForLocale,
+      );
+    });
+    test('Generate template', () {
+      expectContentForMessages(
+        template ?? file,
+        format,
+        messages: icuMessageForLocale[defaultLocale].map(
+          (key, value) => MapEntry(
+            key,
+            IcuMainMessage(value, key),
+          ),
+        ),
+      );
+    });
+  });
+}
+
 testMultiLingualFormatWithDefaultMessages(
   MultiLingualFormat format, {
   String simpleMessage,
@@ -44,7 +93,35 @@ testMultiLingualFormatWithDefaultMessages(
   String pluralMessage,
   String messageWithVariable,
   String allMessages,
+  List<String> locales = const ['en', 'es'],
 }) {
+  if (simpleMessage != null) {
+    testMultiLingualFormat(
+    'Simple Message',
+    format,
+    file: simpleMessage,
+    template: '<?xml version="1.0 encoding="UTF-8""?>\n'
+        '<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2" source-language="en">\n'
+        '  <file>\n'
+        '    <trans-unit id="simpleMessage">\n'
+        '      <notes>\n'
+        '        <note category="format">icu</note>\n'
+        '      </notes>\n'
+        '      <source>Simple Message</source>\n'
+        '      <target></target>\n'
+        '    </trans-unit>\n'
+        '  </file>\n'
+        '</xliff>',
+    icuMessageForLocale: {
+      'en': {
+        'simpleMessage': 'Simple Message',
+      },
+      'es': {
+        'simpleMessage': 'Mensaje simple',
+      },
+    },
+  );
+  }
   group('Parse file:', () {
     if (simpleMessage != null) {
       test('Simple Message', () {
@@ -55,9 +132,10 @@ testMultiLingualFormatWithDefaultMessages(
             'en': {
               'simpleMessage': 'Simple Message',
             },
-            'es': {
-              'simpleMessage': 'Mensaje simple',
-            },
+            if (locales.contains('es'))
+              'es': {
+                'simpleMessage': 'Mensaje simple',
+              },
           },
         );
       });
@@ -71,9 +149,10 @@ testMultiLingualFormatWithDefaultMessages(
             'en': {
               'messageWithMetadata': 'Message With Metadata',
             },
-            'es': {
-              'messageWithMetadata': 'Mensaje con Metadatos',
-            },
+            if (locales.contains('es'))
+              'es': {
+                'messageWithMetadata': 'Mensaje con Metadatos',
+              },
           },
         );
       });
@@ -88,10 +167,11 @@ testMultiLingualFormatWithDefaultMessages(
               'pluralExample':
                   '{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}',
             },
-            'es': {
-              'pluralExample':
-                  '{howMany,plural, =0{Ningún elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}',
-            },
+            if (locales.contains('es'))
+              'es': {
+                'pluralExample':
+                    '{howMany,plural, =0{Ningún elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}',
+              },
           },
           arguments: ['howMany'],
         );
@@ -106,9 +186,10 @@ testMultiLingualFormatWithDefaultMessages(
             'en': {
               'messageWithVariable': 'Share {variable}',
             },
-            'es': {
-              'messageWithVariable': 'Compartir {variable}',
-            },
+            if (locales.contains('es'))
+              'es': {
+                'messageWithVariable': 'Compartir {variable}',
+              },
           },
           arguments: ['variable'],
         );
@@ -124,13 +205,14 @@ testMultiLingualFormatWithDefaultMessages(
                 '{howMany,plural, =0{No items}=1{One item}many{A lot of items}other{{howMany} items}}',
             'messageWithVariable': 'Share {variable}',
           },
-          'es': {
-            'simpleMessage': 'Mensaje simple',
-            'messageWithMetadata': 'Mensaje con Metadatos',
-            'pluralExample':
-                '{howMany,plural, =0{Ningún elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}',
-            'messageWithVariable': 'Compartir {variable}',
-          },
+          if (locales.contains('es'))
+            'es': {
+              'simpleMessage': 'Mensaje simple',
+              'messageWithMetadata': 'Mensaje con Metadatos',
+              'pluralExample':
+                  '{howMany,plural, =0{Ningún elemento}=1{Un elemento}many{Muchos elementos}other{{howMany} elementos}}',
+              'messageWithVariable': 'Compartir {variable}',
+            },
         }, arguments: [
           'variable',
           'howMany'
