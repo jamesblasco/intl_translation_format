@@ -37,13 +37,15 @@ class XliffRootElement extends XliffElement {
   Set<String> get requiredAttributes => {
         'version',
         if (state.version == XliffVersion.v2) 'srcLang' else 'source-language',
-        if (state.version == XliffVersion.v2 && state.multilingual)
-          'trgLang'
-        else if (state.multilingual)
-          'target-language'
       };
   @override
-  Set<String> get optionalAttributes => {'trgLang', 'xml:space'};
+  Set<String> get optionalAttributes => {
+        if (state.version == XliffVersion.v2)
+          'trgLang'
+        else if (state.multilingual)
+          'target-language',
+        'xml:space',
+      };
 
   @override
   String get key => 'xliff';
@@ -76,23 +78,20 @@ class XliffRootElement extends XliffElement {
         ? attributes['trgLang']
         : attributes['target-language'];
 
+    if (state.sourceLocale != null && srcLang != state.sourceLocale) {
+      throw XliffParserException(
+          title: 'Invalid scrLang.',
+          description: 'scrLang was expected to be ${state.sourceLocale} ',
+          context: 'In element <xliff>');
+    }
+
+    if (trgLang != null) {
+      state.multilingual = true;
+    }
+
     state.sourceMessages = MessagesForLocale({}, locale: srcLang);
 
-    if (!state.multilingual && trgLang != null) {
-      throw XliffParserException(
-          title: 'Invalid Xliff parser.',
-          description:
-              'Current format ${keyForVersion(state.version)} does not '
-              'support multiple locales in the same file, use '
-              '${keyForVersion(state.version, true)} instead',
-          context: 'In element <xliff>');
-    } else if (state.multilingual && trgLang == null) {
-      throw XliffParserException(
-          title: 'Target lanugage required',
-          description: 'Current format ${keyForVersion(state.version)} '
-              'uses mulilanguage xliff and requires a target language ',
-          context: 'In element <xliff>');
-    } else if (state.multilingual) {
+    if (state.multilingual) {
       state.targetMessages = MessagesForLocale({}, locale: trgLang);
     }
   }

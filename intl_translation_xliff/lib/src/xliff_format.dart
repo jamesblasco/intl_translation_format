@@ -1,10 +1,9 @@
-import 'package:intl_translation/generate_localized.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 import 'package:xml/xml.dart';
 
-class XliffFormat extends MonoLingualFormat {
+/* class XliffFormat extends MonoLingualFormat {
   final XliffVersion version;
 
   XliffFormat([this.version = XliffVersion.v2]);
@@ -27,12 +26,17 @@ class XliffFormat extends MonoLingualFormat {
   }) {
     return XliffParser(version: version).parse(content);
   }
-}
+} */
 
-class MultipleLanguageXliffFormat extends MultiLingualFormat {
+class XliffFormat extends MultiLingualFormat {
   final XliffVersion version;
 
-  MultipleLanguageXliffFormat([this.version = XliffVersion.v2]);
+  bool allowMultipleSourceLanguages;
+
+  XliffFormat([
+    this.version = XliffVersion.v2,
+    this.allowMultipleSourceLanguages = false,
+  ]);
 
   @override
   String get fileExtension => 'xliff';
@@ -46,11 +50,11 @@ class MultipleLanguageXliffFormat extends MultiLingualFormat {
   }
 
   @override
-  List<MessagesForLocale> parseFile(
-    String content, {
-    MessageGeneration generation,
-  }) {
-    return XliffParser(version: version).parseMultiLanguage(content);
+  List<MessagesForLocale> parseFile(String content, String defaultLocale) {
+    return XliffParser(version: version).parseMultiLanguage(
+      content,
+      allowMultipleSourceLanguages ? null : defaultLocale,
+    );
   }
 }
 
@@ -89,6 +93,9 @@ String generateTemplate(TranslationTemplate template, XliffVersion version) {
               builder.element('source', nest: () {
                 builder.text(text);
               });
+              builder.element('target', nest: () {
+                builder.text('');
+              });
             });
           });
         } else {
@@ -107,6 +114,9 @@ String generateTemplate(TranslationTemplate template, XliffVersion version) {
             });
             builder.element('source', nest: () {
               builder.text(text);
+            });
+            builder.element('target', nest: () {
+              builder.text('');
             });
           });
         }

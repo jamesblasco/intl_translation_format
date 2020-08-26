@@ -27,13 +27,14 @@ class XliffParser {
     ).parse().first;
   }
 
-  List<MessagesForLocale> parseMultiLanguage(String str, {String key}) {
+  List<MessagesForLocale> parseMultiLanguage(String str, String sourceLocale,
+      {String key}) {
     return XliffParserState(
       parseEvents(str),
       key,
       version,
       displayWarnings: displayWarnings,
-      multilingual: true,
+      sourceLocale: sourceLocale,
     ).parse();
   }
 }
@@ -69,7 +70,7 @@ class XliffParserState extends XmlParserState<List<MessagesForLocale>> {
     Iterable<XmlEvent> events,
     String _key,
     this.version, {
-    this.multilingual = false,
+    this.sourceLocale,
     bool displayWarnings = true,
   })  : assert(events != null),
         super(
@@ -79,7 +80,9 @@ class XliffParserState extends XmlParserState<List<MessagesForLocale>> {
         );
 
   final XliffVersion version;
-  final bool multilingual;
+  final String sourceLocale;
+
+  bool multilingual = false;
 
   MessagesForLocale sourceMessages;
   MessagesForLocale targetMessages;

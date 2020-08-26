@@ -5,9 +5,10 @@ import 'package:intl_translation_xliff/intl_translation_xliff.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Xliff v2.0  Multilingual Format -', () {
-    testMultiLingualFormatWithDefaultMessages(MultipleLanguageXliffFormat(),
-        simpleMessage: '''
+  group('Xliff v2.0  with Target Language -', () {
+    testMultiLingualFormatWithDefaultMessages(
+      XliffFormat(),
+      simpleMessage: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en" trgLang="es">
   <file>
@@ -22,7 +23,7 @@ void main() {
     </unit>
   </file>
 </xliff>''',
-        messageWithMetadata: '''
+      messageWithMetadata: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en" trgLang="es">
   <file>
@@ -38,7 +39,7 @@ void main() {
     </unit>
   </file>
 </xliff>''',
-        pluralMessage: '''
+      pluralMessage: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en" trgLang="es">
   <file>
@@ -53,7 +54,7 @@ void main() {
     </unit>
   </file>
 </xliff>''',
-        messageWithVariable: '''
+      messageWithVariable: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en" trgLang="es">
   <file>
@@ -68,7 +69,7 @@ void main() {
     </unit>
   </file>
 </xliff>''',
-        allMessages: '''
+      allMessages: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en" trgLang="es">
   <file>
@@ -110,6 +111,7 @@ void main() {
       </segment>
     </unit>
   </file>
-</xliff>''');
+</xliff>''',
+    );
   });
 }

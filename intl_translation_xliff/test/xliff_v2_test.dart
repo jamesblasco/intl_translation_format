@@ -6,7 +6,9 @@ import 'package:test/test.dart';
 
 void main() {
   group('Xliff v2.0 Format -', () {
-    testFormatParserWithDefaultMessages(XliffFormat(), simpleMessage: '''
+    testMultiLingualFormatWithDefaultMessages(
+      XliffFormat(),
+      simpleMessage: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en">
   <file>
@@ -19,7 +21,8 @@ void main() {
       </segment>
     </unit>
   </file>
-</xliff>''', messageWithMetadata: '''
+</xliff>''',
+      messageWithMetadata: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en">
   <file>
@@ -33,7 +36,8 @@ void main() {
       </segment>
     </unit>
   </file>
-</xliff>''', pluralMessage: '''
+</xliff>''',
+      pluralMessage: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en">
   <file>
@@ -46,7 +50,8 @@ void main() {
       </segment>
     </unit>
   </file>
-</xliff>''', messageWithVariable: '''
+</xliff>''',
+      messageWithVariable: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en">
   <file>
@@ -59,7 +64,8 @@ void main() {
       </segment>
     </unit>
   </file>
-</xliff>''', allMessages: '''
+</xliff>''',
+      allMessages: '''
 <?xml version="1.0 encoding="UTF-8""?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en">
   <file>
@@ -97,6 +103,7 @@ void main() {
       </segment>
     </unit>
   </file>
-</xliff>''');
+</xliff>''',
+    );
   });
 }
