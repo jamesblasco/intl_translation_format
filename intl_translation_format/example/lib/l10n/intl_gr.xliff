@@ -1,12 +1,13 @@
 <?xml version="1.0 encoding="UTF-8""?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="gr">
+<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:2.0 http://docs.oasis-open.org/xliff/xliff-core/v2.0/os/schemas/xliff_core_2.0.xsd" version="2.0" srcLang="en" trgLang="gr">
   <file>
     <unit id="Flutter Demo Home Page" name="Flutter Demo Home Page">
       <segment>
         <notes>
           <note category="format">icu</note>
         </notes>
-        <source>Flutter Demo Homepage</source>
+        <source>Flutter Demo Home Page</source>
+        <target>Flutter Demo Homepage</target>
       </segment>
     </unit>
     <unit id="counterText" name="counterText">
@@ -14,7 +15,8 @@
         <notes>
           <note category="format">icu</note>
         </notes>
-        <source>{value,plural, =0{Sie haben den Knopf noch nicht gedrückt}other{Sie haben die Taste {value} Mal gedrückt}}</source>
+        <source>{value,plural, =0{You haven''t pushed the button yet}=1{You have pushed the button one time}other{You have pushed the button {value} times}}</source>
+        <target>{value,plural, =0{Sie haben den Knopf noch nicht gedrückt}other{Sie haben die Taste {value} Mal gedrückt}}</target>
       </segment>
     </unit>
      <unit id="Increment" name="Increment">
@@ -22,7 +24,8 @@
         <notes>
           <note category="format">icu</note>
         </notes>
-        <source>Zuwachs</source>
+        <source>Increment</source>
+        <target>Zuwachs</target>
       </segment>
     </unit>
     <unit id="Decrement" name="Decrement">
@@ -30,7 +33,8 @@
         <notes>
           <note category="format">icu</note>
         </notes>
-        <source>Dekrement</source>
+        <source>Decrement</source>
+        <target>Dekrement</target>
       </segment>
     </unit>
   </file>
