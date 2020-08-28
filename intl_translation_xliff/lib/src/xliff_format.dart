@@ -27,9 +27,9 @@ class XliffFormat extends MultiLingualFormat {
 
   @override
   List<MessagesForLocale> parseFile(String content, String defaultLocale) {
-    return XliffParser(version: version).parseMultiLanguage(
+    return XliffParser(version: version).parse(
       content,
-      allowMultipleSourceLanguages ? null : defaultLocale,
+      sourceLocale: allowMultipleSourceLanguages ? null : defaultLocale,
     );
   }
 }

@@ -24,7 +24,7 @@ class _ParserTesterWithTargetLanguage extends MultilingualParsingTester {
   @override
   String get simpleMessage => '''
 <?xml version="1.0 encoding="UTF-8""?>
-<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2" source-language="en" target-language="en"  target-language="es" >
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd" version="1.2" source-language="en" target-language="es" >
   <file>
     <trans-unit id="simpleMessage">
       <notes>
