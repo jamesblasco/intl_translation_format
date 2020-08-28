@@ -20,15 +20,28 @@ void main() {
       template.lastModified = null;
       final result = ArbFormat().generateTemplateFiles(template);
 
-      expect(result.first.name, 'intl_fr.arb');
-      expect(result.first.contents, '''
+      final expectedContent = '''
 {
   "@@locale": "fr"
-}''');
+}''';
+
+      expect(result.first.name, 'intl_fr.arb');
+      expect(result.first.contents, expectedContent);
     });
   });
 }
 
+/// An implementation [MonolingualFormatTester] to test arb format with 
+/// standarized messages.
+///
+/// It overrides the strings [simpleMessage], [messageWithMetadata],
+/// [variableMessage], [pluralMessage], [allMessages], that should be the 
+/// content from the arb file that contains each specific message.
+/// 
+/// When tested, it will parse these file content and extract the messages and it
+/// will compare them with them expected ones. After that it will generate a template
+/// with the expected messages and it will try to match it to the same file content
+///
 class ArbDefaultFormatTester extends MonolingualFormatTester {
   @override
   MonoLingualFormat get format => ArbFormat();
