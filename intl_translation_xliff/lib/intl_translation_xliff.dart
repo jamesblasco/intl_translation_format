@@ -7,20 +7,9 @@ export 'src/xliff_format.dart';
 enum XliffVersion { v2, v1 }
 
 final xliffFormats = <String, TranslationFormatBuilder>{
-  'xlf': () => XliffFormat(XliffVersion.v1, false),
-  'xlf2': () => XliffFormat(XliffVersion.v2, false),
+  'xlf': () => XliffFormat(XliffVersion.v1),
+  'xlf2': () => XliffFormat(XliffVersion.v2),
 };
-
-// TODO: This will be better as an extension
-String keyForVersion(XliffVersion version) {
-  switch (version) {
-    case XliffVersion.v2:
-      return 'xlf2';
-    case XliffVersion.v1:
-      return 'xlf';
-  }
-  throw UnimplementedError();
-}
 
 Map<String, String> attributesForVersion(XliffVersion version) {
   if (version == XliffVersion.v2) {

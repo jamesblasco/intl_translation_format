@@ -33,17 +33,24 @@ class XliffRootElement extends XliffElement {
   @override
   bool get required => true;
 
+  String get sourceLanguageKey => {
+        XliffVersion.v1: 'source-language',
+        XliffVersion.v2: 'srcLang',
+      }[state.version];
+
+  String get targetLanguageKey => {
+        XliffVersion.v1: 'target-language',
+        XliffVersion.v2: 'trgLang',
+      }[state.version];
+
   @override
   Set<String> get requiredAttributes => {
         'version',
-        if (state.version == XliffVersion.v2) 'srcLang' else 'source-language',
+        sourceLanguageKey,
       };
   @override
   Set<String> get optionalAttributes => {
-        if (state.version == XliffVersion.v2)
-          'trgLang'
-        else if (state.multilingual)
-          'target-language',
+        targetLanguageKey,
         'xml:space',
       };
 
@@ -71,17 +78,13 @@ class XliffRootElement extends XliffElement {
           context: 'In element <xliff>');
     }
 
-    final srcLang = state.version == XliffVersion.v2
-        ? attributes['srcLang']
-        : attributes['source-language'];
-    final trgLang = state.version == XliffVersion.v2
-        ? attributes['trgLang']
-        : attributes['target-language'];
+    final srcLang = attributes[sourceLanguageKey];
+    final trgLang = attributes[targetLanguageKey];
 
     if (state.sourceLocale != null && srcLang != state.sourceLocale) {
       throw XliffParserException(
-          title: 'Invalid scrLang.',
-          description: 'scrLang was expected to be ${state.sourceLocale} ',
+          title: 'Invalid $sourceLanguageKey (source language) attribute: $srcLang.',
+          description: '$sourceLanguageKey was expected to be ${state.sourceLocale} ',
           context: 'In element <xliff>');
     }
 
@@ -106,6 +109,14 @@ class XliffRootElement extends XliffElement {
         throw 'Xliff version $version is not supported';
     }
   }
+
+  String keyForVersion(XliffVersion version) {
+  return {
+    XliffVersion.v1: 'xlf',
+    XliffVersion.v2: 'xlf2',
+  }[version];
+}
+
 }
 
 ///
