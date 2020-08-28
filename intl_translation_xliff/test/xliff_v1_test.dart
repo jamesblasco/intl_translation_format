@@ -19,7 +19,7 @@ void main() {
 // Tests for xliff v1.2 with a target language
 class _ParserTesterWithTargetLanguage extends MultilingualParsingTester {
   @override
-  TranslationFormat<StringFileData> get format => XliffFormat(XliffVersion.v1);
+  MultiLingualFormat get format => XliffFormat(XliffVersion.v1);
 
   @override
   String get simpleMessage => '''
@@ -122,7 +122,7 @@ class _ParserTesterWithTargetLanguage extends MultilingualParsingTester {
 // Tests for xliff v1.2 without a target language
 class _ParserTester extends MultilingualParsingTester {
   @override
-  TranslationFormat<StringFileData> get format => XliffFormat(XliffVersion.v1);
+  MultiLingualFormat get format => XliffFormat(XliffVersion.v1);
 
   @override
   String get simpleMessage => '''
