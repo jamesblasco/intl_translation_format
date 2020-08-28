@@ -229,7 +229,7 @@ abstract class MultilingualParsingTester extends FormatTester<String>
     group('Parse file:', () {
       if (simpleMessage != null) {
         test('Simple Message', () {
-          expectMulipluralFormatParsing(
+          expectMultiLingualFormatParsing(
             simpleMessage,
             format,
             messages: messagesForKey('simpleMessage'),
@@ -238,7 +238,7 @@ abstract class MultilingualParsingTester extends FormatTester<String>
       }
       if (messageWithMetadata != null) {
         test('Simple Message with Metadata', () {
-          expectMulipluralFormatParsing(
+          expectMultiLingualFormatParsing(
             messageWithMetadata,
             format,
             messages: messagesForKey('messageWithMetadata'),
@@ -247,7 +247,7 @@ abstract class MultilingualParsingTester extends FormatTester<String>
       }
       if (pluralMessage != null) {
         test('Plural Message', () {
-          expectMulipluralFormatParsing(
+          expectMultiLingualFormatParsing(
             pluralMessage,
             format,
             messages: messagesForKey('pluralExample'),
@@ -256,7 +256,7 @@ abstract class MultilingualParsingTester extends FormatTester<String>
       }
       if (variableMessage != null) {
         test('Message with variable', () {
-          expectMulipluralFormatParsing(
+          expectMultiLingualFormatParsing(
             variableMessage,
             format,
             messages: messagesForKey('messageWithVariable'),
@@ -265,7 +265,7 @@ abstract class MultilingualParsingTester extends FormatTester<String>
       }
       if (allMessages != null) {
         test('Parse file', () {
-          expectMulipluralFormatParsing(pluralMessage, format, messages: {
+          expectMultiLingualFormatParsing(pluralMessage, format, messages: {
             'en': messages.values.toList(),
             'es': translatedMessages.values.toList(),
           });

@@ -18,9 +18,9 @@ class MockTemplate extends TranslationTemplate {
   final Map<String, MainMessage> messages;
 }
 
-// Compares two message with their icu string version.
-dynamic expectMessage(Message message, Message expected) {
-  return expect(
+/// Compares two message with their icu string version.
+void expectMessage(Message message, Message expected) {
+  expect(
     messageToIcuString(message),
     messageToIcuString(expected),
   );
@@ -28,14 +28,14 @@ dynamic expectMessage(Message message, Message expected) {
 
 /// Compares a file content with the messages that are expected
 /// after parsing the file with the indicated [format]
-dynamic expectFormatParsing(
+void expectFormatParsing(
   String content,
   MonoLingualFormat format, {
   List<MainMessage> messages = const [],
 }) {
-  final result = format.parseFile(content);
+  final allTranslations = format.parseFile(content);
 
-  for (final translated in result.messages.values) {
+  for (final translated in allTranslations.messages.values) {
     final mainMessage = messages.firstWhere((e) => e.name == translated.id);
     final translatedMessage = translated.message..parent = mainMessage;
     expectMessage(translatedMessage, mainMessage);
@@ -46,10 +46,10 @@ dynamic expectFormatParsing(
 /// after parsing the file with the indicated [format]
 ///
 /// While [expectFormatParsing] works with monolingual files,
-/// [expectMulipluralFormatParsing] allows to test formats that
+/// [expectMultiLingualFormatParsing] allows to test formats that
 /// contains multiple languages
 ///
-dynamic expectMulipluralFormatParsing(
+void expectMultiLingualFormatParsing(
   String content,
   MultiLingualFormat format, {
   Map<String, List<MainMessage>> messages,
@@ -70,7 +70,7 @@ dynamic expectMulipluralFormatParsing(
 /// Compares MainMessages with the template file that would be
 /// generated using the indicated [format].
 ///
-dynamic expectFormatTemplateGeneration(
+void expectFormatTemplateGeneration(
   String content,
   TranslationFormat<StringFileData> format, {
   List<MainMessage> messages = const [],
