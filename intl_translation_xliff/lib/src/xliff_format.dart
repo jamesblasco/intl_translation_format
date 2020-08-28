@@ -3,30 +3,6 @@ import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 import 'package:xml/xml.dart';
 
-/* class XliffFormat extends MonoLingualFormat {
-  final XliffVersion version;
-
-  XliffFormat([this.version = XliffVersion.v2]);
-
-  @override
-  String get fileExtension => 'xliff';
-
-  @override
-  List<String> get supportedFileExtensions => ['xliff', 'xlf'];
-
-  @override
-  String generateTemplateFile(TranslationTemplate template) {
-    return generateTemplate(template, version);
-  }
-
-  @override
-  MessagesForLocale parseFile(
-    String content, {
-    MessageGeneration generation,
-  }) {
-    return XliffParser(version: version).parse(content);
-  }
-} */
 
 class XliffFormat extends MultiLingualFormat {
   final XliffVersion version;
