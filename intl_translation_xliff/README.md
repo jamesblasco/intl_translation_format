@@ -9,11 +9,8 @@ See full guide a [intl_translation_format](https://github.com/jamesblasco/intl_t
 
 If you only need XLIFF, you can execute the same commands from `intl_translation_format` with this package.
 
-`pub run intl_translation_xliff:extract --format xliff-2`
+`pub run intl_translation_xliff:extract --format xlf2`
 
 Available Formats 
-- `xliff-2`
-- `xliff-2-multi`
-- `xliff-1.2`
-- `xliff-1.2-multi`
-
+- `xlf`
+- `xlf2`
