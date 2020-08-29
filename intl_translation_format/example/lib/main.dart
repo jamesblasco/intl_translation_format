@@ -8,16 +8,15 @@ void main() {
   runApp(MyApp());
 }
 
-/// This is the Flutter example counter app slightly modified to support 
+/// This is the Flutter example counter app slightly modified to support
 /// localized strings generated from XLIFF files using intl_translation_format
 class MyApp extends StatelessWidget {
-
   String get homePageTitle => Intl.message('Flutter Demo Home Page');
 
   @override
   Widget build(BuildContext context) {
     // DefaultLocaleController is a custom Widget that stores the current locale
-    // and handles the initialization of the messages of a new locale when the 
+    // and handles the initialization of the messages of a new locale when the
     // current locale changes
     return DefaultLocaleController(
       initialLocale: 'en',
