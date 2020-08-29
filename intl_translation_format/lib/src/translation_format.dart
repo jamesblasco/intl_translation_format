@@ -21,7 +21,7 @@ abstract class TranslationFormat<T extends FileData> {
   const TranslationFormat();
 
   void parseFiles(
-    List<RedableFile> files, {
+    List<ReadableFile> files, {
     TranslationCatalog catalog,
   });
 
@@ -67,7 +67,7 @@ abstract class MonoLingualFormat extends TranslationFormat<StringFileData> {
 
   @override
   Future parseFiles(
-    List<RedableFile> files, {
+    List<ReadableFile> files, {
     TranslationCatalog catalog,
   }) async {
     var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
@@ -116,7 +116,7 @@ abstract class SingleBinaryLanguageFormat
 
   @override
   Future parseFiles(
-    List<RedableFile> files, {
+    List<ReadableFile> files, {
     TranslationCatalog catalog,
   }) async {
     var messagesByLocale = <String, Map<String, BasicTranslatedMessage>>{};
@@ -171,7 +171,7 @@ abstract class MultiLingualFormat extends TranslationFormat<StringFileData> {
 
   @override
   Future parseFiles(
-    List<RedableFile> files, {
+    List<ReadableFile> files, {
     TranslationCatalog catalog,
   }) async {
     final messagesByLocale = <String, MessagesForLocale>{};

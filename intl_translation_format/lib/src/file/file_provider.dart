@@ -9,7 +9,7 @@ import 'package:path/path.dart' as p;
 /// be performed.
 ///
 /// See related [LocalFile], [MockFile]
-abstract class FileProvider with RedableFile, WritableFile {
+abstract class FileProvider with ReadableFile, WritableFile {
   @override
   String get name;
 
@@ -17,7 +17,7 @@ abstract class FileProvider with RedableFile, WritableFile {
 }
 
 /// File abstraction that can be read
-abstract class RedableFile {
+abstract class ReadableFile {
   String get name;
 
   Future<String> readAsString();

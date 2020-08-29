@@ -35,7 +35,7 @@ class TranslationTemplate {
 
   /// Extract template messages from Intl classes inside dart files
   Future addTemplateMessages(
-    List<RedableFile> dartFiles, {
+    List<ReadableFile> dartFiles, {
     ExtractConfig config,
   }) async {
     final extraction = MessageExtraction();
@@ -85,7 +85,7 @@ class TranslationCatalog extends TranslationTemplate {
       : super(projectName, locale: locale);
 
   Future addTranslations(
-    List<RedableFile> files, {
+    List<ReadableFile> files, {
     TranslationFormat format,
   }) async {
     await format.parseFiles(
