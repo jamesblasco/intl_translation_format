@@ -3,6 +3,10 @@ import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:intl_translation_format/test_utils.dart';
 import 'package:test/test.dart';
 
+/// Arb parsing test from intl_translation
+/// https://github.com/dart-lang/intl_translation/tree/master/test/message_extraction
+/// 
+/// It separates the global test into indivial arb parsing test
 main() {
   group('Format to Arb  -', () {
     test('Simple message', () {

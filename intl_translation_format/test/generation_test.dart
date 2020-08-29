@@ -1,7 +1,7 @@
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:test/test.dart';
 
-dynamic expectTranslatedMessages(
+void expectTranslatedMessages(
   List<String> files,
   Map<String, Map<String, String>> messagesByLocale,
   String locale,

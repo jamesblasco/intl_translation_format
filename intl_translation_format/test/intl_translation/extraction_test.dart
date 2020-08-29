@@ -2,6 +2,10 @@ import 'package:intl_translation/extract_messages.dart';
 import 'package:intl_translation_format/intl_translation_format.dart';
 import 'package:test/test.dart';
 
+/// Extraction test from intl_translation
+/// https://github.com/dart-lang/intl_translation/tree/master/test/message_extraction
+/// 
+/// It separates the global test into indivial extractions test
 main() {
   group('Extraction -', () {
     test('Extract simple message', () {
