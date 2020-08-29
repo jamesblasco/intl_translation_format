@@ -5,7 +5,6 @@ import 'file_provider.dart';
 import 'package:path/path.dart' as p;
 
 ///  A reference to a file on the file system.
-///
 class LocalFile extends FileProvider {
   final String path;
 

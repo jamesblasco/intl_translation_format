@@ -4,7 +4,6 @@ import 'package:yaml/yaml.dart';
 
 /// Configuration for a traslation catalog.
 /// Defined as a yaml file
-///
 class TranslationConfig {
   final String projectName;
   final String outputDir;

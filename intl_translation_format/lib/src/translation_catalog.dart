@@ -8,8 +8,6 @@ import 'package:meta/meta.dart';
 import '../intl_translation_format.dart';
 
 ///  Catalog that stores all message templates.
-///
-///
 class TranslationTemplate {
   ///  Project name for the translation project
   ///  The name of translation files will need to follow the following pattern
@@ -65,8 +63,6 @@ class TranslationTemplate {
 }
 
 ///  Catalog that stores all translation messages
-///
-///
 class TranslationCatalog extends TranslationTemplate {
   ///  Project name for the translation project
   ///  The name of translation files will need to follow the following pattern
@@ -74,12 +70,9 @@ class TranslationCatalog extends TranslationTemplate {
   ///
   ///  Generated dart files will be named {projectName}_messages_{locale}.dart
   ///  eg: intl_messages.arb
-  ///
   String projectName;
 
   ///  The default locale
-  ///
-  ///
   String defaultLocale;
   DateTime lastModified;
 

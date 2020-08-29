@@ -17,8 +17,6 @@ class MessagesForLocale {
   MapEntry<String, MessagesForLocale> asEntry() => MapEntry(locale, this);
 }
 
-//
-//
 abstract class TranslationFormat<T extends FileData> {
   const TranslationFormat();
 

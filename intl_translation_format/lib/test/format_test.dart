@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 /// Mock Template used for testing
 ///
 /// The messages are added programatically in the constructor
-///
 class MockTemplate extends TranslationTemplate {
   MockTemplate(
     String projectName,
@@ -48,7 +47,6 @@ void expectFormatParsing(
 /// While [expectFormatParsing] works with monolingual files,
 /// [expectMultiLingualFormatParsing] allows to test formats that
 /// contains multiple languages
-///
 void expectMultiLingualFormatParsing(
   String content,
   MultiLingualFormat format, {
@@ -69,7 +67,6 @@ void expectMultiLingualFormatParsing(
 
 /// Compares MainMessages with the template file that would be
 /// generated using the indicated [format].
-///
 void expectFormatTemplateGeneration(
   String content,
   TranslationFormat<StringFileData> format, {

@@ -16,7 +16,6 @@ void testFormat(FormatTester tester) {
 ///
 /// See [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_arb/test/intl_translation_arb_test.dart)
 /// for an actual implementation of a FormatTester.
-///
 abstract class FormatTester<T> {
   TranslationFormat get format;
   String get defaultLocale => 'en';
@@ -108,7 +107,6 @@ abstract class GenerateTranslationTester<T> implements FormatTester<T> {
 ///
 /// /// See [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_arb/test/intl_translation_arb_test.dart)
 /// for an actual implementation of a [MonolingualFormatTester].
-///
 abstract class MonolingualFormatTester extends FormatTester<String>
     implements ParsingFormatTester<String>, GenerateTranslationTester<String> {
   @override
@@ -240,7 +238,6 @@ abstract class MonolingualFormatTester extends FormatTester<String>
 ///
 /// See [intl_translation_xliff](https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_xliff/test/xliff_v1_test.dart)
 /// for an actual implementation of a [MultilingualParsingTester].
-///
 abstract class MultilingualParsingTester extends FormatTester<String>
     implements ParsingFormatTester<String> {
   @override
