@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 
 import 'l10n/intl_messages_all.dart';
 
+// A [ValueNotifier] that stores the current locale, 
+// and notifies to their listeners when this changes.
 class LocaleController extends ValueNotifier<String> {
   List<String> _availableLocales;
 
@@ -12,6 +14,10 @@ class LocaleController extends ValueNotifier<String> {
         super(initialLocale);
 }
 
+/// A widget that propagates the LocaleController down the Widget tree and
+/// updates when the current locale changes.
+/// 
+/// DefaultLocale.of(context) returns the locale controller
 class DefaultLocale extends InheritedNotifier<LocaleController> {
   const DefaultLocale({
     Key key,
@@ -24,6 +30,8 @@ class DefaultLocale extends InheritedNotifier<LocaleController> {
       context.dependOnInheritedWidgetOfExactType<DefaultLocale>().notifier;
 }
 
+// A widget that stores the current locale and handles the initialization 
+// of the messages of a new locale when the current locale changes
 class DefaultLocaleController extends StatefulWidget {
   final String initialLocale;
   final List<String> availableLocales;
@@ -39,6 +47,8 @@ class DefaultLocaleController extends StatefulWidget {
   _DefaultLocaleState createState() => _DefaultLocaleState();
 }
 
+// A widget that stores the current locale and handles the initialization 
+// of the messages of a new locale when the current locale changes
 class _DefaultLocaleState extends State<DefaultLocaleController> {
   LocaleController controller;
 
@@ -73,6 +83,11 @@ class _DefaultLocaleState extends State<DefaultLocaleController> {
   }
 }
 
+// A segment control that allows the user to change the current
+// locale and choose between the available ones.
+//  
+// This widget needs to be inside a DefaultLocaleController that will
+// be the one that handle changes needed to display the new locale.
 class LocaleSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
