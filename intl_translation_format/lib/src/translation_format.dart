@@ -165,7 +165,7 @@ abstract class MultiLingualFormat extends TranslationFormat<StringFileData> {
   List<String> get supportedFileExtensions => [fileExtension];
   String get fileExtension;
 
-  List<MessagesForLocale> parseFile(String content);
+  List<MessagesForLocale> parseFile(String content, String defaultLocale);
 
   String generateTemplateFile(
     TranslationTemplate catalog,
@@ -184,7 +184,7 @@ abstract class MultiLingualFormat extends TranslationFormat<StringFileData> {
     for (final file in files) {
       final data = await file.readDataOfExactType<StringFileData>();
       final content = data.contents;
-      final messages = parseFile(content);
+      final messages = parseFile(content, catalog.defaultLocale);
       messagesByLocale.addEntries(messages.map((e) => e.asEntry()));
     }
 

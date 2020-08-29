@@ -15,25 +15,17 @@ class XliffParser {
     this.multilingual = false,
   });
 
-  /// Parses SVG from a string to a [DrawableRoot].
-  ///
-  /// The [key] parameter is used for debugging purposes.
-  MessagesForLocale parse(String str, {String key}) {
+  List<MessagesForLocale> parse(
+    String xliff, {
+    String sourceLocale,
+    String key,
+  }) {
     return XliffParserState(
-      parseEvents(str),
+      parseEvents(xliff),
       key,
       version,
       displayWarnings: displayWarnings,
-    ).parse().first;
-  }
-
-  List<MessagesForLocale> parseMultiLanguage(String str, {String key}) {
-    return XliffParserState(
-      parseEvents(str),
-      key,
-      version,
-      displayWarnings: displayWarnings,
-      multilingual: true,
+      sourceLocale: sourceLocale,
     ).parse();
   }
 }
@@ -69,7 +61,7 @@ class XliffParserState extends XmlParserState<List<MessagesForLocale>> {
     Iterable<XmlEvent> events,
     String _key,
     this.version, {
-    this.multilingual = false,
+    this.sourceLocale,
     bool displayWarnings = true,
   })  : assert(events != null),
         super(
@@ -79,7 +71,9 @@ class XliffParserState extends XmlParserState<List<MessagesForLocale>> {
         );
 
   final XliffVersion version;
-  final bool multilingual;
+  final String sourceLocale;
+
+  bool multilingual = false;
 
   MessagesForLocale sourceMessages;
   MessagesForLocale targetMessages;

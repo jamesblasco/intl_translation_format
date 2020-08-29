@@ -1,1 +1,1 @@
-flutter pub run intl_translation_format:extract lib/main.dart --output-dir lib/l10n/ --format xliff-2
+flutter pub run intl_translation_format:extract lib/main.dart --output-dir lib/l10n/ --format xlf2

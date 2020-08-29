@@ -33,17 +33,26 @@ class XliffRootElement extends XliffElement {
   @override
   bool get required => true;
 
+  String get sourceLanguageKey => {
+        XliffVersion.v1: 'source-language',
+        XliffVersion.v2: 'srcLang',
+      }[state.version];
+
+  String get targetLanguageKey => {
+        XliffVersion.v1: 'target-language',
+        XliffVersion.v2: 'trgLang',
+      }[state.version];
+
   @override
   Set<String> get requiredAttributes => {
         'version',
-        if (state.version == XliffVersion.v2) 'srcLang' else 'source-language',
-        if (state.version == XliffVersion.v2 && state.multilingual)
-          'trgLang'
-        else if (state.multilingual)
-          'target-language'
+        sourceLanguageKey,
       };
   @override
-  Set<String> get optionalAttributes => {'trgLang', 'xml:space'};
+  Set<String> get optionalAttributes => {
+        targetLanguageKey,
+        'xml:space',
+      };
 
   @override
   String get key => 'xliff';
@@ -69,30 +78,23 @@ class XliffRootElement extends XliffElement {
           context: 'In element <xliff>');
     }
 
-    final srcLang = state.version == XliffVersion.v2
-        ? attributes['srcLang']
-        : attributes['source-language'];
-    final trgLang = state.version == XliffVersion.v2
-        ? attributes['trgLang']
-        : attributes['target-language'];
+    final srcLang = attributes[sourceLanguageKey];
+    final trgLang = attributes[targetLanguageKey];
+
+    if (state.sourceLocale != null && srcLang != state.sourceLocale) {
+      throw XliffParserException(
+          title: 'Invalid $sourceLanguageKey (source language) attribute: $srcLang.',
+          description: '$sourceLanguageKey was expected to be ${state.sourceLocale} ',
+          context: 'In element <xliff>');
+    }
+
+    if (trgLang != null) {
+      state.multilingual = true;
+    }
 
     state.sourceMessages = MessagesForLocale({}, locale: srcLang);
 
-    if (!state.multilingual && trgLang != null) {
-      throw XliffParserException(
-          title: 'Invalid Xliff parser.',
-          description:
-              'Current format ${keyForVersion(state.version)} does not '
-              'support multiple locales in the same file, use '
-              '${keyForVersion(state.version, true)} instead',
-          context: 'In element <xliff>');
-    } else if (state.multilingual && trgLang == null) {
-      throw XliffParserException(
-          title: 'Target lanugage required',
-          description: 'Current format ${keyForVersion(state.version)} '
-              'uses mulilanguage xliff and requires a target language ',
-          context: 'In element <xliff>');
-    } else if (state.multilingual) {
+    if (state.multilingual) {
       state.targetMessages = MessagesForLocale({}, locale: trgLang);
     }
   }
@@ -107,6 +109,14 @@ class XliffRootElement extends XliffElement {
         throw 'Xliff version $version is not supported';
     }
   }
+
+  String keyForVersion(XliffVersion version) {
+  return {
+    XliffVersion.v1: 'xlf',
+    XliffVersion.v2: 'xlf2',
+  }[version];
+}
+
 }
 
 ///

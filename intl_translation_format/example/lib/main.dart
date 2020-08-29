@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultLocaleController(
       initialLocale: 'en',
-      availableLocales: ['en', 'es', 'gr'],
+      availableLocales: ['en', 'es', 'de'],
       child: Builder(
         builder: (context) {
           final locale = DefaultLocale.of(context).value;
