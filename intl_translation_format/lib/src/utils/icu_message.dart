@@ -2,6 +2,15 @@ import 'package:intl_translation/src/intl_message.dart';
 import 'package:petitparser/petitparser.dart';
 
 /// Parser from a icu string to a Message object
+/// 
+//  Code from intl_translation package
+/// https://github.com/dart-lang/intl_translation/blob/76016774977bc197579f7453df8aa89b48449504/lib/src/icu_parser.dart#L16
+/// 
+/// Unlike IcuParser from intl_translation, _IcuParser allows also to 
+/// extracts the placeholder arguments into the MainMessage
+/// 
+/// [IcuMainMessage] allws to parse a icu string into a MainMessage 
+/// [IcuMessage] allows to parse a icu string into a Message with a given MainMessage
 class _IcuParser {
   Parser get openCurly => char('{');
 
