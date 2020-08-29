@@ -55,11 +55,11 @@ abstract class FormatTester<T> {
 /// An abstract class that allows to test a [TranslationFormat] in a standarized
 /// test with diverse messages.
 ///
-/// The implementation of this class should use [testParseFile] to compare the 
-/// expected [translatedMessages] (eg. [simpleMessage]) with the result of 
-/// extracting the messages from the file content with the desired 
-/// translation format 
-/// 
+/// The implementation of this class should use [testParseFile] to compare the
+/// expected [translatedMessages] (eg. [simpleMessage]) with the result of
+/// extracting the messages from the file content with the desired
+/// translation format
+///
 /// See alse [MonolingualFormatTester, MultilingualParsingTester]
 abstract class ParsingFormatTester<T> implements FormatTester<T> {
   ///Messages file
@@ -80,10 +80,10 @@ abstract class ParsingFormatTester<T> implements FormatTester<T> {
 /// An abstract class that allows to test a [TranslationFormat] in a standarized
 /// test with diverse messages.
 ///
-/// The implementation of this class should use [testGenerateTemplate] to compare 
-/// the template files (eg. [templateSimpleMessage]) with the result of generating 
+/// The implementation of this class should use [testGenerateTemplate] to compare
+/// the template files (eg. [templateSimpleMessage]) with the result of generating
 /// the template with the desired format from the expected [translatedMessages]
-/// 
+///
 /// See alse [MonolingualFormatTester, MultilingualGenerateTemplateTester]
 abstract class GenerateTranslationTester<T> implements FormatTester<T> {
   ///Template file
@@ -103,9 +103,9 @@ abstract class GenerateTranslationTester<T> implements FormatTester<T> {
 
 /// An abstract class that allows to test a [MonoLingualFormat] in a standarized
 /// test with diverse messages.
-/// 
+///
 /// It implements both [ParsingFormatTester] and [GenerateTranslationTester]
-/// 
+///
 /// /// See [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_arb/test/intl_translation_arb_test.dart)
 /// for an actual implementation of a [MonolingualFormatTester].
 ///
@@ -235,9 +235,9 @@ abstract class MonolingualFormatTester extends FormatTester<String>
 
 /// An abstract class that allows to test a [MultiLingualFormat] in a standarized
 /// test with diverse messages.
-/// 
-/// It implements only [ParsingFormatTester]. 
-/// 
+///
+/// It implements only [ParsingFormatTester].
+///
 /// See [intl_translation_xliff](https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_xliff/test/xliff_v1_test.dart)
 /// for an actual implementation of a [MultilingualParsingTester].
 ///

@@ -3,7 +3,6 @@ import 'package:intl_translation_xliff/src/parser/xliff_parser.dart';
 
 import 'package:xml/xml.dart';
 
-
 class XliffFormat extends MultiLingualFormat {
   final XliffVersion version;
 

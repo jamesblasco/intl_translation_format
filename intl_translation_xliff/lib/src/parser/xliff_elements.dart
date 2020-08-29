@@ -83,8 +83,10 @@ class XliffRootElement extends XliffElement {
 
     if (state.sourceLocale != null && srcLang != state.sourceLocale) {
       throw XliffParserException(
-          title: 'Invalid $sourceLanguageKey (source language) attribute: $srcLang.',
-          description: '$sourceLanguageKey was expected to be ${state.sourceLocale} ',
+          title:
+              'Invalid $sourceLanguageKey (source language) attribute: $srcLang.',
+          description:
+              '$sourceLanguageKey was expected to be ${state.sourceLocale} ',
           context: 'In element <xliff>');
     }
 
@@ -111,12 +113,11 @@ class XliffRootElement extends XliffElement {
   }
 
   String keyForVersion(XliffVersion version) {
-  return {
-    XliffVersion.v1: 'xlf',
-    XliffVersion.v2: 'xlf2',
-  }[version];
-}
-
+    return {
+      XliffVersion.v1: 'xlf',
+      XliffVersion.v2: 'xlf2',
+    }[version];
+  }
 }
 
 ///
