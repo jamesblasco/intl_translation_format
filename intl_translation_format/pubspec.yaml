@@ -1,6 +1,6 @@
 name: intl_translation_format
 description: This package provides multiformat support for the Intl package
-version: 0.0.1+1
+version: 0.0.1+2
 homepage: https://github.com/jamesblasco/intl_translation_format
 
 environment:
