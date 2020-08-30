@@ -17,13 +17,16 @@ Current supported formats:
 - [X] **Xliff v1.2** - `xlf` - [Specification](http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html)
 - [X] **Xliff v2.0** - `xlf2` - [Specification](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html)
 
-<a href="https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_arb"><img src="https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_arb/image_header.jpg?raw" /><a/>
+---
 
+<a href="https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_arb"><img src="https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_arb/image_header.jpg?raw" /><a/>
 
 The package [intl_translation_arb](https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_arb) implements `intl_translation_format` for **ARB** files
 
 Formats:
 - `arb`
+
+---
 
 <a href="https://github.com/jamesblasco/intl_translation_format/tree/master/intl_translation_xliff"><img src="https://github.com/jamesblasco/intl_translation_format/blob/master/intl_translation_xliff/image_header.jpg?raw" /><a/>
 
