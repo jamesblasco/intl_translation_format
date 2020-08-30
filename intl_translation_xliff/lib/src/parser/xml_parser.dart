@@ -106,7 +106,7 @@ abstract class Element<T extends XmlParserState> {
 }
 
 /// Maintains state while pushing an [XmlPushReader] through the XML tree.
-/// 
+///
 /// Inspired by the SvgParserState from https://github.com/dnfield/flutter_svg
 abstract class XmlParserState<T> {
   /// Creates a new [XmlParserState].
