@@ -21,9 +21,3 @@ dev_dependencies:
   analyzer: '>=0.36.0 <0.40.0'
   dart_style: ^1.0.0
   intl: '>=0.15.3 <0.17.0'
-
-dependency_overrides:
-  intl_translation_arb:
-    path: ../intl_translation_arb
-  intl_translation_xliff:
-    path: ../intl_translation_xliff  
