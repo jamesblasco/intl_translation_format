@@ -1,13 +1,13 @@
 name: intl_translation_xliff
 description: Extract messages to a xliff file and generate translations from xliff files
-version: 0.0.1+1
+version: 0.0.2
 homepage: https://github.com/jamesblasco/intl_translation_format
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
 
 dependencies:
-  intl_translation_format: ^0.0.1
+  intl_translation_format: ^0.0.2
   xml: ^4.2.0  
 
 dev_dependencies:
