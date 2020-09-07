@@ -62,20 +62,25 @@ You can extend the class TranslationFormat and complete the functions that will 
 and create templates. There are several classes to make this task easier: `MonoLingualFormat`, `BinaryMonolingualFormat`,
 `MultiLingualFormat`.
 
-As an example, this guide will saw you how the JSON file format is implemented.
+As an example, this guide will show you how the JSON file format is implemented.
+While in the package both monolingual and multilingual JSON has been implemented, 
+this steps will only explain the monolingual JSON format
 
 1. Learning about your format
 
 It is important to do some research about the format you are interested to implement. Some good questions would be:
- 1. Is it a standard? 
+ 1. Is there a standard or other definitive document that can tell us how to resolve any questions about the implementation? 
+  eg. [ARB](https://github.com/google/app-resource-bundle/wiki/ApplicationResourceBundleSpecification) and [XLIFF](http://docs.oasis-open.org/xliff/xliff-core/v2.0/xliff-core-v2.0.html) are standardized, 
  2. Is it a binary or text-based format?
+  eg. [.po](https://www.gnu.org/software/gettext/manual/html_node/PO-Files.html) is a text based format while [.mo](https://www.gnu.org/software/gettext/manual/html_node/MO-Files.html) is binary. 
  3. Does it contain a translation for multiple languages per file or is it just one language per file?
+  eg. ARB contains a language per file while XLIFF can contain the translation and the source language.
  4. How does it handle Plurals, Genders, and Variables?
 
 Let's answer these questions for our new JSON format:
  1. While it is a standard data interchange format, there is no official standard for translations. Multiple frameworks create their implementations like `i18next` or `ng2-translate` for `Angular`.
 
- Because the `ICU Format` is the core of the dart intl library, we decided to create a value/key simple JSON with ICU messages. 
+ Because the [`ICU Format`](https://unicode-org.github.io/icu/userguide/format_parse/messages/) is the core of the dart intl library, we decided to create a value/key simple JSON with ICU messages. 
 
  As an example: 
  ```json
@@ -85,9 +90,11 @@ Let's answer these questions for our new JSON format:
    "message2" : "You have { howMany, plural, =0 { none Apples} one { one Apple} other { {howMany} Apples} }"
  } 
  ```
+
+Learn more about ICU message format with [this article]( https://phrase.com/blog/posts/guide-to-the-icu-message-format/)
  2. It is a text-based format
  3. It contains one locale translation per file.
- 4. We will use the ICU standard for plurals, genders, and variables.
+ 4. We will use the ICU format for plurals, genders, and variables.
 
 
 2. Start coding
@@ -104,28 +111,30 @@ class JsonFormat extends MonoLingualFormat {
   ...
 }  
 ```
-The first thing will be to add the `fileExtension` in our case `JSON`. You can override the `fileExtensions` list param in case your format supports multiple extensions (eg. Xliff supports .xliff and xlf).
+The first thing will be to add the `fileExtension` in our case `JSON`. You can override the `fileExtensions` getter in case your format supports multiple extensions (eg. XLIFF supports .xliff and xlf).
 
 3. Implement the method to generate a template.
+
+A template is a class that contains the messages in the source language. By default this language is `en`.
 
 This method will generate a file in the desired format that will contain the messages from the template.
 
 ```dart
 @override
-  String generateTemplateFile(
-    TranslationTemplate catalog,
-  ) {
-    final messages = catalog.messages;
-    var json = '{\n';
-    messages.forEach((key, value) {
-      // Expands the MainMessage into an icu string
-      final message = messageToIcuString(value);
-      json += '  "$key": "$message",\n';
-    });
-    if (messages.isNotEmpty) json = json.substring(0, json.length - 2) + '\n';
-    json += '}';
-    return json;
-  }
+String generateTemplateFile(
+  TranslationTemplate catalog,
+) {
+  final messages = catalog.messages;
+  var json = '{\n';
+  messages.forEach((key, value) {
+    // Expands the MainMessage into an icu string
+    final message = messageToIcuString(value);
+    json += '  "$key": "$message",\n';
+  });
+  if (messages.isNotEmpty) json = json.substring(0, json.length - 2) + '\n';
+  json += '}';
+  return json;
+}
 ```
 The param `catalog` contains the list of `MainMessage`s. These `MainMessages` can be expanded into a string with your transform function. For ICU messages there is an already built method `messageToIcuString` that expands the message into an ICU string.
 
@@ -158,14 +167,14 @@ It will return `MessagesForLocale` object with the messages and an optional loca
     return MessagesForLocale(messages);
 ```
 
-The important part here is to parse the string message into a Message class. You can manually create a Message tree but for ICU there is already a default parser: `IcuMessage.fromIcu(value)`
+The important part here is to parse the string message into a Message class. You can manually manually parse the Message to create a syntax tree but for ICU there is already a default parser: `IcuMessage.fromIcu(value)`
 
-For each message, we will create a BasicTranslatedMessage that will contain the identifier and the Message.
+For each message, we will create a BasicTranslatedMessage that will contain the identifier (the message's keyname) and the Message.
 
 
 5. Testing the new format:
 
-It is important to add tests that will assure us that the format parsing is working as expected. The intl_translation_format comes with some util method for testing.
+It is important to add tests that will assure us that the format parsing is working as expected. The intl_translation_format comes with some utility methods for testing.
 
 ```dart
 /// Compares a file content with the messages that are expected
